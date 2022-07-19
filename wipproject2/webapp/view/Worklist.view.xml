@@ -1,83 +1,73 @@
-<mvc:View
-    controllerName="com.chappota.wippoc2.wipproject2.controller.Worklist"
-    xmlns="sap.m"
-    xmlns:mvc="sap.ui.core.mvc"
-    xmlns:semantic="sap.f.semantic">
+<mvc:View controllerName="com.chappota.wippoc2.wipproject2.controller.Worklist" xmlns="sap.m" 
+xmlns:mvc="sap.ui.core.mvc" xmlns:semantic="sap.m.semantic" xmlns:smartFilterBar="sap.ui.comp.smartfilterbar" 
+xmlns:smartTable="sap.ui.comp.smarttable" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
 
-    <semantic:SemanticPage
-        id="page"
-        headerPinnable="false"
-        toggleHeaderOnTitleClick="false">
+    <semantic:SemanticPage id="page">
 
-        <semantic:titleHeading>
-            <Title
-                text="{i18n>worklistTitle}"
-                level="H2"/>
-        </semantic:titleHeading>
 
         <semantic:content>
-            <Table
-                id="table"
-                width="auto"
-                items="{
-                    path: '/YY1_WIPProjectListAPI1',
-                    sorter: {
-                        path: 'CompanyCode',
-                        descending: false
-                    }
-                }"
-                noDataText="{worklistView>/tableNoDataText}"
-                busyIndicatorDelay="{worklistView>/tableBusyDelay}"
-                growing="true"
-                growingScrollToLoad="true"
-                updateFinished=".onUpdateFinished">
+        
+       <Panel headerText="" >
+                <content>
+	<VBox fitContainer="true">
 
-                <headerToolbar>
-                    <OverflowToolbar>
-                        <Title
-                            id="tableHeader"
-                            text="{worklistView>/worklistTableTitle}"
-                            level="H3"/>
-                        <ToolbarSpacer />
-                        <SearchField
-                            id="searchField"
-                            tooltip="{i18n>worklistSearchTooltip}"
-                            search=".onSearch">
-                            <layoutData>
-                                <OverflowToolbarLayoutData
-                                    maxWidth="200px"
-                                    priority="NeverOverflow"/>
-                            </layoutData>
-                        </SearchField>
-                    </OverflowToolbar>
-                </headerToolbar>
+    <smartFilterBar:SmartFilterBar id="smartFilterBar" 	considerSelectionVariants="true" beforeVariantFetch="onBeforeVariantSave"  afterVariantLoad="onAfterVariantLoad"
+    entitySet="YY1_WIPProjectListAPI1" persistencyKey="SmartFilter_Explored" liveMode="true">
+<smartFilterBar:controlConfiguration>
 
-                <columns>
-                    <Column id="nameColumn">
-                        <Text text="{i18n>tableNameColumnTitle}" id="nameColumnTitle"/>
-                    </Column>
-                    <Column id="unitNumberColumn" hAlign="End">
-                        <Text text="{i18n>tableUnitNumberColumnTitle}" id="unitNumberColumnTitle"/>
-                    </Column>
-                </columns>
+<smartFilterBar:ControlConfiguration key="EngagementProject" visibleInAdvancedArea="true" index="0" label="{i18n>txt_projid}" hasValueHelpDialog="true"/>
+<smartFilterBar:ControlConfiguration key="EngagementProjectName" visibleInAdvancedArea="true" index="0" label="{i18n>txt_projname}" hasValueHelpDialog="false"/>
+<smartFilterBar:ControlConfiguration key="Customer" visibleInAdvancedArea="true" index="0" label="{i18n>txt_cust}" hasValueHelpDialog="true"/>
+<smartFilterBar:ControlConfiguration key="" visibleInAdvancedArea="true" index="0" label="{i18n>txt_stage}" hasValueHelpDialog="false"/>
+<smartFilterBar:ControlConfiguration key="CompanyCode" visibleInAdvancedArea="true" index="0" label="{i18n>txt_ccode}" hasValueHelpDialog="true"/>
+<smartFilterBar:ControlConfiguration key="" visibleInAdvancedArea="true" index="0" label="{i18n>txt_role}" hasValueHelpDialog="false"/>
+<smartFilterBar:ControlConfiguration key="" visibleInAdvancedArea="true" index="0" label="{i18n>txt_roleplayer}" hasValueHelpDialog="false"/>
+<smartFilterBar:ControlConfiguration key="" visibleInAdvancedArea="true" index="0" label="{i18n>txt_wipexist}" hasValueHelpDialog="false"/>
+<smartFilterBar:ControlConfiguration key="CostCenter" visibleInAdvancedArea="true" index="0" label="{i18n>txt_costcntr}" hasValueHelpDialog="true"/>
+<smartFilterBar:ControlConfiguration key="ProfitCenter" visibleInAdvancedArea="true" index="0" label="{i18n>txt_prftcntr}" hasValueHelpDialog="true"/>
 
-                <items>
-                    <ColumnListItem
-                        type="Navigation"
-                        press=".onPress">
-                        <cells>
-                            <ObjectIdentifier
-                                title="{CompanyCode}"/>
-                            <ObjectNumber />
-                        </cells>
+</smartFilterBar:controlConfiguration>
+                	<smartFilterBar:layoutData>
+				<FlexItemData shrinkFactor="0"/>
+			</smartFilterBar:layoutData>
+    </smartFilterBar:SmartFilterBar>
+
+      <!-- enableAutoColumnWidth="true"  -->
+<smartTable:SmartTable id="smartTable" entitySet="YY1_WIPProjectListAPI1" smartFilterId="smartFilterBar" tableType="ResponsiveTable" beforeRebindTable="onBeforeRebindTable" 
+ useExportToExcel="true" useVariantManagement="true" useTablePersonalisation="true" header="WIP Entries" showRowCount="true" enableAutoBinding="true" 
+ initiallyVisibleFields="EngagementProject,EngagementProjectName,Customer,CustomerName,ProjectStartDate,ProjectEndDate,ProjectManager,CompanyCode,CostCenter,ProfitCenter"
+ 
+ 
+ >
+        <smartTable:layoutData>
+                        <FlexItemData growFactor="1" baseSize="0%"/>
+                    </smartTable:layoutData>
+                    <!-- <Table>
+                        <columns>
+                            <Column >
+                                <customData>
+                                <core:CustomData key="p13nData"
+                                                            value='\{"columnKey": "TimeEntryID", "leadingProperty": "TimeEntryID","displayBehaviour": "descriptionOnly", "width": "360px", "index" : "6"}' />
+                                        </customData>
+                                <Text text="TimeEntry" />
+                            </Column>
+                        </columns>
+                    <items>
+                    <ColumnListItem >
+                    <cells>
+                        <Link text="{TimeEntryID}" />
+                    </cells>
                     </ColumnListItem>
-                </items>
-            </Table>
+                    </items>
+                    </Table> -->
+                </smartTable:SmartTable>
+     </VBox>
+                
+                </content>
+                </Panel>
+
         </semantic:content>
 
-        <semantic:sendEmailAction>
-            <semantic:SendEmailAction id="shareEmail" press=".onShareEmailPress"/>
-        </semantic:sendEmailAction>
 
     </semantic:SemanticPage>
 
