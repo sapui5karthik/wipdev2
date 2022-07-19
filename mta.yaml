@@ -1,0 +1,57 @@
+_schema-version: "3.2"
+ID: wippoc2
+version: 0.0.1
+modules:
+- name: wippoc2-destination-content
+  type: com.sap.application.content
+  requires:
+  - name: wippoc2-destination-service
+    parameters:
+      content-target: true
+  - name: wippoc2_html_repo_host
+    parameters:
+      service-key:
+        name: wippoc2_html_repo_host-key
+  - name: uaa_wippoc2
+    parameters:
+      service-key:
+        name: uaa_wippoc2-key
+  parameters:
+    content:
+      instance:
+        destinations:
+        - Name: wip2_wippoc2_html_repo_host
+          ServiceInstanceName: wippoc2-html5-app-host-service
+          ServiceKeyName: wippoc2_html_repo_host-key
+          sap.cloud.service: wip2
+        - Authentication: OAuth2UserTokenExchange
+          Name: wip2_uaa_wippoc2
+          ServiceInstanceName: wippoc2-xsuaa-service
+          ServiceKeyName: uaa_wippoc2-key
+          sap.cloud.service: wip2
+        existing_destinations_policy: ignore
+  build-parameters:
+    no-source: true
+resources:
+- name: wippoc2-destination-service
+  type: org.cloudfoundry.managed-service
+  parameters:
+    config:
+      HTML5Runtime_enabled: true
+      version: 1.0.0
+    service: destination
+    service-name: wippoc2-destination-service
+    service-plan: lite
+- name: wippoc2_html_repo_host
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-name: wippoc2-html5-app-host-service
+    service-plan: app-host
+- name: uaa_wippoc2
+  type: org.cloudfoundry.managed-service
+  parameters:
+    path: ./xs-security.json
+    service: xsuaa
+    service-name: wippoc2-xsuaa-service
+    service-plan: application
