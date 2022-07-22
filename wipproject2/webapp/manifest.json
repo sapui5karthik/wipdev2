@@ -24,6 +24,15 @@
           "localUri": "localService/metadata.xml",
           "odataVersion": "2.0"
         }
+      },
+      "jrnlentry": {
+        "uri": "/sap/opu/odata/sap/YY1_JOURNALENTRYITEM_CDS/",
+        "type": "OData",
+        "settings": {
+          "annotations": [],
+          "localUri": "localService/metadata.xml",
+          "odataVersion": "2.0"
+        }
       }
     }
   },
@@ -73,6 +82,11 @@
         "dataSource": "mainService",
         "preload": true,
         "settings": {}
+      },
+      "jrnlentryMDL": {
+        "dataSource": "jrnlentry",
+        "preload": true,
+        "settings": {}
       }
     },
     "resources": {
@@ -101,7 +115,7 @@
           ]
         },
         {
-          "pattern": "YY1_WIPProjectListAPI1/{objectId}",
+            "pattern" : "{pid}",
           "name": "object",
           "target": [
             "object"
@@ -118,6 +132,7 @@
         "object": {
           "viewName": "Object",
           "viewId": "object",
+          
           "viewLevel": 2,
           "title": "{i18n>objectViewTitle}"
         },
