@@ -3,8 +3,10 @@ sap.ui.define([
     "sap/ui/model/json/JSONModel",
     "../model/formatter",
     "sap/ui/model/Filter",
-    "sap/ui/model/FilterOperator"
-], function (BaseController, JSONModel, formatter, Filter, FilterOperator) {
+    "sap/ui/model/FilterOperator",
+    "sap/m/MessageToast",
+    "sap/m/MessageBox"
+], function (BaseController, JSONModel, formatter, Filter, FilterOperator,MessageToast,MessageBox) {
     "use strict";
 
     return BaseController.extend("com.chappota.wippoc2.wipproject2.controller.Worklist", {
@@ -72,7 +74,13 @@ sap.ui.define([
          */
         onPress : function (oEvent) {
             // The source is the list item that got pressed
-            this._showObject(oEvent.getSource());
+           // this._showObject(oEvent.getSource());
+           this.oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+           this.oRouter.navTo("object",{
+            from : "worklist",
+            to : "object",
+            pid : oEvent.getSource().getBindingContext().getProperty("EngagementProject")
+           },true);
         },
 
         /**

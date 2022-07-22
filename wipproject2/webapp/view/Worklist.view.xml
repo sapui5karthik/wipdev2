@@ -53,7 +53,7 @@ xmlns:smartTable="sap.ui.comp.smarttable" xmlns:html="http://www.w3.org/1999/xht
                             </Column>
                         </columns>
                     <items>
-                    <ColumnListItem type="Navigation">
+                    <ColumnListItem type="Navigation" press="onPress">
                     <cells>
                         <Link text="{EngagementProject}" />
                     </cells>
