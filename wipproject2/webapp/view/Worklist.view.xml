@@ -1,5 +1,5 @@
 <mvc:View controllerName="com.chappota.wippoc2.wipproject2.controller.Worklist" xmlns="sap.m" 
-xmlns:mvc="sap.ui.core.mvc" xmlns:semantic="sap.m.semantic" xmlns:smartFilterBar="sap.ui.comp.smartfilterbar" 
+xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core" xmlns:semantic="sap.m.semantic" xmlns:smartFilterBar="sap.ui.comp.smartfilterbar" 
 xmlns:smartTable="sap.ui.comp.smarttable" xmlns:html="http://www.w3.org/1999/xhtml" xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
 
     <semantic:SemanticPage id="page">
@@ -34,7 +34,7 @@ xmlns:smartTable="sap.ui.comp.smarttable" xmlns:html="http://www.w3.org/1999/xht
 
       <!-- enableAutoColumnWidth="true"  -->
 <smartTable:SmartTable id="smartTable" entitySet="YY1_WIPProjectListAPI1" smartFilterId="smartFilterBar" tableType="ResponsiveTable" beforeRebindTable="onBeforeRebindTable" 
- useExportToExcel="true" useVariantManagement="true" useTablePersonalisation="true" header="WIP Entries" showRowCount="true" enableAutoBinding="true" 
+ useExportToExcel="true" useVariantManagement="true" useTablePersonalisation="true" header="{i18n>txt_prjs}" showRowCount="true" enableAutoBinding="true" 
  initiallyVisibleFields="EngagementProject,EngagementProjectName,Customer,CustomerName,ProjectStartDate,ProjectEndDate,ProjectManager,CompanyCode,CostCenter,ProfitCenter"
  
  
@@ -42,24 +42,24 @@ xmlns:smartTable="sap.ui.comp.smarttable" xmlns:html="http://www.w3.org/1999/xht
         <smartTable:layoutData>
                         <FlexItemData growFactor="1" baseSize="0%"/>
                     </smartTable:layoutData>
-                    <!-- <Table>
+                    <Table>
                         <columns>
                             <Column >
                                 <customData>
-                                <core:CustomData key="p13nData"
-                                                            value='\{"columnKey": "TimeEntryID", "leadingProperty": "TimeEntryID","displayBehaviour": "descriptionOnly", "width": "360px", "index" : "6"}' />
+                                <core:CustomData key="p13nData" 
+                                value='\{"columnKey": "EngagementProject", "leadingProperty": "EngagementProject","displayBehaviour": "descriptionOnly", "width": "360px", "index" : "0"}' />
                                         </customData>
-                                <Text text="TimeEntry" />
+                                <Text text="{i18n>txt_projid}" />
                             </Column>
                         </columns>
                     <items>
-                    <ColumnListItem >
+                    <ColumnListItem type="Navigation">
                     <cells>
-                        <Link text="{TimeEntryID}" />
+                        <Link text="{EngagementProject}" />
                     </cells>
                     </ColumnListItem>
                     </items>
-                    </Table> -->
+                    </Table>
                 </smartTable:SmartTable>
      </VBox>
                 
