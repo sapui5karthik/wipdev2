@@ -75,6 +75,7 @@ sap.ui.define([
         onPress : function (oEvent) {
             // The source is the list item that got pressed
            // this._showObject(oEvent.getSource());
+           //sap.ui.core.BusyIndicator.show(0);
            this.oRouter = sap.ui.core.UIComponent.getRouterFor(this);
            this.oRouter.navTo("object",{
             from : "worklist",

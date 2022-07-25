@@ -33,6 +33,15 @@
           "localUri": "localService/metadata.xml",
           "odataVersion": "2.0"
         }
+      },
+      "wipedits": {
+        "uri": "/sap/opu/odata/sap/YY1_WIPEDITS_CDS/",
+        "type": "OData",
+        "settings": {
+          "annotations": [],
+          "localUri": "localService/metadata.xml",
+          "odataVersion": "2.0"
+        }
       }
     }
   },
@@ -85,6 +94,11 @@
       },
       "jrnlentryMDL": {
         "dataSource": "jrnlentry",
+        "preload": true,
+        "settings": {}
+      },
+      "wipeditsMDL": {
+        "dataSource": "wipedits",
         "preload": true,
         "settings": {}
       }
