@@ -49,6 +49,12 @@ sap.ui.define([
 
 
         },
+        onCheckBoxSelect: function (oEvent) {
+			var bFixedLayout = oEvent.getParameter("selected");
+			var oTable = oEvent.getSource().getParent().getParent();
+			oTable.setFixedLayout(bFixedLayout);
+		},
+        
         _getwipprojectdata: function (oevent) {
             
             const pid = oevent.getParameter("arguments").pid,
@@ -160,6 +166,9 @@ sap.ui.define([
                 }.bind(this),
                 error: function (msg) {}.bind(this)
             });
+        },
+        _newjecreation : function(oevent){
+            
         },
 
         /**
