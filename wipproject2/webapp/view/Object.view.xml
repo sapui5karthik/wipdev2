@@ -1,6 +1,6 @@
 <mvc:View xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc" xmlns:semantic="sap.m.semantic" xmlns:si="sap.suite.ui.commons.statusindicator" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:form="sap.ui.layout.form" xmlns:core="sap.ui.core" controllerName="com.chappota.wippoc2.wipproject2.controller.Object">
 
-    <semantic:SemanticPage id="objectpage" showNavButton="true" navButtonPress="onNavBack" >
+    <semantic:SemanticPage id="objectpage" showNavButton="true" navButtonPress="onNavBack">
 
 
         <semantic:content>
@@ -15,14 +15,14 @@
             </FlexBox>
 
             <!-- <FlexBox width="100%" id="box1" wrap="Wrap" direction="Column" alignItems="Start">        
-                                                    <items>            -->
+                                                                <items>            -->
 
             <Toolbar width="100%" id="toolbar2" height="200px">
                 <f:SimpleForm width="600px" editable="true" layout="ResponsiveGridLayout" labelSpanXL="4" labelSpanL="3" labelSpanM="4" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="4" emptySpanM="0" emptySpanS="0" columnsXL="2" columnsL="1" columnsM="1" singleContainerFullSize="false" breakpointL="0" breakpointM="0" breakpointXL="0">
                     <f:content>
                         <Label text="Project Name"/><ObjectStatus state="Information" text="{prjlst>/EngagementProjectName}" width="200px"/>
                         <Label text="Customer Name"/><ObjectStatus state="Information" text="{prjlst>/CustomerName}" width="200px"/>
-                        <Label text="Revenue Accountant"/><ObjectStatus state="Information" text="XXXXXXXXMike Jones" width="200px"/>
+                        <Label text="Revenue Accountant"/><ObjectStatus state="Information" text="Suman" width="200px"/>
                     </f:content>
                 </f:SimpleForm>
 
@@ -30,156 +30,42 @@
                 <f:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanXL="4" labelSpanL="3" labelSpanM="4" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="4" emptySpanM="0" emptySpanS="0" columnsXL="2" columnsL="1" columnsM="1" singleContainerFullSize="false" breakpointL="0" breakpointM="0" breakpointXL="0">
                     <f:content>
                         <Label text="Project Manager"/><ObjectStatus state="Information" text="{prjlst>/ProjectManager}"/>
-                        <Label text="Billing Analyst"/><ObjectStatus state="Information" text="XXXXXXXXXXChris Skinner"/>
+                        <Label text="Billing Analyst"/><ObjectStatus state="Information" text="Ram"/>
                     </f:content>
                 </f:SimpleForm>
             </Toolbar>
-            <!-- </items>      </FlexBox> -->
-            <!-- <layout:Grid defaultIndent="L0 M0 S0" defaultSpan="L4 M5 S12" position="Center" width="1256px" containerQuery="false" hSpacing="1" vSpacing="1" visible="true">
-                            <layout:content>
-                                <form:Form width="300px" editable="false" visible="true">
-                                    <form:title/>
-                                    <form:formContainers>
-                                        <form:FormContainer visible="true">
-                                            <form:formElements>
-                                                <form:FormElement visible="true">
-                                                    <form:label>
-                                                        <Label text="Project Name" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-            
-                                                    </form:label>
-                                                    <form:fields>
-                                                        <Text text="Text" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                                    </form:fields>
-                                                </form:FormElement>
-                                                <form:FormElement visible="true">
-                                                    <form:label>
-                                                        <Label text="Customer Name" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                                    </form:label>
-                                                    <form:fields>
-                                                        <Text text="Text" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                                    </form:fields>
-                                                </form:FormElement>
-                                                <form:FormElement visible="true">
-                                                    <form:label>
-                                                        <Label text="Revenue Accountant" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                                    </form:label>
-                                                    <form:fields>
-                                                        <Text text="Text" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                                    </form:fields>
-                                                </form:FormElement>
-                                            </form:formElements>
-                                            <form:title/>
-                                        </form:FormContainer>
-                                    </form:formContainers>
-                                    <form:layout>
-                                        <form:ResponsiveGridLayout adjustLabelSpan="false" columnsL="2" labelSpanL="3" columnsM="1" labelSpanM="2" labelSpanS="12"/>
-                                    </form:layout>
-                                </form:Form>
-                                <form:Form width="300px" editable="true" visible="true">
-                                    <form:title/>
-                                    <form:formContainers>
-                                        <form:FormContainer visible="true">
-                                            <form:formElements>
-                                                <form:FormElement visible="true">
-                                                    <form:label>
-                                                        <Label text="Project Manager" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                                    </form:label>
-                                                    <form:fields>
-                                                        <Text text="Text" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                                    </form:fields>
-                                                </form:FormElement>
-                                                <form:FormElement visible="true">
-                                                    <form:label>
-                                                        <Label text="Billing Analyst" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                                    </form:label>
-                                                    <form:fields>
-                                                        <Text text="Text" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                                    </form:fields>
-                                                </form:FormElement>
-                                            </form:formElements>
-                                            <form:title/>
-                                        </form:FormContainer>
-                                    </form:formContainers>
-                                    <form:layout>
-                                        <form:ResponsiveGridLayout adjustLabelSpan="false" columnsL="2" labelSpanL="3" columnsM="1" labelSpanM="2" labelSpanS="12"/>
-                                    </form:layout>
-                                </form:Form>
-                                <form:Form width="100%" editable="true" visible="false">
-                                    <form:title>
-                                        <core:Title text="Quick Filters" level="Auto"/>
-                                    </form:title>
-                                    <form:formContainers>
-                                        <form:FormContainer visible="true">
-                                            <form:formElements>
-                                                <form:FormElement visible="true">
-                                                    <form:label>
-                                                        <Label text="Posting Date" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                                    </form:label>
-                                                    <form:fields>
-                                                        <DateRangeSelection width="300px" displayFormat="medium" required="false" valueStateText="Invalid entry" enabled="true" visible="true" change="_onDateRangeSelectionChange"/>
-                                                    </form:fields>
-                                                </form:FormElement>
-                                                <form:FormElement visible="true">
-                                                    <form:label>
-                                                        <Label text="Work Date" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                                    </form:label>
-                                                    <form:fields>
-                                                        <DateRangeSelection width="300px" displayFormat="medium" required="false" valueStateText="Invalid entry" enabled="true" visible="true" change="_onDateRangeSelectionChange1"/>
-                                                    </form:fields>
-                                                </form:FormElement>
-                                                <form:FormElement visible="true">
-                                                    <form:label>
-                                                        <Label text="Person" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                                    </form:label>
-                                                    <form:fields>
-                                                        <Input type="Text" showValueHelp="false" enabled="true" visible="true" width="300px" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
-                                                    </form:fields>
-                                                </form:FormElement>
-                                                <form:FormElement visible="true">
-                                                    <form:label>
-                                                       
-                                                    </form:label>
-                                                    <form:fields>
-                                                        <HBox alignContent="End">
-                                                            <Button text="Clear" type="Default" width="auto"/>
-                                                            <Button text="Apply" type="Emphasized" width="auto"/>
-                                                        </HBox>
-            
-                                                    </form:fields>
-                                                </form:FormElement>
-                                            </form:formElements>
-                                            <form:title/>
-                                        </form:FormContainer>
-                                    </form:formContainers>
-                                    <form:layout>
-                                        <form:ResponsiveGridLayout adjustLabelSpan="false" columnsL="2" labelSpanL="3" columnsM="1" labelSpanM="2" labelSpanS="12"/>
-                                    </form:layout>
-                                </form:Form>
-                            </layout:content>
-                        </layout:Grid> -->
+
             <IconTabBar id="idIconTabBar" select=".onFilterSelect" class="sapUiResponsiveContentPadding">
                 <items>
 
-                    <IconTabFilter iconColor="Positive" count="{count1>/}" text="WIP Time" key="Ok" icon="sap-icon://time-account"/>
+                    <IconTabFilter
+                    iconColor="Positive" count="{count1>/}" text="WIP Time" key="Ok" icon="sap-icon://time-account"/>
                 <!-- <IconTabFilter icon="sap-icon://compare" iconColor="Critical" count="{/ProductCollectionStats/Counts/Weight/Heavy}" text="Heavy" key="Heavy"/>
-                                    <IconTabFilter icon="sap-icon://inventory" iconColor="Negative" count="{/ProductCollectionStats/Counts/Weight/Overweight}" text="Overweight" key="Overweight"/> -->
+                                                    <IconTabFilter icon="sap-icon://inventory" iconColor="Negative" count="{/ProductCollectionStats/Counts/Weight/Overweight}" text="Overweight" key="Overweight"/> -->
                 </items>
                 <content>
-                    <Table id="wiptable" items="{path : 'wipentry>/'}" mode="MultiSelect" updateFinished="_onupdatefinished">
+                    <Table id="wiptable" items="{path : 'wipentry>/'}" mode="MultiSelect">
                         <headerToolbar>
                             <OverflowToolbar>
                                 <content>
                                     <Title text="Time Entries" level="H2"/>
-                                    <ObjectStatus state="Success" text="New: {newcount>/}" />
-                                    <ObjectStatus state="Error" text="Changed:{changedcount>/}" />
+                                    <ObjectStatus state="Success" text="New: {newcount>/}"/>
+                                    <ObjectStatus state="Error" text="Changed:{changedcount>/}"/>
                                     <ToolbarSpacer/>
                                     <Input width="auto" placeholder="Search..."/>
-                                    <Button text="Create WIP Accrual" width="auto"/>
+                                    <Button text="New" width="auto" press="_newjecreation"/>
                                     <Button text="Edit" width="auto"/>
+                                    <Button text="Delete" width="auto"/>
                                     <Button text="Transfer" width="auto"/>
                                     <Button text="Combine" width="auto"/>
                                     <Button text="Split" width="auto"/>
                                     <Button text="Finalize" width="auto"/>
+                                    <CheckBox text="Fixed Layout" selected="true" select="onCheckBoxSelect"/>
+                                    <Button icon="sap-icon://action-settings" press="onPersoButtonPressed">
+                                        <layoutData>
+                                            <OverflowToolbarLayoutData priority="NeverOverflow"/>
+                                        </layoutData>
+                                    </Button>
                                 </content>
                             </OverflowToolbar>
                         </headerToolbar>
@@ -208,7 +94,7 @@
                             <Column>
                                 <Text text="{i18n>txt_wrkitem}"/>
                             </Column>
-                            <Column>
+                            <Column width="150px">
                                 <Text text="{i18n>txt_wrkpckg}"/>
                             </Column>
                             <Column>
@@ -220,30 +106,18 @@
                         </columns>
                         <items>
                             <ColumnListItem>
-                                <cells>                                    
-                                    <ObjectStatus  state="{= ${wipentry>Status} === undefined ? 'Success' : 'Error'}"  
-                                    text="{= ${wipentry>Status} === undefined ? 'New' : 'Changed'}"                                                                      
-                                    />
-                                    <ObjectStatus  state="{= ${wipentry>Status} === undefined ? 'Success' : 'Error'}"  
-                                     text="{wipentry>AccountingDocument}"/>
-                                    <ObjectStatus  state="{= ${wipentry>Status} === undefined ? 'Success' : 'Error'}"  
-                                     text="{wipentry>GLAccount}"/>
-                                    <ObjectStatus  state="{= ${wipentry>Status} === undefined ? 'Success' : 'Error'}"  
-                                     text="{wipentry>ReferenceDocument}"/>
-                                    <ObjectStatus  state="{= ${wipentry>Status} === undefined ? 'Success' : 'Error'}"  
-                                     text="{wipentry>Customer}"/>
-                                    <ObjectStatus  state="{= ${wipentry>Status} === undefined ? 'Success' : 'Error'}"  
-                                     text="{wipentry>Project}"/>
-                                    <ObjectStatus  state="{= ${wipentry>Status} === undefined ? 'Success' : 'Error'}"  
-                                     text="{wipentry>Quantity}"/>
-                                    <ObjectStatus  state="{= ${wipentry>Status} === undefined ? 'Success' : 'Error'}"  
-                                     text="{wipentry>WorkItem}"/>
-                                    <ObjectStatus  state="{= ${wipentry>Status} === undefined ? 'Success' : 'Error'}"  
-                                     text="{wipentry>WBSElement}"/>
-                                    <ObjectStatus  state="{= ${wipentry>Status} === undefined ? 'Success' : 'Error'}"  
-                                     text="{wipentry>AmountInGlobalCurrency}"/>
-                                    <ObjectStatus  state="{= ${wipentry>Status} === undefined ? 'Success' : 'Error'}"  
-                                     text="{wipentry>DocumentItemText}"/>
+                                <cells>
+                                    <ObjectStatus state="{= ${wipentry>Status} === undefined ? 'Success' : 'Error'}" text="{= ${wipentry>Status} === undefined ? 'New' : 'Changed'}"/>
+                                    <ObjectStatus state="{= ${wipentry>Status} === undefined ? 'Success' : 'Error'}" text="{wipentry>AccountingDocument}"/>
+                                    <ObjectStatus state="{= ${wipentry>Status} === undefined ? 'Success' : 'Error'}" text="{wipentry>GLAccount}"/>
+                                    <ObjectStatus state="{= ${wipentry>Status} === undefined ? 'Success' : 'Error'}" text="{wipentry>ReferenceDocument}"/>
+                                    <ObjectStatus state="{= ${wipentry>Status} === undefined ? 'Success' : 'Error'}" text="{wipentry>Customer}"/>
+                                    <ObjectStatus state="{= ${wipentry>Status} === undefined ? 'Success' : 'Error'}" text="{wipentry>Project}"/>
+                                    <ObjectStatus state="{= ${wipentry>Status} === undefined ? 'Success' : 'Error'}" text="{wipentry>Quantity}"/>
+                                    <ObjectStatus state="{= ${wipentry>Status} === undefined ? 'Success' : 'Error'}" text="{wipentry>WorkItem}"/>
+                                    <ObjectStatus state="{= ${wipentry>Status} === undefined ? 'Success' : 'Error'}" text="{wipentry>WBSElement}"/>
+                                    <ObjectStatus state="{= ${wipentry>Status} === undefined ? 'Success' : 'Error'}" text="{wipentry>AmountInGlobalCurrency}"/>
+                                    <ObjectStatus state="{= ${wipentry>Status} === undefined ? 'Success' : 'Error'}" text="{wipentry>DocumentItemText}"/>
                                 </cells>
 
                             </ColumnListItem>
