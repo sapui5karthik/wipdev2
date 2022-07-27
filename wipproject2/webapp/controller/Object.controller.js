@@ -24,27 +24,7 @@ sap.ui.define([
             this.oRouter = sap.ui.core.UIComponent.getRouterFor(this);
             this.oRouter.getRoute("object").attachPatternMatched(this._getwipprojectdata, this);
            
-           
-            // promisewiprojlist = new Promise((resolve,reject) => {
-            //     wipprojlist.read("/YY1_WIPProjectListAPI1",{
-            //         success : (odata) => {
-            //             resolve(odata);
-            //             debugger;
-            //         },
-            //         error : (err) => {
-            //             reject(err)
-            //         }
-            //     });
-            // });
-            // debugger;
-            // Promise[(promisewiprojlist)].then((data) => {
-            // var wiprojjson = new JSONModel();
-            // wiprojjson.setData(data.results);
-            // this.getView().setModel(wiprojjson,"prjlst");
-            // }).catch(err => {
-            //     MessageToast.show(err);
-            // });
-          
+      
            
 
 
@@ -67,7 +47,7 @@ sap.ui.define([
                 wipprojlist.read("/YY1_WIPProjectListAPI1",{
                     filters: [engagementProjectFilter],
                     success : (odata) => {
-                        debugger;
+                        
                         var wipprojjson = new JSONModel();
                         wipprojjson.setData(odata.results[0]);
                         this.getView().setModel(wipprojjson,"prjlst");
@@ -169,6 +149,91 @@ sap.ui.define([
         },
         _newjecreation : function(oevent){
             
+			// create dialog lazily
+		// 	if (!this.nDialog) {
+		// 		this.nDialog = this.loadFragment({
+		// 			name: "com.chappota.wippoc2.wipproject2.fragments.S2_New_WIP"
+		// 		});
+		// 	} 
+		// 	this.nDialog.then(function(oDialog) {
+		// 		oDialog.open();
+			
+
+
+        // });
+        if(!this.nDialog){
+            this.nDialog = sap.ui.xmlfragment(this.getView().getId(),"com.chappota.wippoc2.wipproject2.fragments.S2_New_WIP",this);
+            this.getView().addDependent(this.nDialog);
+        }
+
+        this.nDialog.open();
+        var unbilled =   this.byId("newunbilled").getValue();         
+        var notes = this.byId("newnotes").getValue();
+        var acttype = this.byId("newacttype").getValue();
+        if(unbilled !== ""){ this.byId("newunbilled").setValue();}        
+        if(notes !== ""){ this.byId("newnotes").setValue();}
+        if(acttype !== ""){this.byId("newacttype").setValue();}
+        },
+        _savenewrecord : function(){
+ 
+
+        var newpayload = {
+            Quantity : this.getView().byId("newunbilled").getValue(),
+            WBSElement : this.getView().byId("newworkpackage").getValue(),
+            DocumentItemText : this.getView().byId("newnotes").getValue(),
+            ActivityType : this.getView().byId("newacttype").getValue()
+        };
+        var saveapi = this.getOwnerComponent().getModel("wipeditsMDL");
+        saveapi.create("/YY1_WIPEDITS",newpayload,{
+            success : (odata) => {
+                MessageToast.show("Record Created");
+                debugger;
+            },
+            error : (err) => {
+                MessageToast.show(err);
+                debugger;
+            }
+        });
+            
+        },
+        _wiptableselchange : function(oevent){
+            debugger;
+            if(oevent.getParameter("selected")){
+            this.qty = oevent.getSource().getModel("wipentry").getData()[oevent.getSource().getSelectedContextPaths()[0].split('/')[1]].Quantity;
+            this.wrkpkg = oevent.getSource().getModel("wipentry").getData()[oevent.getSource().getSelectedContextPaths()[0].split('/')[1]].WBSElement;
+            this.notes = oevent.getSource().getModel("wipentry").getData()[oevent.getSource().getSelectedContextPaths()[0].split('/')[1]].DocumentItemText;
+            this.acttype = "A010";
+            }
+        },
+        _wiptableitempress  : function(oevent){
+debugger;
+        },
+        _closenewrecord : function(){
+            // this.nDialog.then(function(oDialog) {
+			// 	oDialog.close();
+			// });
+            this.nDialog.close();
+        },
+        _updatejeRecord : function(oevent){
+            debugger;
+            if(!this.pDialog){
+                this.pDialog = sap.ui.xmlfragment(this.getView().getId(),"com.chappota.wippoc2.wipproject2.fragments.S2_Edited_WIP",this);
+                this.getView().addDependent(this.pDialog);
+            }
+    
+            this.pDialog.open();
+
+            this.getView().byId("editleftunbilamnt").setText(this.qty);
+            this.getView().byId("editleftwpkg").setText(this.wrkpkg);
+            this.getView().byId("editleftnotes").setText(this.notes);
+            this.getView().byId("editleftacttype").setText(this.acttype);
+
+
+        },
+        _closechangerecord : function(){
+            this.pDialog.close();
+            this.byId("wiptable").removeSelections();
+			
         },
 
         /**
