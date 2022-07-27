@@ -1,0 +1,127 @@
+<core:FragmentDefinition
+   xmlns="sap.m"
+   xmlns:core="sap.ui.core" xmlns:layout="sap.ui.layout" xmlns:form="sap.ui.layout.form">
+   <Dialog
+      id="changedialog"  draggable="true" resizable="false"
+      title="Change Record" contentHeight="350px" contentWidth="660px">
+      
+      <layout:BlockLayout background="Default" visible="true">
+                <layout:content>
+                    <layout:BlockLayoutRow scrollable="false">
+                        <layout:content>
+                            <layout:BlockLayoutCell width="2" title="" titleAlignment="Begin" titleLevel="Auto">
+                                <layout:content>
+                                    <form:Form width="100%" editable="true" visible="true">
+                                        <form:title>
+                                            <core:Title text="Old Data" level="Auto"/>
+                                        </form:title>
+                                        <form:formContainers>
+                                            <form:FormContainer visible="true">
+                                                <form:formElements>
+                                                    <form:FormElement visible="true">
+                                                        <form:label>
+                                                            <Label text="Unbilled Amount" design="Standard" width="231.40625px" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                                        </form:label>
+                                                        <form:fields>
+                                                           <ObjectStatus state="Information" id="editleftunbilamnt" />
+                                                        </form:fields>
+                                                    </form:FormElement>
+                                                    <form:FormElement visible="true">
+                                                        <form:label>
+                                                            <Label text="Workpage" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                                        </form:label>
+                                                        <form:fields>
+                                                            <ObjectStatus state="Information" id="editleftwpkg" />
+                                                        </form:fields>
+                                                    </form:FormElement>
+                                                    <form:FormElement visible="true">
+                                                        <form:label>
+                                                            <Label text="Notes" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                                        </form:label>
+                                                        <form:fields>
+                                                           <ObjectStatus state="Information" id="editleftnotes" />
+                                                        </form:fields>
+                                                    </form:FormElement>
+                                                    <form:FormElement visible="true">
+                                                        <form:label>
+                                                            <Label text="Activity Type" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                                        </form:label>
+                                                        <form:fields>
+                                                            <ObjectStatus state="Information" id="editleftacttype" />
+                                                        </form:fields>
+                                                    </form:FormElement>
+                                                </form:formElements>
+                                                <form:title/>
+                                            </form:FormContainer>
+                                        </form:formContainers>
+                                        <form:layout>
+                                            <form:ResponsiveGridLayout adjustLabelSpan="false" columnsL="2" labelSpanL="3" columnsM="1" labelSpanM="2" labelSpanS="12"/>
+                                        </form:layout>
+                                    </form:Form>
+                                </layout:content>
+                            </layout:BlockLayoutCell>
+                            <layout:BlockLayoutCell width="2" title="" titleAlignment="End" titleLevel="Auto">
+                                <layout:content>
+                                    <form:Form width="100%" editable="true" visible="true">
+                                        <form:title>
+                                            <core:Title text="Change Data" level="Auto"/>
+                                        </form:title>
+                                        <form:formContainers>
+                                            <form:FormContainer visible="true">
+                                                <form:formElements>
+                                                    <form:FormElement visible="true">
+                                                        <form:label>
+                                                            <Label text="Unbilled Amount" design="Standard" width="231.40625px" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                                        </form:label>
+                                                        <form:fields>
+                                                            <Input type="Text" showValueHelp="false" enabled="true" visible="true" width="auto" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
+                                                        </form:fields>
+                                                    </form:FormElement>
+                                                    <form:FormElement visible="true">
+                                                        <form:label>
+                                                            <Label text="Workpage" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                                        </form:label>
+                                                        <form:fields>
+                                                            <Input type="Text" showValueHelp="false" enabled="true" visible="true" width="auto" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
+                                                        </form:fields>
+                                                    </form:FormElement>
+                                                    <form:FormElement visible="true">
+                                                        <form:label>
+                                                            <Label text="Notes" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                                        </form:label>
+                                                        <form:fields>
+                                                            <Input type="Text" showValueHelp="false" enabled="true" visible="true" width="auto" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
+                                                        </form:fields>
+                                                    </form:FormElement>
+                                                    <form:FormElement visible="true">
+                                                        <form:label>
+                                                            <Label text="Label" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                                        </form:label>
+                                                        <form:fields>
+                                                            <Input type="Text" showValueHelp="false" enabled="true" visible="true" width="auto" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
+                                                        </form:fields>
+                                                    </form:FormElement>
+                                                </form:formElements>
+                                                <form:title/>
+                                            </form:FormContainer>
+                                        </form:formContainers>
+                                        <form:layout>
+                                            <form:ResponsiveGridLayout adjustLabelSpan="false" columnsL="2" labelSpanL="3" columnsM="1" labelSpanM="2" labelSpanS="12"/>
+                                        </form:layout>
+                                    </form:Form>
+                                   
+                                </layout:content>
+                            </layout:BlockLayoutCell>
+                        </layout:content>
+                    </layout:BlockLayoutRow>
+                </layout:content>
+            </layout:BlockLayout>
+
+    <buttons>
+        <Button text="Edit" type="Accept"/>
+        <Button text="Close" type="Reject" press="_closechangerecord"/>
+      </buttons>
+
+
+   </Dialog>
+</core:FragmentDefinition>

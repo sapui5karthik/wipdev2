@@ -44,7 +44,7 @@
                                                     <IconTabFilter icon="sap-icon://inventory" iconColor="Negative" count="{/ProductCollectionStats/Counts/Weight/Overweight}" text="Overweight" key="Overweight"/> -->
                 </items>
                 <content>
-                    <Table id="wiptable" items="{path : 'wipentry>/'}" mode="MultiSelect">
+                    <Table id="wiptable" items="{path : 'wipentry>/'}" mode="MultiSelect" selectionChange="_wiptableselchange" itemPress="_wiptableitempress">
                         <headerToolbar>
                             <OverflowToolbar>
                                 <content>
@@ -54,7 +54,7 @@
                                     <ToolbarSpacer/>
                                     <Input width="auto" placeholder="Search..."/>
                                     <Button text="New" width="auto" press="_newjecreation"/>
-                                    <Button text="Edit" width="auto"/>
+                                    <Button text="Edit" width="auto" press="_updatejeRecord"/>
                                     <Button text="Delete" width="auto"/>
                                     <Button text="Transfer" width="auto"/>
                                     <Button text="Combine" width="auto"/>
