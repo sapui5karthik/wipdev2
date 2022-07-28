@@ -20,13 +20,10 @@ sap.ui.define([
         /* =========================================================== */
         onInit: function () {
             //sap.ui.core.BusyIndicator.hide();
-           
+            this.selflag = 0;
             this.oRouter = sap.ui.core.UIComponent.getRouterFor(this);
             this.oRouter.getRoute("object").attachPatternMatched(this._getwipprojectdata, this);
            
-      
-           
-
 
         },
         onCheckBoxSelect: function (oEvent) {
@@ -196,18 +193,45 @@ sap.ui.define([
         });
             
         },
+        _editjerecord : function(){
+            var editpayload = {
+                Quantity : this.getView().byId("editrightunbilamnt").getValue(),
+                WBSElement : this.getView().byId("editrightwpkg").getValue(),
+                DocumentItemText : this.getView().byId("editrightnotes").getValue(),
+                ActivityType : this.getView().byId("editrightacttype").getValue()
+            };
+            var editapi = this.getOwnerComponent().getModel("wipeditsMDL");
+            var eset =  "/YY1_WIPEDITS('"+this.accdocjeid+"')";
+           
+            editapi.update(eset,editpayload,{
+                success : (odata) => {
+                    MessageToast.show("Updated!");
+                    this._getwipprojectdata();
+                    debugger;
+                },
+                error : (err) => {
+                    MessageToast.show(err);
+                    debugger;
+                }
+            });
+                
+
+        },
         _wiptableselchange : function(oevent){
-            debugger;
+          
+
             if(oevent.getParameter("selected")){
+                this.selflag++;
+                debugger;
+                this.accdocjeid = oevent.getSource().getModel("wipentry").getData()[oevent.getSource().getSelectedContextPaths()[0].split('/')[1]].AccountingDocument;
             this.qty = oevent.getSource().getModel("wipentry").getData()[oevent.getSource().getSelectedContextPaths()[0].split('/')[1]].Quantity;
             this.wrkpkg = oevent.getSource().getModel("wipentry").getData()[oevent.getSource().getSelectedContextPaths()[0].split('/')[1]].WBSElement;
             this.notes = oevent.getSource().getModel("wipentry").getData()[oevent.getSource().getSelectedContextPaths()[0].split('/')[1]].DocumentItemText;
             this.acttype = "A010";
             }
+            
         },
-        _wiptableitempress  : function(oevent){
-debugger;
-        },
+
         _closenewrecord : function(){
             // this.nDialog.then(function(oDialog) {
 			// 	oDialog.close();
@@ -215,19 +239,76 @@ debugger;
             this.nDialog.close();
         },
         _updatejeRecord : function(oevent){
-            debugger;
+          
+
             if(!this.pDialog){
                 this.pDialog = sap.ui.xmlfragment(this.getView().getId(),"com.chappota.wippoc2.wipproject2.fragments.S2_Edited_WIP",this);
                 this.getView().addDependent(this.pDialog);
             }
-    
-            this.pDialog.open();
-
+            if(this.selflag < 1){
+                MessageBox.alert("Please select atleast 1 row to edit");
+            }
+            else {
+                this.pDialog.open();
+              
+            }
+            debugger;
+            if(this.selflag === 1) {
+               debugger;
             this.getView().byId("editleftunbilamnt").setText(this.qty);
             this.getView().byId("editleftwpkg").setText(this.wrkpkg);
             this.getView().byId("editleftnotes").setText(this.notes);
             this.getView().byId("editleftacttype").setText(this.acttype);
 
+            if(this.getView().byId("editrightunbilamnt").getValue() !== ''){ 
+                this.getView().byId("editrightunbilamnt").setValue();
+            }
+            if(this.getView().byId("editrightwpkg").getValue() !== ''){ 
+                this.getView().byId("editrightwpkg").setValue();
+            }
+            if(this.getView().byId("editrightnotes").getValue() !== ''){ 
+                this.getView().byId("editrightnotes").setValue();
+            }
+            if(this.getView().byId("editrightacttype").getValue() !== ''){
+                 this.getView().byId("editrightacttype").setValue();
+                }
+
+
+
+            this.getView().byId("editrightunbilamnt").setValue(this.qty);
+            this.getView().byId("editrightwpkg").setValue(this.wrkpkg);
+            this.getView().byId("editrightnotes").setValue(this.notes);
+            this.getView().byId("editrightacttype").setValue(this.acttype);
+            this.selflag = 0;
+            }
+            if(this.selflag > 1){
+              debugger;
+                this.getView().byId("editleftunbilamnt").setText("MULTI");
+                this.getView().byId("editleftwpkg").setText("MULTI");
+                this.getView().byId("editleftnotes").setText("MULTI");
+                this.getView().byId("editleftacttype").setText("MULTI");
+                this.selflag = 0;
+
+                if(this.getView().byId("editrightunbilamnt").getValue() !== ''){ 
+                    this.getView().byId("editrightunbilamnt").setValue();
+                }
+                if(this.getView().byId("editrightwpkg").getValue() !== ''){ 
+                    this.getView().byId("editrightwpkg").setValue();
+                }
+                if(this.getView().byId("editrightnotes").getValue() !== ''){ 
+                    this.getView().byId("editrightnotes").setValue();
+                }
+                if(this.getView().byId("editrightacttype").getValue() !== ''){
+                     this.getView().byId("editrightacttype").setValue();
+                    }
+    
+    
+    
+                // this.getView().byId("editrightunbilamnt").setValue(this.qty);
+                // this.getView().byId("editrightwpkg").setValue(this.wrkpkg);
+                // this.getView().byId("editrightnotes").setValue(this.notes);
+                // this.getView().byId("editrightacttype").setValue(this.acttype);
+            }
 
         },
         _closechangerecord : function(){

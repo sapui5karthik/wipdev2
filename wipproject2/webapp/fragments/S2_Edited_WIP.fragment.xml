@@ -74,7 +74,7 @@
                                                             <Label text="Unbilled Amount" design="Standard" width="231.40625px" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                                         </form:label>
                                                         <form:fields>
-                                                            <Input type="Text" showValueHelp="false" enabled="true" visible="true" width="auto" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
+                                                            <Input id="editrightunbilamnt"/>
                                                         </form:fields>
                                                     </form:FormElement>
                                                     <form:FormElement visible="true">
@@ -82,7 +82,7 @@
                                                             <Label text="Workpage" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                                         </form:label>
                                                         <form:fields>
-                                                            <Input type="Text" showValueHelp="false" enabled="true" visible="true" width="auto" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
+                                                             <Input id="editrightwpkg"/>
                                                         </form:fields>
                                                     </form:FormElement>
                                                     <form:FormElement visible="true">
@@ -90,7 +90,7 @@
                                                             <Label text="Notes" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                                         </form:label>
                                                         <form:fields>
-                                                            <Input type="Text" showValueHelp="false" enabled="true" visible="true" width="auto" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
+                                                             <Input id="editrightnotes"/>
                                                         </form:fields>
                                                     </form:FormElement>
                                                     <form:FormElement visible="true">
@@ -98,7 +98,7 @@
                                                             <Label text="Label" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                                         </form:label>
                                                         <form:fields>
-                                                            <Input type="Text" showValueHelp="false" enabled="true" visible="true" width="auto" valueHelpOnly="false" required="false" valueStateText="Invalid entry" maxLength="0"/>
+                                                             <Input id="editrightacttype"/>
                                                         </form:fields>
                                                     </form:FormElement>
                                                 </form:formElements>
@@ -118,7 +118,7 @@
             </layout:BlockLayout>
 
     <buttons>
-        <Button text="Edit" type="Accept"/>
+        <Button text="Edit" type="Accept" press="_editjerecord"/>
         <Button text="Close" type="Reject" press="_closechangerecord"/>
       </buttons>
 
