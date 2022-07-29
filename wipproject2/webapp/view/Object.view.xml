@@ -44,7 +44,7 @@
                                                     <IconTabFilter icon="sap-icon://inventory" iconColor="Negative" count="{/ProductCollectionStats/Counts/Weight/Overweight}" text="Overweight" key="Overweight"/> -->
                 </items>
                 <content>
-                    <Table id="wiptable" items="{path : 'wipentry>/'}" mode="MultiSelect" selectionChange="_wiptableselchange" itemPress="_wiptableitempress">
+                    <Table id="wiptable" items="{path : 'wipentry>/'}" mode="MultiSelect" selectionChange="_wiptableselchange" >
                         <headerToolbar>
                             <OverflowToolbar>
                                 <content>
@@ -70,6 +70,9 @@
                             </OverflowToolbar>
                         </headerToolbar>
                         <columns>
+                            <Column width="28px">
+                                <Text text=""/>
+                            </Column>
                             <Column>
                                 <Text text="{i18n>txt_chngind}"/>
                             </Column>
@@ -107,7 +110,8 @@
                         <items>
                             <ColumnListItem>
                                 <cells>
-                                    <ObjectStatus state="{= ${wipentry>Status} === undefined ? 'Success' : 'Error'}" text="{= ${wipentry>Status} === undefined ? 'New' : 'Changed'}"/>
+                                <ObjectStatus state="{= ${wipentry>Status} === undefined ? 'Success' : 'Error'}" icon="{= ${wipentry>Status} === undefined ? 'sap-icon://accept' : 'sap-icon://edit'}"/>
+                                    <ObjectStatus state="{= ${wipentry>Status} === undefined ? 'Success' : 'Error'}" text="{= ${wipentry>Status} === undefined ? 'Original' : 'Updated'}"/>
                                     <ObjectStatus state="{= ${wipentry>Status} === undefined ? 'Success' : 'Error'}" text="{wipentry>AccountingDocument}"/>
                                     <ObjectStatus state="{= ${wipentry>Status} === undefined ? 'Success' : 'Error'}" text="{wipentry>GLAccount}"/>
                                     <ObjectStatus state="{= ${wipentry>Status} === undefined ? 'Success' : 'Error'}" text="{wipentry>ReferenceDocument}"/>
