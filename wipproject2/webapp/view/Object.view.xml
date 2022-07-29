@@ -52,7 +52,8 @@
                                     <ObjectStatus state="Success" text="New: {newcount>/}"/>
                                     <ObjectStatus state="Error" text="Changed:{changedcount>/}"/>
                                     <ToolbarSpacer/>
-                                    <Input width="auto" placeholder="Search..."/>
+                                    <Input width="auto" placeholder="Accouting Document..." submit="_searchaccdoc" id="_search"/>
+                                    <Button icon="sap-icon://refresh" press="_refresh" />
                                     <Button text="New" width="auto" press="_newjecreation"/>
                                     <Button text="Edit" width="auto" press="_updatejeRecord"/>
                                     <Button text="Delete" width="auto"/>
