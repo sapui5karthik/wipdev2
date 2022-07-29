@@ -31,12 +31,21 @@ sap.ui.define([
 			var oTable = oEvent.getSource().getParent().getParent();
 			oTable.setFixedLayout(bFixedLayout);
 		},
+        _refresh : function(){
+            if(this.byId("_search").getValue()!==''){
+            this.byId("_search").setValue();
+            }
+            var bindings = this.getView().byId("wiptable").getBinding("items");
+            bindings.filter();
+        },
+      
         
         _getwipprojectdata: function (oevent) {
-            
+            this.pid = oevent.getParameter("arguments").pid;
             const pid = oevent.getParameter("arguments").pid,
                 jrnlentrymdl = this.getOwnerComponent().getModel("jrnlentryMDL"),
                 wipeditsmdl = this.getOwnerComponent().getModel("wipeditsMDL"),
+
                 projectfilter = new Filter("Project", FilterOperator.EQ, pid);
 
                 const wipprojlist = this.getOwnerComponent().getModel(),
@@ -143,6 +152,37 @@ sap.ui.define([
                 }.bind(this),
                 error: function (msg) {}.bind(this)
             });
+        },
+        _searchaccdoc : function(oevent){
+
+            var xfilter = [];
+            var filterproj = new Filter("Project",FilterOperator.EQ,this.pid);
+            var  filterwip = new Filter("AccountingDocument",FilterOperator.EQ,oevent.getParameter("value"));
+            xfilter.push(filterproj);
+            xfilter.push(filterwip);
+            var finalfilter = new Filter({
+                filters : xfilter,
+                and : true
+            });
+            var bindings = this.getView().byId("wiptable").getBinding("items");
+            bindings.filter([finalfilter]);
+            
+        // const accdoc = oevent.getParameter("value"),
+        //       wipedits = this.getOwnerComponent().getModel("jrnlentryMDL"),
+        //     filterproj = new Filter("Project",FilterOperator.EQ,this.pid),
+        //       filterwip = new Filter("AccountingDocument",FilterOperator.EQ,accdoc),
+        //       wipjson = new JSONModel();
+        //       wipedits.read("/YY1_JournalEntryItem",{
+        //           filters : [filterproj,filterwip],
+        //           success : (odata) => {
+        //             wipjson.setData(odata.results);
+        //             this.getView().byId("wiptable").setModel(wipjson,"wipentry");
+        //           },
+        //           error : (err) => {
+        //               MessageToast.show(err);
+        //           }
+        //       });
+            
         },
         _newjecreation : function(oevent){
             
