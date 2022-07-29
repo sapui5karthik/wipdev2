@@ -42,7 +42,7 @@ xmlns:smartTable="sap.ui.comp.smarttable" xmlns:html="http://www.w3.org/1999/xht
         <smartTable:layoutData>
                         <FlexItemData growFactor="1" baseSize="0%"/>
                     </smartTable:layoutData>
-                    <Table growing="true" growingScrollToLoad="false" growingThreshold="500">
+                    <Table growing="true" growingScrollToLoad="false" growingThreshold="100">
                         <columns>
                             <Column >
                                 <customData>
