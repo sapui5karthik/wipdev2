@@ -5,7 +5,7 @@
 >
    <Dialog
       id="newdialog" draggable="true" resizable="true"
-      title="Create New Record" contentHeight="200px" contentWidth="617px">
+      title="Create New Record" contentHeight="230px" contentWidth="630px">
 <f:SimpleForm id="newform"
 			editable="true"
 			layout="ResponsiveGridLayout"		
@@ -16,12 +16,14 @@
 			columnsM="2"
 			>
 			<f:content>
+                <Label text="Customer" />
+				<ObjectStatus state="Information" text="{prjlst>/CustomerName}"/>
 				<Label text="Unbilled Qty" />
 				<Input  width="auto" id="newunbilled"/>
 				<Label text="Workpage" />
 				<Input width="auto" id="newworkpackage" value="{prjlst>/EngagementProject}"/>
                 <Label text="Notes" />
-				<Input  width="auto" id="newnotes"/>
+				<TextArea rows="4" width="auto" id="newnotes" />
 				<Label text="Activity Type" />
 				<Input width="auto" id="newacttype"/>
 <!--                 
