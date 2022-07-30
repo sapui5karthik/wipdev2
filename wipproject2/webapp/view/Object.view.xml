@@ -17,7 +17,7 @@
             <!-- <FlexBox width="100%" id="box1" wrap="Wrap" direction="Column" alignItems="Start">        
                                                                 <items>            -->
 
-            <Toolbar width="100%" id="toolbar2" height="200px">
+            <Toolbar width="100%" id="toolbar2" height="130px">
                 <f:SimpleForm width="600px" editable="true" layout="ResponsiveGridLayout" labelSpanXL="4" labelSpanL="3" labelSpanM="4" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="4" emptySpanM="0" emptySpanS="0" columnsXL="2" columnsL="1" columnsM="1" singleContainerFullSize="false" breakpointL="0" breakpointM="0" breakpointXL="0">
                     <f:content>
                         <Label text="Project Name"/><ObjectStatus state="Information" text="{prjlst>/EngagementProjectName}" width="200px"/>
@@ -38,13 +38,12 @@
             <IconTabBar id="idIconTabBar" select=".onFilterSelect" class="sapUiResponsiveContentPadding">
                 <items>
 
-                    <IconTabFilter
-                    iconColor="Positive" count="{count1>/}" text="WIP Time" key="Ok" icon="sap-icon://time-account"/>
+                    <IconTabFilter iconColor="Positive" count="{count1>/}" text="WIP Time" key="Ok" icon="sap-icon://time-account"/>
                 <!-- <IconTabFilter icon="sap-icon://compare" iconColor="Critical" count="{/ProductCollectionStats/Counts/Weight/Heavy}" text="Heavy" key="Heavy"/>
                                                     <IconTabFilter icon="sap-icon://inventory" iconColor="Negative" count="{/ProductCollectionStats/Counts/Weight/Overweight}" text="Overweight" key="Overweight"/> -->
                 </items>
                 <content>
-                    <Table id="wiptable" items="{path : 'wipentry>/'}" mode="MultiSelect" selectionChange="_wiptableselchange" >
+                    <Table id="wiptable" items="{path : 'wipentry>/'}" mode="MultiSelect" selectionChange="_wiptableselchange">
                         <headerToolbar>
                             <OverflowToolbar>
                                 <content>
@@ -53,7 +52,7 @@
                                     <ObjectStatus state="Error" text="Changed:{changedcount>/}"/>
                                     <ToolbarSpacer/>
                                     <Input width="auto" placeholder="Accouting Document..." submit="_searchaccdoc" id="_search"/>
-                                    <Button icon="sap-icon://refresh" press="_refresh" />
+                                    <Button icon="sap-icon://refresh" press="_refresh"/>
                                     <Button text="New" width="auto" press="_newjecreation"/>
                                     <Button text="Edit" width="auto" press="_updatejeRecord"/>
                                     <Button text="Delete" width="auto"/>
