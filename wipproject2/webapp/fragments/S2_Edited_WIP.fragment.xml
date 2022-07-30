@@ -3,7 +3,7 @@
    xmlns:core="sap.ui.core" xmlns:layout="sap.ui.layout" xmlns:form="sap.ui.layout.form">
    <Dialog
       id="changedialog"  draggable="true" resizable="false"
-      title="Change Record" contentHeight="350px" contentWidth="660px">
+      title="Change Record" contentHeight="380px" contentWidth="680px">
       
       <layout:BlockLayout background="Default" visible="true">
                 <layout:content>
@@ -18,6 +18,14 @@
                                         <form:formContainers>
                                             <form:FormContainer visible="true">
                                                 <form:formElements>
+                                                 <form:FormElement visible="true">
+                                                        <form:label>
+                                                            <Label text="Customer Name" design="Standard" width="231.40625px" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                                        </form:label>
+                                                        <form:fields>
+                                                           <ObjectStatus state="Information" text="{prjlst>/CustomerName}"/>
+                                                        </form:fields>
+                                                    </form:FormElement>
                                                     <form:FormElement visible="true">
                                                         <form:label>
                                                             <Label text="Unbilled Amount" design="Standard" width="231.40625px" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
@@ -69,6 +77,14 @@
                                         <form:formContainers>
                                             <form:FormContainer visible="true">
                                                 <form:formElements>
+                                                 <form:FormElement visible="true">
+                                                        <form:label>
+                                                            <Label text="Customer Name" design="Standard" width="231.40625px" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                                        </form:label>
+                                                        <form:fields>
+                                                            <Input enabled="false" value="{prjlst>/CustomerName}"/>
+                                                        </form:fields>
+                                                    </form:FormElement>
                                                     <form:FormElement visible="true">
                                                         <form:label>
                                                             <Label text="Unbilled Amount" design="Standard" width="231.40625px" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
@@ -90,7 +106,7 @@
                                                             <Label text="Notes" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                                         </form:label>
                                                         <form:fields>
-                                                             <Input id="editrightnotes"/>
+                                                             <TextArea rows="4" id="editrightnotes"/>
                                                         </form:fields>
                                                     </form:FormElement>
                                                     <form:FormElement visible="true">
