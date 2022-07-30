@@ -5,7 +5,7 @@
 >
    <Dialog
       id="newdialog" draggable="true" resizable="true"
-      title="Create New Record" contentHeight="330px" contentWidth="630px">
+      title="Create New Record" contentHeight="360px" contentWidth="630px">
 <f:SimpleForm id="newform"
 			editable="true"
 			layout="ResponsiveGridLayout"		
@@ -17,9 +17,11 @@
 			>
 			<f:content>
                 <Label text="Customer" />
-                <Input  width="auto" id="customerid" value="{prjlst>/CustomerName}" editable = "false"/>                
+                <Input  width="auto" id="newcustomerid" value="{prjlst>/CustomerName}" editable = "false"/>                
 				<Label text="Project ID" />
-                <Input  width="auto" id="projectid" value="{prjlst>/EngagementProject}" editable = "false"/>                
+                <Input  width="auto" id="newprojectid" value="{prjlst>/EngagementProject}" editable = "false"/>                
+				<Label text="Journal Entry ID" />
+                <Input  width="auto" id="newjournalid" value="" editable = "false"/>                
 				<Label text="Unbilled Qty" />
 				<Input  width="auto" id="newunbilled"/>
 				<Label text="Workpackage" />
