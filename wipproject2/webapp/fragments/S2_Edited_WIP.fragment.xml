@@ -3,7 +3,7 @@
    xmlns:core="sap.ui.core" xmlns:layout="sap.ui.layout" xmlns:form="sap.ui.layout.form">
    <Dialog
       id="changedialog"  draggable="true" resizable="false"
-      title="Change Record" contentHeight="380px" contentWidth="680px">
+      title="Change Record" contentHeight="500px" contentWidth="680px">
       
       <layout:BlockLayout background="Default" visible="true">
                 <layout:content>
@@ -13,7 +13,7 @@
                                 <layout:content>
                                     <form:Form width="100%" editable="true" visible="true">
                                         <form:title>
-                                            <core:Title text="Old Data" level="Auto"/>
+                                            <core:Title text="Original Data" level="Auto"/>
                                         </form:title>
                                         <form:formContainers>
                                             <form:FormContainer visible="true">
@@ -26,6 +26,14 @@
                                                            <ObjectStatus state="Information" text="{prjlst>/CustomerName}"/>
                                                         </form:fields>
                                                     </form:FormElement>
+                                                    <form:FormElement visible="true">
+                                                        <form:label>
+                                                            <Label text="Project" design="Standard" width="231.40625px" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                                        </form:label>
+                                                        <form:fields>
+                                                           <ObjectStatus state="Information" text="{prjlst>/EngagementProject}"/>
+                                                        </form:fields>
+                                                    </form:FormElement>                                                    
                                                     <form:FormElement visible="true">
                                                         <form:label>
                                                             <Label text="Unbilled Amount" design="Standard" width="231.40625px" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
@@ -44,18 +52,18 @@
                                                     </form:FormElement>
                                                     <form:FormElement visible="true">
                                                         <form:label>
-                                                            <Label text="Notes" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                                        </form:label>
-                                                        <form:fields>
-                                                           <ObjectStatus state="Information" id="editleftnotes" />
-                                                        </form:fields>
-                                                    </form:FormElement>
-                                                    <form:FormElement visible="true">
-                                                        <form:label>
                                                             <Label text="Activity Type" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                                         </form:label>
                                                         <form:fields>
                                                             <ObjectStatus state="Information" id="editleftacttype" />
+                                                        </form:fields>
+                                                    </form:FormElement>
+                                                    <form:FormElement visible="true">
+                                                        <form:label>
+                                                            <Label text="Notes" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                                        </form:label>
+                                                        <form:fields>
+                                                           <ObjectStatus state="Information" id="editleftnotes" />
                                                         </form:fields>
                                                     </form:FormElement>
                                                 </form:formElements>
@@ -85,6 +93,14 @@
                                                             <Input enabled="false" value="{prjlst>/CustomerName}"/>
                                                         </form:fields>
                                                     </form:FormElement>
+                                                 <form:FormElement visible="true">
+                                                        <form:label>
+                                                            <Label text="Project" design="Standard" width="231.40625px" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                                        </form:label>
+                                                        <form:fields>
+                                                            <Input enabled="false" value="{prjlst>/EngagementProject}"/>
+                                                        </form:fields>
+                                                    </form:FormElement>                                                    
                                                     <form:FormElement visible="true">
                                                         <form:label>
                                                             <Label text="Unbilled Amount" design="Standard" width="231.40625px" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
@@ -103,18 +119,18 @@
                                                     </form:FormElement>
                                                     <form:FormElement visible="true">
                                                         <form:label>
-                                                            <Label text="Notes" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                                            <Label text="Activity Type" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                                         </form:label>
                                                         <form:fields>
-                                                             <TextArea rows="4" id="editrightnotes"/>
+                                                             <Input id="editrightacttype"/>
                                                         </form:fields>
                                                     </form:FormElement>
                                                     <form:FormElement visible="true">
                                                         <form:label>
-                                                            <Label text="Label" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                                            <Label text="Notes" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                                         </form:label>
                                                         <form:fields>
-                                                             <Input id="editrightacttype"/>
+                                                             <TextArea rows="4" id="editrightnotes"/>
                                                         </form:fields>
                                                     </form:FormElement>
                                                 </form:formElements>
