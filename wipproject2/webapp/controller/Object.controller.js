@@ -204,6 +204,8 @@ sap.ui.define([
         }
 
         this.nDialog.open();
+//        var projectid = this.byId("newprojectid").getValue();
+
         var unbilled =   this.byId("newunbilled").getValue();         
         var notes = this.byId("newnotes").getValue();
         var acttype = this.byId("newacttype").getValue();
@@ -211,14 +213,19 @@ sap.ui.define([
         if(notes !== ""){ this.byId("newnotes").setValue();}
         if(acttype !== ""){this.byId("newacttype").setValue();}
         },
-        _savenewrecord : function(){
- 
 
-        var newpayload = {
+        _savenewrecord : function(){
+            var jeid = "9000000001";
+            var newpayload = {
+            JEID : jeid,
+            ID : "1",
+            Status : "01",
+            ProjectID : this.byId("newprojectid").getValue(),
             Quantity : this.getView().byId("newunbilled").getValue(),
-            WBSElement : this.getView().byId("newworkpackage").getValue(),
-            DocumentItemText : this.getView().byId("newnotes").getValue(),
+            WBS : this.getView().byId("newworkpackage").getValue(),
+            Notes : this.getView().byId("newnotes").getValue(),
             ActivityType : this.getView().byId("newacttype").getValue()
+  //          ServiceDate : "2022-07-29:T00:00:00" //this.getView().byId("newservicedate").getValue()  //
         };
         var saveapi = this.getOwnerComponent().getModel("wipeditsMDL");
         saveapi.create("/YY1_WIPEDITS",newpayload,{
@@ -323,10 +330,10 @@ sap.ui.define([
             }
             if(this.selflag > 1){
               debugger;
-                this.getView().byId("editleftunbilamnt").setText("MULTI");
-                this.getView().byId("editleftwpkg").setText("MULTI");
-                this.getView().byId("editleftnotes").setText("MULTI");
-                this.getView().byId("editleftacttype").setText("MULTI");
+                this.getView().byId("editleftunbilamnt").setText("<Multiple Values>");
+                this.getView().byId("editleftwpkg").setText("<Multiple Values>");
+                this.getView().byId("editleftnotes").setText("<Multiple Values>");
+                this.getView().byId("editleftacttype").setText("<Multiple Values>");
                 this.selflag = 0;
 
                 if(this.getView().byId("editrightunbilamnt").getValue() !== ''){ 
