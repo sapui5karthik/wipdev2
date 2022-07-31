@@ -99,7 +99,12 @@ sap.ui.define([
                             for (var j = 0; j < odata2.results.length; j++) {
                                 if (jsonmodelwipedit.oData[j].Status === "01") {
                                     odata.results[odata.results.length] = {}
-                                    odata.results[odata.results.length - 1].AccountingDocument = jsonmodelwipedit.oData[j].JEID
+                                    odata.results[odata.results.length - 1].AccountingDocument = jsonmodelwipedit.oData[j].JEID,
+                                    odata.results[odata.results.length - 1].Project = jsonmodelwipedit.oData[j].ProjectID,
+                                    odata.results[odata.results.length - 1].DocumentItemText = jsonmodelwipedit.oData[j].Notes,
+                                    odata.results[odata.results.length - 1].WBSElement = jsonmodelwipedit.oData[j].WBS,
+                                    odata.results[odata.results.length - 1].Quantity = jsonmodelwipedit.oData[j].Quantity
+                                   
                                 }
 
                             }
@@ -216,14 +221,20 @@ sap.ui.define([
         _savenewrecord: function () {
             var wipeditsmdl = this.getOwnerComponent().getModel("wipeditsMDL");
          wipeditsmdl.read("/YY1_WIPEDITS", {
+            urlParameters : {
+                "$select" : 'JEID',
+                "$orderby" : 'JEID desc',
+                "$top" : 1
+                
+            },
                         success:  (odata2) => {
                             var jsonmodelwipedit = new JSONModel();                        
                             jsonmodelwipedit.setData(odata2.results);
-                           
-                            var jeid = parseInt(odata2.results[odata2.results.length-1].JEID);
+                            debugger;
+                            var jeid = parseInt(odata2.results[0].JEID);
 
                             var newpayload = {
-                                JEID: (jeid+1).toString(),
+                               JEID: (jeid+1).toString(),
                                 ID: "1",
                                 Status: "01",
                                 ProjectID: this.byId("newprojectid").getValue(),
