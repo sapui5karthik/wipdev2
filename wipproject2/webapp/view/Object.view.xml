@@ -38,11 +38,8 @@
             <IconTabBar id="idIconTabBar" select=".onFilterSelect" class="sapUiResponsiveContentPadding">
                 <items>
 
-                    <IconTabFilter iconColor="Positive" count="{count1>/}" text="WIP Time" key="Ok" icon="sap-icon://time-account"/>
-                <!-- <IconTabFilter icon="sap-icon://compare" iconColor="Critical" count="{/ProductCollectionStats/Counts/Weight/Heavy}" text="Heavy" key="Heavy"/>
-                                                    <IconTabFilter icon="sap-icon://inventory" iconColor="Negative" count="{/ProductCollectionStats/Counts/Weight/Overweight}" text="Overweight" key="Overweight"/> -->
-                </items>
-                <content>
+                    <IconTabFilter iconColor="Positive" count="{count1>/}" text="WIP Time" key="Ok" icon="sap-icon://time-account">
+                      <content>
                     <Table id="wiptable" items="{path : 'wipentry>/'}" mode="MultiSelect" selectionChange="_wiptableselchange">
                         <headerToolbar>
                             <OverflowToolbar>
@@ -60,7 +57,7 @@
                                     <Button text="Combine" width="auto"/>
                                     <Button text="Split" width="auto"/>
                                     <Button text="Finalize" width="auto"/>
-                                    <CheckBox text="Fixed Layout" selected="true" select="onCheckBoxSelect"/>
+                                    <!-- <CheckBox text="Fixed Layout" selected="true" select="onCheckBoxSelect"/> -->
                                     <Button icon="sap-icon://action-settings" press="onPersoButtonPressed">
                                         <layoutData>
                                             <OverflowToolbarLayoutData priority="NeverOverflow"/>
@@ -76,6 +73,7 @@
                             <Column>
                                 <Text text="{i18n>txt_chngind}"/>
                             </Column>
+                           
                             <Column>
                                 <Text text="{i18n>txt_jeid}"/>
                             </Column>
@@ -112,6 +110,7 @@
                                 <cells>
                                 <ObjectStatus state="{= ${wipentry>Status} === undefined ? 'Success' : 'Error'}" icon="{= ${wipentry>Status} === undefined ? 'sap-icon://accept' : 'sap-icon://edit'}"/>
                                     <ObjectStatus state="{= ${wipentry>Status} === undefined ? 'Success' : 'Error'}" text="{= ${wipentry>Status} === undefined ? 'Original' : 'Updated'}"/>
+                                 
                                     <ObjectStatus state="{= ${wipentry>Status} === undefined ? 'Success' : 'Error'}" text="{wipentry>AccountingDocument}"/>
                                     <ObjectStatus state="{= ${wipentry>Status} === undefined ? 'Success' : 'Error'}" text="{wipentry>GLAccount}"/>
                                     <ObjectStatus state="{= ${wipentry>Status} === undefined ? 'Success' : 'Error'}" text="{wipentry>ReferenceDocument}"/>
@@ -128,6 +127,42 @@
                         </items>
                     </Table>
                 </content>
+                 </IconTabFilter>
+                 <!--                                   <IconTabFilter icon="sap-icon://inventory" iconColor="Negative" count="{/ProductCollectionStats/Counts/Weight/Overweight}" text="Overweight" key="Overweight"/> -->
+               <IconTabFilter icon="sap-icon://save" iconColor="Critical"  text="Draft" key="draft" visible="false">
+                    <content>
+	                    <Table id="table_approvedcer" width="auto" mode="None" showSeparators="All" growing="true" growingThreshold="20" growingScrollToLoad="true" class="sapUiResponsiveMargin" items="{path : 'aprdcers>/'}">
+									<infoToolbar/>
+								<headerToolbar/>
+								<columns>
+									<Column width="300px" hAlign="Left" vAlign="Top" minScreenWidth="Phone" demandPopin="false" popinDisplay="Inline" mergeDuplicates="false">
+										<header>
+											<Text text="Project" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+										</header>
+										<footer/>
+									</Column>
+									<Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Phone" demandPopin="false" popinDisplay="Inline" mergeDuplicates="false">
+										<header>
+											<Text text="Internal Order" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+										</header>
+										<footer/>
+									</Column>
+								</columns>
+								<items>
+									<ColumnListItem>
+										<cells>
+												<ObjectIdentifier title="{aprdcers>ZProjectDescription}" titlePress="_ceriddetailsappr" text="{aprdcers>ZCerId}(Status : {aprdcers>ZCerStatusDes})" titleActive="true" visible="true"/>
+											<Text text="{aprdcers>ZInternalOrder}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+										</cells>
+									</ColumnListItem>
+								</items>
+							</Table>
+                </content>
+
+                 </IconTabFilter>
+               
+                </items>
+              
             </IconTabBar>
 
         </semantic:content>

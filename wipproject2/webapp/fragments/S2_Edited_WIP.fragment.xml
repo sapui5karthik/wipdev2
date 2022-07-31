@@ -3,7 +3,7 @@
    xmlns:core="sap.ui.core" xmlns:layout="sap.ui.layout" xmlns:form="sap.ui.layout.form">
    <Dialog
       id="changedialog"  draggable="true" resizable="false"
-      title="Change Record" contentHeight="500px" contentWidth="680px">
+      title="Change Record" contentHeight="530px" contentWidth="680px">
       
       <layout:BlockLayout background="Default" visible="true">
                 <layout:content>
