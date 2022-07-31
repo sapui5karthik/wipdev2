@@ -5,7 +5,7 @@
 >
    <Dialog
       id="newdialog" draggable="true" resizable="true"
-      title="Create New Record" contentHeight="360px" contentWidth="630px">
+      title="Create New Record" contentHeight="390px" contentWidth="630px">
 <f:SimpleForm id="newform"
 			editable="true"
 			layout="ResponsiveGridLayout"		

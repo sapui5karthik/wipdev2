@@ -18,28 +18,27 @@ sap.ui.define([
         /* =========================================================== */
         /* lifecycle methods                                           */
         /* =========================================================== */
-        onInit: function () {
-            //sap.ui.core.BusyIndicator.hide();
+        onInit: function () { // sap.ui.core.BusyIndicator.hide();
             this.selflag = 0;
             this.oRouter = sap.ui.core.UIComponent.getRouterFor(this);
             this.oRouter.getRoute("object").attachPatternMatched(this._getwipprojectdata, this);
-           
+
 
         },
-        onCheckBoxSelect: function (oEvent) {
-			var bFixedLayout = oEvent.getParameter("selected");
-			var oTable = oEvent.getSource().getParent().getParent();
-			oTable.setFixedLayout(bFixedLayout);
-		},
-        _refresh : function(){
-            if(this.byId("_search").getValue()!==''){
-            this.byId("_search").setValue();
+        // onCheckBoxSelect: function (oEvent) {
+        // var bFixedLayout = oEvent.getParameter("selected");
+        // var oTable = oEvent.getSource().getParent().getParent();
+        // oTable.setFixedLayout(bFixedLayout);
+        // },
+        _refresh: function () {
+            if (this.byId("_search").getValue() !== '') {
+                this.byId("_search").setValue();
             }
             var bindings = this.getView().byId("wiptable").getBinding("items");
             bindings.filter();
         },
-      
-        
+
+
         _getwipprojectdata: function (oevent) {
             this.pid = oevent.getParameter("arguments").pid;
             const pid = oevent.getParameter("arguments").pid,
@@ -48,23 +47,84 @@ sap.ui.define([
 
                 projectfilter = new Filter("Project", FilterOperator.EQ, pid);
 
-                const wipprojlist = this.getOwnerComponent().getModel(),
-                engagementProjectFilter = new Filter("EngagementProject",FilterOperator.EQ,pid);
-                wipprojlist.read("/YY1_WIPProjectListAPI1",{
-                    filters: [engagementProjectFilter],
-                    success : (odata) => {
-                        
-                        var wipprojjson = new JSONModel();
-                        wipprojjson.setData(odata.results[0]);
-                        this.getView().setModel(wipprojjson,"prjlst");
-                    },
-                    error : (err) => {
-                        MessageToast.show(err);
-                    }
-                });
+            const wipprojlist = this.getOwnerComponent().getModel(),
+                engagementProjectFilter = new Filter("EngagementProject", FilterOperator.EQ, pid);
+            wipprojlist.read("/YY1_WIPProjectListAPI1", {
+                filters: [engagementProjectFilter],
+                success: (odata) => {
+
+                    var wipprojjson = new JSONModel();
+                    wipprojjson.setData(odata.results[0]);
+                    this.getView().setModel(wipprojjson, "prjlst");
+                },
+                error: (err) => {
+                    MessageToast.show(err);
+                }
+            });
+            jrnlentrymdl.read("/YY1_JournalEntryItem", {
+                filters: [projectfilter],
+                success: function (odata) {
 
 
-           /*     promiseJournalItems = new Promise((res, rej) => {
+                    var count = new JSONModel();
+                    count.setData(odata.results.length);
+                    this.getView().setModel(count, "count1");
+
+                    var jsonmodelmainjrnlentry = new JSONModel();
+                    jsonmodelmainjrnlentry.setData(odata.results);
+
+
+                    // Read 2nd API wipedits
+                    // var wipeditsmdl = this.getOwnerComponent().getModel("wipeditsMDL");
+                    wipeditsmdl.read("/YY1_WIPEDITS", {
+                        success: function (odata2) {
+                            var jsonmodelwipedit = new JSONModel();
+                            debugger;
+                            jsonmodelwipedit.setData(odata2.results);
+                            var changedflag = 0;
+
+                            for (var i = 0; i < odata.results.length; i++) {
+                                for (var j = 0; j < odata2.results.length; j++) {
+                                    if (odata.results[i].AccountingDocument === jsonmodelwipedit.oData[j].JEID) {
+
+                                        odata.results[i].Status = "Changed";
+
+                                        changedflag++;
+                                    }
+
+                                }
+
+                            }
+
+                            for (var j = 0; j < odata2.results.length; j++) {
+                                if (jsonmodelwipedit.oData[j].Status === "01") {
+                                    odata.results[odata.results.length] = {}
+                                    odata.results[odata.results.length - 1].AccountingDocument = jsonmodelwipedit.oData[j].JEID
+                                }
+
+                            }
+
+                            var changedjson = new JSONModel();
+                            changedjson.setData(changedflag);
+                            this.getView().setModel(changedjson, "changedcount");
+
+                            var newcount = (odata.results.length) - changedflag;
+                            var newjson = new JSONModel();
+                            newjson.setData(newcount);
+                            this.getView().setModel(newjson, "newcount");
+
+                            this.getView().byId("wiptable").setModel(jsonmodelmainjrnlentry, "wipentry");
+                            // this.getView().byId("wiptable").setModel(jsonmodelwipedit, "wipentry");
+                        }.bind(this),
+                        error: function (msg2) {}.bind(this)
+
+
+                    });
+                }.bind(this),
+                error: function (msg) {}.bind(this)
+            });
+
+            /*     promiseJournalItems = new Promise((res, rej) => {
                     jrnlentrymdl.read("/YY1_JournalEntryItem", {
                         filters: [projectfilter],
                         success: (odata) => {
@@ -101,256 +161,215 @@ sap.ui.define([
                 MessageToast.show(err.message)
             });*/
 
-            //var projectfilter = new Filter("Project", FilterOperator.EQ, pid);
-            jrnlentrymdl.read("/YY1_JournalEntryItem", {
-                filters: [projectfilter],
-                success: function (odata) { 
-                    // Read 2nd API wipedits
-                    
-                    //var wipeditsmdl = this.getOwnerComponent().getModel("wipeditsMDL");
-                    wipeditsmdl.read("/YY1_WIPEDITS", {
-                        success: function (odata2) {
-                            var jsonmodelwipedit = new JSONModel();
-
-                            jsonmodelwipedit.setData(odata2.results);
-
-                            var count = new JSONModel();
-                            count.setData(odata.results.length);
-                            this.getView().setModel(count, "count1");
+            // var projectfilter = new Filter("Project", FilterOperator.EQ, pid);
 
 
-                            var jsonmodelmainjrnlentry = new JSONModel();
-                            jsonmodelmainjrnlentry.setData(odata.results);
-                            var changedflag = 0;
-
-                         
-                            for (var i = 0; i < odata.results.length; i++) {
-                                for(var j=0;j<odata2.results.length;j++){
-                                    if (odata.results[i].AccountingDocument === jsonmodelwipedit.oData[j].JEID) {
-                                    
-                                        odata.results[i].Status = "Changed";
-                                        changedflag++;
-                                    }
-                                }
-                                
-                            }
-                            var changedjson = new JSONModel();
-                            changedjson.setData(changedflag);
-                            this.getView().setModel(changedjson,"changedcount");
-
-                            var newcount = (odata.results.length)-changedflag;
-                            var newjson = new JSONModel();
-                            newjson.setData(newcount);
-                            this.getView().setModel(newjson,"newcount");
-
-                            this.getView().byId("wiptable").setModel(jsonmodelmainjrnlentry, "wipentry");
-                        }.bind(this),
-                        error: function (msg2) {}.bind(this)
-
-
-                    });
-                }.bind(this),
-                error: function (msg) {}.bind(this)
-            });
         },
-        _searchaccdoc : function(oevent){
+        _searchaccdoc: function (oevent) {
 
             var xfilter = [];
-            var filterproj = new Filter("Project",FilterOperator.EQ,this.pid);
-            var  filterwip = new Filter("AccountingDocument",FilterOperator.EQ,oevent.getParameter("value"));
+            var filterproj = new Filter("Project", FilterOperator.EQ, this.pid);
+            var filterwip = new Filter("AccountingDocument", FilterOperator.EQ, oevent.getParameter("value"));
             xfilter.push(filterproj);
             xfilter.push(filterwip);
-            var finalfilter = new Filter({
-                filters : xfilter,
-                and : true
-            });
+            var finalfilter = new Filter({filters: xfilter, and: true});
             var bindings = this.getView().byId("wiptable").getBinding("items");
             bindings.filter([finalfilter]);
-            
-        // const accdoc = oevent.getParameter("value"),
-        //       wipedits = this.getOwnerComponent().getModel("jrnlentryMDL"),
-        //     filterproj = new Filter("Project",FilterOperator.EQ,this.pid),
-        //       filterwip = new Filter("AccountingDocument",FilterOperator.EQ,accdoc),
-        //       wipjson = new JSONModel();
-        //       wipedits.read("/YY1_JournalEntryItem",{
-        //           filters : [filterproj,filterwip],
-        //           success : (odata) => {
-        //             wipjson.setData(odata.results);
-        //             this.getView().byId("wiptable").setModel(wipjson,"wipentry");
-        //           },
-        //           error : (err) => {
-        //               MessageToast.show(err);
-        //           }
-        //       });
-            
+
+
         },
-        _newjecreation : function(oevent){
-            
-			// create dialog lazily
-		// 	if (!this.nDialog) {
-		// 		this.nDialog = this.loadFragment({
-		// 			name: "com.chappota.wippoc2.wipproject2.fragments.S2_New_WIP"
-		// 		});
-		// 	} 
-		// 	this.nDialog.then(function(oDialog) {
-		// 		oDialog.open();
-			
+        _newjecreation: function (oevent) {
+
+            // create dialog lazily
+            // if (!this.nDialog) {
+            // this.nDialog = this.loadFragment({
+            // name: "com.chappota.wippoc2.wipproject2.fragments.S2_New_WIP"
+            // });
+            // }
+            // this.nDialog.then(function(oDialog) {
+            // oDialog.open();
 
 
-        // });
-        if(!this.nDialog){
-            this.nDialog = sap.ui.xmlfragment(this.getView().getId(),"com.chappota.wippoc2.wipproject2.fragments.S2_New_WIP",this);
-            this.getView().addDependent(this.nDialog);
-        }
-
-        this.nDialog.open();
-//        var projectid = this.byId("newprojectid").getValue();
-
-        var unbilled =   this.byId("newunbilled").getValue();         
-        var notes = this.byId("newnotes").getValue();
-        var acttype = this.byId("newacttype").getValue();
-        if(unbilled !== ""){ this.byId("newunbilled").setValue();}        
-        if(notes !== ""){ this.byId("newnotes").setValue();}
-        if(acttype !== ""){this.byId("newacttype").setValue();}
-        },
-
-        _savenewrecord : function(){
-            var jeid = "9000000001";
-            var newpayload = {
-            JEID : jeid,
-            ID : "1",
-            Status : "01",
-            ProjectID : this.byId("newprojectid").getValue(),
-            Quantity : this.getView().byId("newunbilled").getValue(),
-            WBS : this.getView().byId("newworkpackage").getValue(),
-            Notes : this.getView().byId("newnotes").getValue(),
-            ActivityType : this.getView().byId("newacttype").getValue()
-  //          ServiceDate : "2022-07-29:T00:00:00" //this.getView().byId("newservicedate").getValue()  //
-        };
-        var saveapi = this.getOwnerComponent().getModel("wipeditsMDL");
-        saveapi.create("/YY1_WIPEDITS",newpayload,{
-            success : (odata) => {
-                MessageToast.show("Record Created");
-                debugger;
-            },
-            error : (err) => {
-                MessageToast.show(err);
-                debugger;
+            // });
+            if (!this.nDialog) {
+                this.nDialog = sap.ui.xmlfragment(this.getView().getId(), "com.chappota.wippoc2.wipproject2.fragments.S2_New_WIP", this);
+                this.getView().addDependent(this.nDialog);
             }
-        });
-            
+
+            this.nDialog.open();
+            //        var projectid = this.byId("newprojectid").getValue();
+
+            var unbilled = this.byId("newunbilled").getValue();
+            var notes = this.byId("newnotes").getValue();
+            var acttype = this.byId("newacttype").getValue();
+            if (unbilled !== "") {
+                this.byId("newunbilled").setValue();
+            }
+            if (notes !== "") {
+                this.byId("newnotes").setValue();
+            }
+            if (acttype !== "") {
+                this.byId("newacttype").setValue();
+            }
         },
-        _editjerecord : function(){
+
+        _savenewrecord: function () {
+            var wipeditsmdl = this.getOwnerComponent().getModel("wipeditsMDL");
+         wipeditsmdl.read("/YY1_WIPEDITS", {
+                        success:  (odata2) => {
+                            var jsonmodelwipedit = new JSONModel();                        
+                            jsonmodelwipedit.setData(odata2.results);
+                           
+                            var jeid = parseInt(odata2.results[odata2.results.length-1].JEID);
+
+                            var newpayload = {
+                                JEID: (jeid+1).toString(),
+                                ID: "1",
+                                Status: "01",
+                                ProjectID: this.byId("newprojectid").getValue(),
+                                Quantity: this.getView().byId("newunbilled").getValue(),
+                                WBS: this.getView().byId("newworkpackage").getValue(),
+                                Notes: this.getView().byId("newnotes").getValue(),
+                                ActivityType: this.getView().byId("newacttype").getValue()
+                                //          ServiceDate : "2022-07-29:T00:00:00" //this.getView().byId("newservicedate").getValue()  //
+                            };
+                            var saveapi = this.getOwnerComponent().getModel("wipeditsMDL");
+                            saveapi.create("/YY1_WIPEDITS", newpayload, {
+                                success: (odata) => {
+                                    MessageToast.show("Record Created");
+                                    this.onInit();
+                                    this.nDialog.close();
+                                    debugger;
+                                },
+                                error: (err) => {
+                                    MessageToast.show(err);
+                                    this.nDialog.close();
+                                    
+                                }
+                            });
+
+                            
+                        },
+                        error : (err) => { }
+                    });
+
+                  
+                 
+          
+        },
+        _editjerecord: function () {
             var editpayload = {
-                Quantity : this.getView().byId("editrightunbilamnt").getValue(),
-                WBSElement : this.getView().byId("editrightwpkg").getValue(),
-                DocumentItemText : this.getView().byId("editrightnotes").getValue(),
-                ActivityType : this.getView().byId("editrightacttype").getValue()
+                Status: "02",
+                ID: "1",
+                ProjectID: this.byId("newprojectid").getValue(),
+                Quantity: this.getView().byId("editrightunbilamnt").getValue(),
+                WBS: this.getView().byId("editrightwpkg").getValue(),
+                Notes: this.getView().byId("editrightnotes").getValue(),
+                ActivityType: this.getView().byId("editrightacttype").getValue()
             };
             var editapi = this.getOwnerComponent().getModel("wipeditsMDL");
-            var eset =  "/YY1_WIPEDITS('"+this.accdocjeid+"')";
-           
-            editapi.update(eset,editpayload,{
-                success : (odata) => {
+            var eset = "/YY1_WIPEDITS('" + this.accdocjeid + "')";
+
+            editapi.update(eset, editpayload, {
+                success: (odata) => {
                     MessageToast.show("Updated!");
-                    this._getwipprojectdata();
+                    this.onInit();
+                    this.nDialog.close();
                     debugger;
                 },
-                error : (err) => {
+                error: (err) => {
                     MessageToast.show(err);
+                    this.nDialog.close();
                     debugger;
                 }
             });
-                
+
 
         },
-        _wiptableselchange : function(oevent){
-          
+        _wiptableselchange: function (oevent) {
 
-            if(oevent.getParameter("selected")){
-                this.selflag++;
+
+            if (oevent.getParameter("selected")) {
+                this.selflag ++;
                 debugger;
                 this.accdocjeid = oevent.getSource().getModel("wipentry").getData()[oevent.getSource().getSelectedContextPaths()[0].split('/')[1]].AccountingDocument;
-            this.qty = oevent.getSource().getModel("wipentry").getData()[oevent.getSource().getSelectedContextPaths()[0].split('/')[1]].Quantity;
-            this.wrkpkg = oevent.getSource().getModel("wipentry").getData()[oevent.getSource().getSelectedContextPaths()[0].split('/')[1]].WBSElement;
-            this.notes = oevent.getSource().getModel("wipentry").getData()[oevent.getSource().getSelectedContextPaths()[0].split('/')[1]].DocumentItemText;
-            this.acttype = "A010";
+                this.qty = oevent.getSource().getModel("wipentry").getData()[oevent.getSource().getSelectedContextPaths()[0].split('/')[1]].Quantity;
+                this.wrkpkg = oevent.getSource().getModel("wipentry").getData()[oevent.getSource().getSelectedContextPaths()[0].split('/')[1]].WBSElement;
+                this.notes = oevent.getSource().getModel("wipentry").getData()[oevent.getSource().getSelectedContextPaths()[0].split('/')[1]].DocumentItemText;
+                this.acttype = "A010";
             }
-            
+
         },
 
-        _closenewrecord : function(){
+        _closenewrecord: function () {
             // this.nDialog.then(function(oDialog) {
-			// 	oDialog.close();
-			// });
+            // oDialog.close();
+            // });
             this.nDialog.close();
         },
-        _updatejeRecord : function(oevent){
-          
+        _updatejeRecord: function (oevent) {
 
-            if(!this.pDialog){
-                this.pDialog = sap.ui.xmlfragment(this.getView().getId(),"com.chappota.wippoc2.wipproject2.fragments.S2_Edited_WIP",this);
+
+            if (!this.pDialog) {
+                this.pDialog = sap.ui.xmlfragment(this.getView().getId(), "com.chappota.wippoc2.wipproject2.fragments.S2_Edited_WIP", this);
                 this.getView().addDependent(this.pDialog);
             }
-            if(this.selflag < 1){
+            if (this.selflag < 1) {
                 MessageBox.alert("Please select atleast 1 row to edit");
-            }
-            else {
+            } else {
                 this.pDialog.open();
-              
+
             }
             debugger;
-            if(this.selflag === 1) {
-               debugger;
-            this.getView().byId("editleftunbilamnt").setText(this.qty);
-            this.getView().byId("editleftwpkg").setText(this.wrkpkg);
-            this.getView().byId("editleftnotes").setText(this.notes);
-            this.getView().byId("editleftacttype").setText(this.acttype);
+            if (this.selflag === 1) {
+                debugger;
+                this.getView().byId("editleftunbilamnt").setText(this.qty);
+                this.getView().byId("editleftwpkg").setText(this.wrkpkg);
+                this.getView().byId("editleftnotes").setText(this.notes);
+                this.getView().byId("editleftacttype").setText(this.acttype);
 
-            if(this.getView().byId("editrightunbilamnt").getValue() !== ''){ 
-                this.getView().byId("editrightunbilamnt").setValue();
-            }
-            if(this.getView().byId("editrightwpkg").getValue() !== ''){ 
-                this.getView().byId("editrightwpkg").setValue();
-            }
-            if(this.getView().byId("editrightnotes").getValue() !== ''){ 
-                this.getView().byId("editrightnotes").setValue();
-            }
-            if(this.getView().byId("editrightacttype").getValue() !== ''){
-                 this.getView().byId("editrightacttype").setValue();
+                if (this.getView().byId("editrightunbilamnt").getValue() !== '') {
+                    this.getView().byId("editrightunbilamnt").setValue();
+                }
+                if (this.getView().byId("editrightwpkg").getValue() !== '') {
+                    this.getView().byId("editrightwpkg").setValue();
+                }
+                if (this.getView().byId("editrightnotes").getValue() !== '') {
+                    this.getView().byId("editrightnotes").setValue();
+                }
+                if (this.getView().byId("editrightacttype").getValue() !== '') {
+                    this.getView().byId("editrightacttype").setValue();
                 }
 
 
-
-            this.getView().byId("editrightunbilamnt").setValue(this.qty);
-            this.getView().byId("editrightwpkg").setValue(this.wrkpkg);
-            this.getView().byId("editrightnotes").setValue(this.notes);
-            this.getView().byId("editrightacttype").setValue(this.acttype);
-            this.selflag = 0;
+                this.getView().byId("editrightunbilamnt").setValue(this.qty);
+                this.getView().byId("editrightwpkg").setValue(this.wrkpkg);
+                this.getView().byId("editrightnotes").setValue(this.notes);
+                this.getView().byId("editrightacttype").setValue(this.acttype);
+                this.selflag = 0;
             }
-            if(this.selflag > 1){
-              debugger;
+            if (this.selflag > 1) {
+                debugger;
                 this.getView().byId("editleftunbilamnt").setText("<Multiple Values>");
                 this.getView().byId("editleftwpkg").setText("<Multiple Values>");
                 this.getView().byId("editleftnotes").setText("<Multiple Values>");
                 this.getView().byId("editleftacttype").setText("<Multiple Values>");
                 this.selflag = 0;
 
-                if(this.getView().byId("editrightunbilamnt").getValue() !== ''){ 
+                if (this.getView().byId("editrightunbilamnt").getValue() !== '') {
                     this.getView().byId("editrightunbilamnt").setValue();
                 }
-                if(this.getView().byId("editrightwpkg").getValue() !== ''){ 
+                if (this.getView().byId("editrightwpkg").getValue() !== '') {
                     this.getView().byId("editrightwpkg").setValue();
                 }
-                if(this.getView().byId("editrightnotes").getValue() !== ''){ 
+                if (this.getView().byId("editrightnotes").getValue() !== '') {
                     this.getView().byId("editrightnotes").setValue();
                 }
-                if(this.getView().byId("editrightacttype").getValue() !== ''){
-                     this.getView().byId("editrightacttype").setValue();
-                    }
-    
-    
-    
+                if (this.getView().byId("editrightacttype").getValue() !== '') {
+                    this.getView().byId("editrightacttype").setValue();
+                }
+
+
                 // this.getView().byId("editrightunbilamnt").setValue(this.qty);
                 // this.getView().byId("editrightwpkg").setValue(this.wrkpkg);
                 // this.getView().byId("editrightnotes").setValue(this.notes);
@@ -358,10 +377,10 @@ sap.ui.define([
             }
 
         },
-        _closechangerecord : function(){
+        _closechangerecord: function () {
             this.pDialog.close();
             this.byId("wiptable").removeSelections();
-			
+
         },
 
         /**
