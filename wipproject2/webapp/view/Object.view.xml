@@ -15,7 +15,7 @@
             </FlexBox>
 
             <!-- <FlexBox width="100%" id="box1" wrap="Wrap" direction="Column" alignItems="Start">        
-                                                                <items>            -->
+                                                                            <items>            -->
 
             <Toolbar width="100%" id="toolbar2" height="130px">
                 <f:SimpleForm width="600px" editable="true" layout="ResponsiveGridLayout" labelSpanXL="4" labelSpanL="3" labelSpanM="4" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="4" emptySpanM="0" emptySpanS="0" columnsXL="2" columnsL="1" columnsM="1" singleContainerFullSize="false" breakpointL="0" breakpointM="0" breakpointXL="0">
@@ -39,130 +39,132 @@
                 <items>
 
                     <IconTabFilter iconColor="Positive" count="{count1>/}" text="WIP Time" key="Ok" icon="sap-icon://time-account">
-                      <content>
-                    <Table id="wiptable" items="{path : 'wipentry>/'}" mode="MultiSelect" selectionChange="_wiptableselchange">
-                        <headerToolbar>
-                            <OverflowToolbar>
-                                <content>
-                                    <Title text="Time Entries" level="H2"/>
-                                    <ObjectStatus state="Success" text="New: {newcount>/}"/>
-                                    <ObjectStatus state="Error" text="Changed:{changedcount>/}"/>
-                                    <ToolbarSpacer/>
-                                    <Input width="auto" placeholder="Accouting Document..." submit="_searchaccdoc" id="_search"/>
-                                    <Button icon="sap-icon://refresh" press="_refresh"/>
-                                    <Button text="New" width="auto" press="_newjecreation"/>
-                                    <Button text="Edit" width="auto" press="_updatejeRecord"/>
-                                    <Button text="Delete" width="auto"/>
-                                    <Button text="Transfer" width="auto"/>
-                                    <Button text="Combine" width="auto"/>
-                                    <Button text="Split" width="auto"/>
-                                    <Button text="Finalize" width="auto"/>
-                                    <!-- <CheckBox text="Fixed Layout" selected="true" select="onCheckBoxSelect"/> -->
-                                    <Button icon="sap-icon://action-settings" press="onPersoButtonPressed">
-                                        <layoutData>
-                                            <OverflowToolbarLayoutData priority="NeverOverflow"/>
-                                        </layoutData>
-                                    </Button>
-                                </content>
-                            </OverflowToolbar>
-                        </headerToolbar>
-                        <columns>
-                            <Column width="28px">
-                                <Text text=""/>
-                            </Column>
-                            <Column>
-                                <Text text="{i18n>txt_chngind}"/>
-                            </Column>
-                           
-                            <Column>
-                                <Text text="{i18n>txt_jeid}"/>
-                            </Column>
-                            <Column>
-                                <Text text="{i18n>txt_glacc}"/>
-                            </Column>
-                            <Column>
-                                <Text text="{i18n>txt_ref}"/>
-                            </Column>
-                            <Column>
-                                <Text text="{i18n>txt_cust}"/>
-                            </Column>
-                            <Column>
-                                <Text text="{i18n>txt_proj}"/>
-                            </Column>
-                            <Column>
-                                <Text text="{i18n>txt_unbqty}"/>
-                            </Column>
-                            <Column>
-                                <Text text="{i18n>txt_wrkitem}"/>
-                            </Column>
-                            <Column width="150px">
-                                <Text text="{i18n>txt_wrkpckg}"/>
-                            </Column>
-                            <Column>
-                                <Text text="{i18n>txt_amnt}"/>
-                            </Column>
-                            <Column>
-                                <Text text="{i18n>txt_notes}"/>
-                            </Column>
-                        </columns>
-                        <items>
-                            <ColumnListItem>
-                                <cells>
-                                <ObjectStatus state="{= ${wipentry>Status} === undefined ? 'Success' : 'Error'}" icon="{= ${wipentry>Status} === undefined ? 'sap-icon://accept' : 'sap-icon://edit'}"/>
-                                    <ObjectStatus state="{= ${wipentry>Status} === undefined ? 'Success' : 'Error'}" text="{= ${wipentry>Status} === undefined ? 'Original' : 'Updated'}"/>
-                                 
-                                    <ObjectStatus state="{= ${wipentry>Status} === undefined ? 'Success' : 'Error'}" text="{wipentry>AccountingDocument}"/>
-                                    <ObjectStatus state="{= ${wipentry>Status} === undefined ? 'Success' : 'Error'}" text="{wipentry>GLAccount}"/>
-                                    <ObjectStatus state="{= ${wipentry>Status} === undefined ? 'Success' : 'Error'}" text="{wipentry>ReferenceDocument}"/>
-                                    <ObjectStatus state="{= ${wipentry>Status} === undefined ? 'Success' : 'Error'}" text="{wipentry>Customer}"/>
-                                    <ObjectStatus state="{= ${wipentry>Status} === undefined ? 'Success' : 'Error'}" text="{wipentry>Project}"/>
-                                    <ObjectStatus state="{= ${wipentry>Status} === undefined ? 'Success' : 'Error'}" text="{wipentry>Quantity}"/>
-                                    <ObjectStatus state="{= ${wipentry>Status} === undefined ? 'Success' : 'Error'}" text="{wipentry>WorkItem}"/>
-                                    <ObjectStatus state="{= ${wipentry>Status} === undefined ? 'Success' : 'Error'}" text="{wipentry>WBSElement}"/>
-                                    <ObjectStatus state="{= ${wipentry>Status} === undefined ? 'Success' : 'Error'}" text="{wipentry>AmountInGlobalCurrency}"/>
-                                    <ObjectStatus state="{= ${wipentry>Status} === undefined ? 'Success' : 'Error'}" text="{wipentry>DocumentItemText}"/>
-                                </cells>
+                        <content>
+                            <Table id="wiptable" items="{path : 'wipentry>/'}" mode="MultiSelect" selectionChange="_wiptableselchange">
+                                <headerToolbar>
+                                    <OverflowToolbar>
+                                        <content>
+                                            <Title text="Time Entries" level="H2"/>
+                                            <ObjectStatus state="Success" text="Orignal:{orignal>/}"/>
+                                            <ObjectStatus state="Error" text="Changed:{changedcount>/}"/>
+                                            <ObjectStatus state="Information" text="New: {newcount>/}"/>
+                                            <ToolbarSpacer/>
+                                            <Input width="auto" placeholder="Accouting Document..." submit="_searchaccdoc" id="_search"/>
+                                            <Button icon="sap-icon://refresh" press="_refresh"/>
+                                            <Button text="New" width="auto" press="_newjecreation"/>
+                                            <Button text="Edit" width="auto" press="_updatejeRecord"/>
+                                            <Button text="Delete" width="auto"/>
+                                            <Button text="Transfer" width="auto"/>
+                                            <Button text="Combine" width="auto"/>
+                                            <Button text="Split" width="auto"/>
+                                            <Button
+                                            text="Finalize" width="auto"/>
+                                            <!-- <CheckBox text="Fixed Layout" selected="true" select="onCheckBoxSelect"/> -->
+                                            <Button icon="sap-icon://action-settings" press="onPersoButtonPressed">
+                                                <layoutData>
+                                                    <OverflowToolbarLayoutData priority="NeverOverflow"/>
+                                                </layoutData>
+                                            </Button>
+                                        </content>
+                                    </OverflowToolbar>
+                                </headerToolbar>
+                                <columns>
+                                    <Column width="28px">
+                                        <Text text=""/>
+                                    </Column>
+                                    <Column>
+                                        <Text text="{i18n>txt_chngind}"/>
+                                    </Column>
 
-                            </ColumnListItem>
-                        </items>
-                    </Table>
-                </content>
-                 </IconTabFilter>
-                 <!--                                   <IconTabFilter icon="sap-icon://inventory" iconColor="Negative" count="{/ProductCollectionStats/Counts/Weight/Overweight}" text="Overweight" key="Overweight"/> -->
-               <IconTabFilter icon="sap-icon://save" iconColor="Critical"  text="Draft" key="draft" visible="false">
-                    <content>
-	                    <Table id="table_approvedcer" width="auto" mode="None" showSeparators="All" growing="true" growingThreshold="20" growingScrollToLoad="true" class="sapUiResponsiveMargin" items="{path : 'aprdcers>/'}">
-									<infoToolbar/>
-								<headerToolbar/>
-								<columns>
-									<Column width="300px" hAlign="Left" vAlign="Top" minScreenWidth="Phone" demandPopin="false" popinDisplay="Inline" mergeDuplicates="false">
-										<header>
-											<Text text="Project" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-										</header>
-										<footer/>
-									</Column>
-									<Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Phone" demandPopin="false" popinDisplay="Inline" mergeDuplicates="false">
-										<header>
-											<Text text="Internal Order" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-										</header>
-										<footer/>
-									</Column>
-								</columns>
-								<items>
-									<ColumnListItem>
-										<cells>
-												<ObjectIdentifier title="{aprdcers>ZProjectDescription}" titlePress="_ceriddetailsappr" text="{aprdcers>ZCerId}(Status : {aprdcers>ZCerStatusDes})" titleActive="true" visible="true"/>
-											<Text text="{aprdcers>ZInternalOrder}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-										</cells>
-									</ColumnListItem>
-								</items>
-							</Table>
-                </content>
+                                    <Column>
+                                        <Text text="{i18n>txt_jeid}"/>
+                                    </Column>
+                                    <Column>
+                                        <Text text="{i18n>txt_glacc}"/>
+                                    </Column>
+                                    <Column>
+                                        <Text text="{i18n>txt_ref}"/>
+                                    </Column>
+                                    <Column>
+                                        <Text text="{i18n>txt_cust}"/>
+                                    </Column>
+                                    <Column>
+                                        <Text text="{i18n>txt_proj}"/>
+                                    </Column>
+                                    <Column>
+                                        <Text text="{i18n>txt_unbqty}"/>
+                                    </Column>
+                                    <Column>
+                                        <Text text="{i18n>txt_wrkitem}"/>
+                                    </Column>
+                                    <Column width="150px">
+                                        <Text text="{i18n>txt_wrkpckg}"/>
+                                    </Column>
+                                    <Column>
+                                        <Text text="{i18n>txt_amnt}"/>
+                                    </Column>
+                                    <Column>
+                                        <Text text="{i18n>txt_notes}"/>
+                                    </Column>
+                                </columns>
+                                <items>
+                                    <ColumnListItem>
+                                        <cells>
+                                            <ObjectStatus state="{= ${wipentry>StatusObject} === undefined ? 'Success' : ${wipentry>StatusObject}}" icon="{= ${wipentry>StatusIcon} === undefined ? 'sap-icon://accept' : ${wipentry>StatusIcon}}"/>
+                                            <ObjectStatus state="{= ${wipentry>StatusObject} === undefined ? 'Success' : ${wipentry>StatusObject}}" text="{= ${wipentry>Status} === undefined ? 'Original' : ${wipentry>Status}}"/>
 
-                 </IconTabFilter>
-               
+                                            <ObjectStatus state="{= ${wipentry>StatusObject} === undefined ? 'Success' : ${wipentry>StatusObject}}" text="{wipentry>AccountingDocument}"/>
+                                            <ObjectStatus state="{= ${wipentry>StatusObject} === undefined ? 'Success' : ${wipentry>StatusObject}}" text="{wipentry>GLAccount}"/>
+                                            <ObjectStatus state="{= ${wipentry>StatusObject} === undefined ? 'Success' : ${wipentry>StatusObject}}" text="{wipentry>ReferenceDocument}"/>
+                                            <ObjectStatus state="{= ${wipentry>StatusObject} === undefined ? 'Success' : ${wipentry>StatusObject}}" text="{wipentry>Customer}"/>
+                                            <ObjectStatus state="{= ${wipentry>StatusObject} === undefined ? 'Success' : ${wipentry>StatusObject}}" text="{wipentry>Project}"/>
+                                            <ObjectStatus state="{= ${wipentry>StatusObject} === undefined ? 'Success' : ${wipentry>StatusObject}}" text="{wipentry>Quantity}"/>
+                                            <ObjectStatus state="{= ${wipentry>StatusObject} === undefined ? 'Success' : ${wipentry>StatusObject}}" text="{wipentry>WorkItem}"/>
+                                            <ObjectStatus state="{= ${wipentry>StatusObject} === undefined ? 'Success' : ${wipentry>StatusObject}}" text="{wipentry>WBSElement}"/>
+                                            <ObjectStatus state="{= ${wipentry>StatusObject} === undefined ? 'Success' : ${wipentry>StatusObject}}" text="{wipentry>AmountInGlobalCurrency}"/>
+                                            <ObjectStatus state="{= ${wipentry>StatusObject} === undefined ? 'Success' : ${wipentry>StatusObject}}" text="{wipentry>DocumentItemText}"/>
+                                        </cells>
+
+                                    </ColumnListItem>
+                                </items>
+                            </Table>
+                        </content>
+                    </IconTabFilter>
+                    <!--                                   <IconTabFilter icon="sap-icon://inventory" iconColor="Negative" count="{/ProductCollectionStats/Counts/Weight/Overweight}" text="Overweight" key="Overweight"/> -->
+                    <IconTabFilter icon="sap-icon://save" iconColor="Critical" text="Draft" key="draft" visible="false">
+                        <content>
+                            <Table id="table_approvedcer" width="auto" mode="None" showSeparators="All" growing="true" growingThreshold="20" growingScrollToLoad="true" class="sapUiResponsiveMargin" items="{path : 'aprdcers>/'}">
+                                <infoToolbar/>
+                                <headerToolbar/>
+                                <columns>
+                                    <Column width="300px" hAlign="Left" vAlign="Top" minScreenWidth="Phone" demandPopin="false" popinDisplay="Inline" mergeDuplicates="false">
+                                        <header>
+                                            <Text text="Project" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                        </header>
+                                        <footer/>
+                                    </Column>
+                                    <Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Phone" demandPopin="false" popinDisplay="Inline" mergeDuplicates="false">
+                                        <header>
+                                            <Text text="Internal Order" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                        </header>
+                                        <footer/>
+                                    </Column>
+                                </columns>
+                                <items>
+                                    <ColumnListItem>
+                                        <cells>
+                                            <ObjectIdentifier title="{aprdcers>ZProjectDescription}" titlePress="_ceriddetailsappr" text="{aprdcers>ZCerId}(Status : {aprdcers>ZCerStatusDes})" titleActive="true" visible="true"/>
+                                            <Text text="{aprdcers>ZInternalOrder}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                        </cells>
+                                    </ColumnListItem>
+                                </items>
+                            </Table>
+                        </content>
+
+                    </IconTabFilter>
+
                 </items>
-              
+
             </IconTabBar>
 
         </semantic:content>

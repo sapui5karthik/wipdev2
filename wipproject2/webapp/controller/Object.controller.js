@@ -36,12 +36,23 @@ sap.ui.define([
             }
             var bindings = this.getView().byId("wiptable").getBinding("items");
             bindings.filter();
+            
         },
 
 
         _getwipprojectdata: function (oevent) {
-            this.pid = oevent.getParameter("arguments").pid;
-            const pid = oevent.getParameter("arguments").pid,
+
+            if(oevent !== undefined){
+                this.pid = oevent.getParameter("arguments").pid;
+            }
+
+            var busyDialog = new sap.m.BusyDialog({
+                title:"Loading Data",
+                text:"... now loading the data from a far away server"
+            }).open();
+
+            
+            const pid = this.pid,
                 jrnlentrymdl = this.getOwnerComponent().getModel("jrnlentryMDL"),
                 wipeditsmdl = this.getOwnerComponent().getModel("wipeditsMDL"),
 
@@ -59,6 +70,7 @@ sap.ui.define([
                 },
                 error: (err) => {
                     MessageToast.show(err);
+                    busyDialog.close();
                 }
             });
             jrnlentrymdl.read("/YY1_JournalEntryItem", {
@@ -66,9 +78,7 @@ sap.ui.define([
                 success: function (odata) {
 
 
-                    var count = new JSONModel();
-                    count.setData(odata.results.length);
-                    this.getView().setModel(count, "count1");
+                    
 
                     var jsonmodelmainjrnlentry = new JSONModel();
                     jsonmodelmainjrnlentry.setData(odata.results);
@@ -81,14 +91,15 @@ sap.ui.define([
                             var jsonmodelwipedit = new JSONModel();
                             debugger;
                             jsonmodelwipedit.setData(odata2.results);
-                            var changedflag = 0;
+                            var changedflag = 0, newFlag = 0;
 
                             for (var i = 0; i < odata.results.length; i++) {
                                 for (var j = 0; j < odata2.results.length; j++) {
                                     if (odata.results[i].AccountingDocument === jsonmodelwipedit.oData[j].JEID) {
 
-                                        odata.results[i].Status = "Changed";
-
+                                        odata.results[i].Status = "Updated";
+                                        odata.results[i].StatusObject = "Error";
+                                        odata.results[i].StatusIcon = 'sap-icon://edit';
                                         changedflag++;
                                     }
 
@@ -97,14 +108,17 @@ sap.ui.define([
                             }
 
                             for (var j = 0; j < odata2.results.length; j++) {
-                                if (jsonmodelwipedit.oData[j].Status === "01") {
+                                if (jsonmodelwipedit.oData[j].Status === "01" &  odata.results[0].Project === jsonmodelwipedit.oData[j].ProjectID) {
                                     odata.results[odata.results.length] = {}
                                     odata.results[odata.results.length - 1].AccountingDocument = jsonmodelwipedit.oData[j].JEID,
                                     odata.results[odata.results.length - 1].Project = jsonmodelwipedit.oData[j].ProjectID,
                                     odata.results[odata.results.length - 1].DocumentItemText = jsonmodelwipedit.oData[j].Notes,
                                     odata.results[odata.results.length - 1].WBSElement = jsonmodelwipedit.oData[j].WBS,
                                     odata.results[odata.results.length - 1].Quantity = jsonmodelwipedit.oData[j].Quantity
-                                   
+                                    odata.results[odata.results.length - 1].Status = "New";
+                                    odata.results[odata.results.length - 1].StatusObject = "Information";
+                                    odata.results[odata.results.length - 1].StatusIcon = 'sap-icon://notes';
+                                    newFlag++;
                                 }
 
                             }
@@ -113,12 +127,22 @@ sap.ui.define([
                             changedjson.setData(changedflag);
                             this.getView().setModel(changedjson, "changedcount");
 
-                            var newcount = (odata.results.length) - changedflag;
+                            var newcount = newFlag;
                             var newjson = new JSONModel();
                             newjson.setData(newcount);
                             this.getView().setModel(newjson, "newcount");
 
+                            var orignal = odata.results.length- newcount - changedflag;
+                            var orignaljson = new JSONModel();
+                            orignaljson.setData(orignal);
+                            this.getView().setModel(orignaljson, "orignal");
+
+                            var count = new JSONModel();
+                            count.setData(odata.results.length);
+                            this.getView().setModel(count, "count1"); 
+
                             this.getView().byId("wiptable").setModel(jsonmodelmainjrnlentry, "wipentry");
+                            busyDialog.close();
                             // this.getView().byId("wiptable").setModel(jsonmodelwipedit, "wipentry");
                         }.bind(this),
                         error: function (msg2) {}.bind(this)
@@ -126,7 +150,9 @@ sap.ui.define([
 
                     });
                 }.bind(this),
-                error: function (msg) {}.bind(this)
+                error: function (msg) {
+                    busyDialog.close();
+                }.bind(this)
             });
 
             /*     promiseJournalItems = new Promise((res, rej) => {
@@ -248,8 +274,9 @@ sap.ui.define([
                             saveapi.create("/YY1_WIPEDITS", newpayload, {
                                 success: (odata) => {
                                     MessageToast.show("Record Created");
-                                    this.onInit();
+                                    //this.onInit();
                                     this.nDialog.close();
+                                    this._getwipprojectdata();
                                     debugger;
                                 },
                                 error: (err) => {
