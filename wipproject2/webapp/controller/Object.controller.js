@@ -89,14 +89,14 @@ sap.ui.define([
                     wipeditsmdl.read("/YY1_WIPEDITS", {
                         success: function (odata2) {
                             var jsonmodelwipedit = new JSONModel();
-                            debugger;
+                           
                             jsonmodelwipedit.setData(odata2.results);
                             var changedflag = 0, newFlag = 0;
 
                             for (var i = 0; i < odata.results.length; i++) {
                                 for (var j = 0; j < odata2.results.length; j++) {
                                     if (odata.results[i].AccountingDocument === jsonmodelwipedit.oData[j].JEID) {
-
+                                        
                                         odata.results[i].Status = "Updated";
                                         odata.results[i].StatusObject = "Error";
                                         odata.results[i].StatusIcon = 'sap-icon://edit';
@@ -256,7 +256,7 @@ sap.ui.define([
                         success:  (odata2) => {
                             var jsonmodelwipedit = new JSONModel();                        
                             jsonmodelwipedit.setData(odata2.results);
-                            debugger;
+                            
                             var jeid = parseInt(odata2.results[0].JEID);
 
                             var newpayload = {
@@ -277,7 +277,7 @@ sap.ui.define([
                                     //this.onInit();
                                     this.nDialog.close();
                                     this._getwipprojectdata();
-                                    debugger;
+                                    
                                 },
                                 error: (err) => {
                                     MessageToast.show(err);
@@ -296,28 +296,30 @@ sap.ui.define([
           
         },
         _editjerecord: function () {
+           
             var editpayload = {
                 Status: "02",
                 ID: "1",
-                ProjectID: this.byId("newprojectid").getValue(),
+                ProjectID: this.byId("editrightprojectid").getValue(),
                 Quantity: this.getView().byId("editrightunbilamnt").getValue(),
                 WBS: this.getView().byId("editrightwpkg").getValue(),
                 Notes: this.getView().byId("editrightnotes").getValue(),
                 ActivityType: this.getView().byId("editrightacttype").getValue()
             };
+            debugger;
             var editapi = this.getOwnerComponent().getModel("wipeditsMDL");
             var eset = "/YY1_WIPEDITS('" + this.accdocjeid + "')";
 
             editapi.update(eset, editpayload, {
                 success: (odata) => {
                     MessageToast.show("Updated!");
-                    this.onInit();
-                    this.nDialog.close();
+                    this._getwipprojectdata();
+                    this.pDialog.close();
                     debugger;
                 },
                 error: (err) => {
                     MessageToast.show(err);
-                    this.nDialog.close();
+                    this.pDialog.close();
                     debugger;
                 }
             });
@@ -329,14 +331,24 @@ sap.ui.define([
 
             if (oevent.getParameter("selected")) {
                 this.selflag ++;
-                debugger;
+                
                 this.accdocjeid = oevent.getSource().getModel("wipentry").getData()[oevent.getSource().getSelectedContextPaths()[0].split('/')[1]].AccountingDocument;
                 this.qty = oevent.getSource().getModel("wipentry").getData()[oevent.getSource().getSelectedContextPaths()[0].split('/')[1]].Quantity;
                 this.wrkpkg = oevent.getSource().getModel("wipentry").getData()[oevent.getSource().getSelectedContextPaths()[0].split('/')[1]].WBSElement;
                 this.notes = oevent.getSource().getModel("wipentry").getData()[oevent.getSource().getSelectedContextPaths()[0].split('/')[1]].DocumentItemText;
                 this.acttype = "A010";
+            }else{
+                this.selflag --;
+
             }
 
+            if( (oevent.getParameter("selected")) & (oevent.getParameter("selectAll")) ){
+                this.selflag = 2;
+            }
+            else{
+                return;
+            }
+           
         },
 
         _closenewrecord: function () {
@@ -354,13 +366,15 @@ sap.ui.define([
             }
             if (this.selflag < 1) {
                 MessageBox.alert("Please select atleast 1 row to edit");
-            } else {
-                this.pDialog.open();
+            } 
+            // else {
+            //     this.pDialog.open();
 
-            }
-            debugger;
+            // }
+           
             if (this.selflag === 1) {
-                debugger;
+               
+              
                 this.getView().byId("editleftunbilamnt").setText(this.qty);
                 this.getView().byId("editleftwpkg").setText(this.wrkpkg);
                 this.getView().byId("editleftnotes").setText(this.notes);
@@ -385,9 +399,11 @@ sap.ui.define([
                 this.getView().byId("editrightnotes").setValue(this.notes);
                 this.getView().byId("editrightacttype").setValue(this.acttype);
                 this.selflag = 0;
+                this.pDialog.open();
             }
             if (this.selflag > 1) {
-                debugger;
+                
+                
                 this.getView().byId("editleftunbilamnt").setText("<Multiple Values>");
                 this.getView().byId("editleftwpkg").setText("<Multiple Values>");
                 this.getView().byId("editleftnotes").setText("<Multiple Values>");
@@ -406,7 +422,7 @@ sap.ui.define([
                 if (this.getView().byId("editrightacttype").getValue() !== '') {
                     this.getView().byId("editrightacttype").setValue();
                 }
-
+                this.pDialog.open();
 
                 // this.getView().byId("editrightunbilamnt").setValue(this.qty);
                 // this.getView().byId("editrightwpkg").setValue(this.wrkpkg);
