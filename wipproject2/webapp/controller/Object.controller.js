@@ -46,10 +46,10 @@ sap.ui.define([
                 this.pid = oevent.getParameter("arguments").pid;
             }
 
-            var busyDialog = new sap.m.BusyDialog({
-                title:"Loading Data",
-                text:"... now loading the data from a far away server"
-            }).open();
+            // var busyDialog = new sap.m.BusyDialog({
+            //     title:"Loading Data",
+            //     text:"... now loading the data from a far away server"
+            // }).open();
 
             
             const pid = this.pid,
@@ -70,7 +70,7 @@ sap.ui.define([
                 },
                 error: (err) => {
                     MessageToast.show(err);
-                    busyDialog.close();
+                    //busyDialog.close();
                 }
             });
             jrnlentrymdl.read("/YY1_JournalEntryItem", {
@@ -133,15 +133,7 @@ sap.ui.define([
                         }
 
                             }
-                            // for (var j = 0; j < odata2.results.length; j++) {
-                            //     if (jsonmodelwipedit.oData[j].Status === "02" 
-                            //             &  odata.results[0].Project === jsonmodelwipedit.oData[j].ProjectID
-                            //                 & odata.results[0].AccountingDocument === jsonmodelwipedit.oData[j].JEID
-                            //                 ) {
-                            //                     odata.results[j]. Quantity = jsonmodelwipedit.oData[j].Quantity
-
-                            //     }
-                            // }
+                  
 
                             var changedjson = new JSONModel();
                             changedjson.setData(changedflag);
@@ -162,16 +154,17 @@ sap.ui.define([
                             this.getView().setModel(count, "count1"); 
 
                             this.getView().byId("wiptable").setModel(jsonmodelmainjrnlentry, "wipentry");
-                            busyDialog.close();
+                            //busyDialog.close();
                             // this.getView().byId("wiptable").setModel(jsonmodelwipedit, "wipentry");
                         }.bind(this),
-                        error: function (msg2) { busyDialog.close();}.bind(this)
+                        error: function (msg2) { //busyDialog.close();
+                        }.bind(this)
 
 
                     });
                 }.bind(this),
                 error: function (msg) {
-                    busyDialog.close();
+                    //busyDialog.close();
                 }.bind(this)
             });
 
@@ -216,6 +209,31 @@ sap.ui.define([
 
 
         },
+        onSuggestionItemSelected: function(oevent) {
+			var oSelectedRow = oevent.getParameter("selectedRow").getBindingContext("wipentry").getObject();
+
+			var jsonarray = [];
+			// var finalarray = [];
+
+			var owndata = {
+				AccountingDocument: oSelectedRow.AccountingDocument,
+                ReferenceDocument: oSelectedRow.ReferenceDocument,
+                WBSElement: oSelectedRow.WBSElement,
+                AmountInGlobalCurrency: oSelectedRow.AmountInGlobalCurrency,
+                DocumentItemText: oSelectedRow.DocumentItemText
+				
+			};
+			jsonarray.push(owndata);
+
+			// jsonarray = {
+			// 	"" : finalarray
+			// };
+
+			var jsonmodel = new JSONModel();
+			jsonmodel.setData(jsonarray);
+			this.getView().byId("wiptable").setModel(jsonmodel, "wipentry");
+
+		}, 
         _searchaccdoc: function (oevent) {
 
             var xfilter = [];
@@ -316,8 +334,90 @@ sap.ui.define([
           
         },
         _editjerecord: function () {
-           
-            var editpayload = {
+
+            if(this.statustext === 'Original'){
+
+                var editpayload = {
+                    JEID:  this.accdocjeid,
+                    Status: "02",
+                    ID: "1",
+                    ProjectID: this.byId("editrightprojectid").getValue(),
+                    Quantity: this.getView().byId("editrightunbilamnt").getValue(),
+                    WBS: this.getView().byId("editrightwpkg").getValue(),
+                    Notes: this.getView().byId("editrightnotes").getValue(),
+                    ActivityType: this.getView().byId("editrightacttype").getValue()
+                };
+
+            var saveeditapi = this.getOwnerComponent().getModel("wipeditsMDL");
+            saveeditapi.create("/YY1_WIPEDITS", editpayload, {
+                                success: (odata) => {
+                                   // MessageToast.show("Record Created");
+                                    //this.onInit();
+                                    this.pDialog.close();
+                                    this._getwipprojectdata();
+                                    
+                                },
+                                error: (err) => {
+                                    MessageToast.show(err);
+                                    this.pDialog.close();
+                                    
+                                }
+                            });
+
+
+
+            }
+            if((this.statustext === 'Updated') || (this.statustext === 'New') ){
+             
+                var editapi = this.getOwnerComponent().getModel("wipeditsMDL");
+                var filterjeid = new Filter("JEID",FilterOperator.EQ,this.accdocjeid)
+                editapi.read("/YY1_WIPEDITS",{
+                    filters : [filterjeid],
+                    success : (odata) => {
+
+              
+
+                        // for(var i=0;i<odata.results.length;++i){
+                        //     if(odata.results[i].JEID === this.accdocjeid){
+                        //        var esetguid = odata.results[i].SAP_UUID;
+                        //     }
+                        // }
+
+                        var esetguid = odata.results[0].SAP_UUID;
+
+                        var editpayload = {
+                            Status: "02",
+                            ID: "1",
+                            ProjectID: this.byId("editrightprojectid").getValue(),
+                            Quantity: this.getView().byId("editrightunbilamnt").getValue(),
+                            WBS: this.getView().byId("editrightwpkg").getValue(),
+                            Notes: this.getView().byId("editrightnotes").getValue(),
+                            ActivityType: this.getView().byId("editrightacttype").getValue()
+                        };
+                       
+                        var editapi = this.getOwnerComponent().getModel("wipeditsMDL");
+                        //var eset = "/YY1_WIPEDITS('" + this.accdocjeid + "')";
+                        //var esetguid = "42010a03-27dd-1eed-8390-6dc4fe7aa967";
+                        var esetwithguid = "/YY1_WIPEDITS(guid'" + esetguid + "')";
+                        editapi.update(esetwithguid, editpayload, {
+                            success: (odata) => {
+                                MessageToast.show("Updated!");
+                                this._getwipprojectdata();
+                                this.pDialog.close();
+                                
+                            },
+                            error: (err) => {
+                                MessageToast.show(err);
+                                this.pDialog.close();
+                                busyDialog.close();
+                                
+                            }
+                        });
+            
+
+                    },
+                    error : (err) => {
+  var editpayload = {
                 Status: "02",
                 ID: "1",
                 ProjectID: this.byId("editrightprojectid").getValue(),
@@ -326,9 +426,9 @@ sap.ui.define([
                 Notes: this.getView().byId("editrightnotes").getValue(),
                 ActivityType: this.getView().byId("editrightacttype").getValue()
             };
-            debugger;
+           
             var editapi = this.getOwnerComponent().getModel("wipeditsMDL");
-            var eset = "/YY1_WIPEDITS('" + this.accdocjeid + "')";
+            //var eset = "/YY1_WIPEDITS('" + this.accdocjeid + "')";
             var esetguid = "42010a03-27dd-1eed-8390-6dc4fe7aa967";
             var esetwithguid = "/YY1_WIPEDITS(guid'" + esetguid + "')";
             editapi.update(esetwithguid, editpayload, {
@@ -336,17 +436,26 @@ sap.ui.define([
                     MessageToast.show("Updated!");
                     this._getwipprojectdata();
                     this.pDialog.close();
-                    debugger;
+                    
                 },
                 error: (err) => {
                     MessageToast.show(err);
                     this.pDialog.close();
                     busyDialog.close();
-                    debugger;
+                    
                 }
             });
 
 
+                    }
+
+
+
+                });
+
+
+          
+        }
         },
         _wiptableselchange: function (oevent) {
 
@@ -354,6 +463,7 @@ sap.ui.define([
             if (oevent.getParameter("selected")) {
                 this.selflag ++;
                 
+                this.statustext = oevent.mParameters.listItem.mAggregations.cells[1].getText();
                 this.accdocjeid = oevent.getSource().getModel("wipentry").getData()[oevent.getSource().getSelectedContextPaths()[0].split('/')[1]].AccountingDocument;
                 this.qty = oevent.getSource().getModel("wipentry").getData()[oevent.getSource().getSelectedContextPaths()[0].split('/')[1]].Quantity;
                 this.wrkpkg = oevent.getSource().getModel("wipentry").getData()[oevent.getSource().getSelectedContextPaths()[0].split('/')[1]].WBSElement;
