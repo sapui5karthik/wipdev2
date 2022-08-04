@@ -1,9 +1,5 @@
-<core:FragmentDefinition
-   xmlns="sap.m"
-   xmlns:core="sap.ui.core" xmlns:layout="sap.ui.layout" xmlns:form="sap.ui.layout.form">
-   <Dialog
-      id="changedialog"  draggable="true" resizable="false"
-      title="Change Record" contentHeight="530px" contentWidth="680px">
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:layout="sap.ui.layout" xmlns:form="sap.ui.layout.form">
+   <Dialog id="changedialog" draggable="true" resizable="false" title="Change Record" contentHeight="530px" contentWidth="680px">
       
       <layout:BlockLayout background="Default" visible="true">
                 <layout:content>
@@ -39,7 +35,7 @@
                                                             <Label text="Unbilled Amount" design="Standard" width="231.40625px" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                                         </form:label>
                                                         <form:fields>
-                                                           <ObjectStatus state="Information" id="editleftunbilamnt" />
+                                                           <ObjectStatus state="Information" id="editleftunbilamnt"/>
                                                         </form:fields>
                                                     </form:FormElement>
                                                     <form:FormElement visible="true">
@@ -47,7 +43,7 @@
                                                             <Label text="Workpage" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                                         </form:label>
                                                         <form:fields>
-                                                            <ObjectStatus state="Information" id="editleftwpkg" />
+                                                            <ObjectStatus state="Information" id="editleftwpkg"/>
                                                         </form:fields>
                                                     </form:FormElement>
                                                     <form:FormElement visible="true">
@@ -55,7 +51,7 @@
                                                             <Label text="Activity Type" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                                         </form:label>
                                                         <form:fields>
-                                                            <ObjectStatus state="Information" id="editleftacttype" />
+                                                            <ObjectStatus state="Information" id="editleftacttype"/>
                                                         </form:fields>
                                                     </form:FormElement>
                                                     <form:FormElement visible="true">
@@ -63,7 +59,7 @@
                                                             <Label text="Notes" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                                         </form:label>
                                                         <form:fields>
-                                                           <ObjectStatus state="Information" id="editleftnotes" />
+                                                           <ObjectStatus state="Information" id="editleftnotes"/>
                                                         </form:fields>
                                                     </form:FormElement>
                                                 </form:formElements>
@@ -80,7 +76,10 @@
                                 <layout:content>
                                     <form:Form width="100%" editable="true" visible="true">
                                         <form:title>
-                                            <core:Title text="Change Data (if no changes, leave the field blank)" level="Auto" />
+                                           
+                                            <core:Title text="Change Data" level="Auto"/>
+                                            <!-- <core:Title text="(if no changes, leave the field blank)" /> -->
+                                       
                                         </form:title>
                                         <form:formContainers>
                                             <form:FormContainer visible="true">

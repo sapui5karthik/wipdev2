@@ -128,7 +128,10 @@ sap.ui.define([
                                 &  odata.results[0].Project === jsonmodelwipedit.oData[j].ProjectID
                                     & this.accdocjeid === jsonmodelwipedit.oData[j].JEID
                                     ) {
-                                        odata.results[this.i].Quantity = jsonmodelwipedit.oData[j].Quantity
+                                        odata.results[this.i].Quantity = jsonmodelwipedit.oData[j].Quantity,
+                                        odata.results[this.i].WBSElement = jsonmodelwipedit.oData[j].WBS,
+                                       // odata.results[this.i].Quantity = jsonmodelwipedit.oData[j].Quantity,
+                                        odata.results[this.i].DocumentItemText = jsonmodelwipedit.oData[j].Notes
 
                         }
 
@@ -363,9 +366,6 @@ sap.ui.define([
                                     
                                 }
                             });
-
-
-
             }
             if((this.statustext === 'Updated') || (this.statustext === 'New') ){
              
@@ -417,34 +417,7 @@ sap.ui.define([
 
                     },
                     error : (err) => {
-  var editpayload = {
-                Status: "02",
-                ID: "1",
-                ProjectID: this.byId("editrightprojectid").getValue(),
-                Quantity: this.getView().byId("editrightunbilamnt").getValue(),
-                WBS: this.getView().byId("editrightwpkg").getValue(),
-                Notes: this.getView().byId("editrightnotes").getValue(),
-                ActivityType: this.getView().byId("editrightacttype").getValue()
-            };
-           
-            var editapi = this.getOwnerComponent().getModel("wipeditsMDL");
-            //var eset = "/YY1_WIPEDITS('" + this.accdocjeid + "')";
-            var esetguid = "42010a03-27dd-1eed-8390-6dc4fe7aa967";
-            var esetwithguid = "/YY1_WIPEDITS(guid'" + esetguid + "')";
-            editapi.update(esetwithguid, editpayload, {
-                success: (odata) => {
-                    MessageToast.show("Updated!");
-                    this._getwipprojectdata();
-                    this.pDialog.close();
-                    
-                },
-                error: (err) => {
-                    MessageToast.show(err);
-                    this.pDialog.close();
-                    busyDialog.close();
-                    
-                }
-            });
+
 
 
                     }
