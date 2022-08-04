@@ -42,31 +42,63 @@
                         <content>
                             <Table id="wiptable" items="{path : 'wipentry>/'}" mode="MultiSelect" selectionChange="_wiptableselchange">
                                 <headerToolbar>
-                                    <OverflowToolbar>
+                                    <Toolbar>
                                         <content>
                                             <Title text="Time Entries" level="H2"/>
                                             <ObjectStatus state="Success" text="Orignal:{orignal>/}"/>
                                             <ObjectStatus state="Error" text="Changed:{changedcount>/}"/>
                                             <ObjectStatus state="Information" text="New: {newcount>/}"/>
                                             <ToolbarSpacer/>
-                                            <Input width="auto" placeholder="Accouting Document..." submit="_searchaccdoc" id="_search"/>
-                                            <Button icon="sap-icon://refresh" press="_refresh"/>
+                                            <Input id="suggestionhelpbox" placeholder="Search by typing any of the following fields.." visible="true" width="500px"
+								showSuggestion="true" showTableSuggestionValueHelp="false" suggestionRows="{wipentry>/}"
+								suggestionItemSelected="onSuggestionItemSelected">
+								<suggestionColumns>
+									<Column >
+										<Label text="{i18n>txt_jeid}"/>
+									</Column>
+									<Column>
+										<Label text="{i18n>txt_ref}"/>
+									</Column>
+									<Column>
+										<Label text="{i18n>txt_wrkpckg}"/>
+									</Column>
+									<Column>
+										<Label text="{i18n>txt_amnt}"/>
+									</Column>
+									<Column>
+										<Label text="{i18n>txt_notes}"/>
+									</Column>
+									
+								</suggestionColumns>
+								<suggestionRows>
+									<ColumnListItem>
+										<Label text="{wipentry>AccountingDocument}" width="auto" wrapping="true"/>
+										<Label text="{wipentry>ReferenceDocument}" width="auto" wrapping="true"/>
+										<Label text="{wipentry>WBSElement}" width="auto" wrapping="true"/>									
+										<Label text="{wipentry>AmountInGlobalCurrency}" width="auto" wrapping="true"/>
+										<Label text="{wipentry>DocumentItemText}" width="auto" wrapping="true"/>
+										
+									</ColumnListItem>
+								</suggestionRows>
+							</Input>
+                                            <Input width="auto" placeholder="Accouting Document..." submit="_searchaccdoc" id="_search" visible="false"/>
+                                            <Button icon="sap-icon://refresh" press="_getwipprojectdata"/>
                                             <Button text="New" width="auto" press="_newjecreation"/>
                                             <Button text="Edit" width="auto" press="_updatejeRecord"/>
                                             <Button text="Delete" width="auto"/>
-                                            <Button text="Transfer" width="auto"/>
+                                            <Button text="Transfer" width="auto" visible="false"/>
                                             <Button text="Combine" width="auto"/>
                                             <Button text="Split" width="auto"/>
                                             <Button
                                             text="Finalize" width="auto"/>
                                             <!-- <CheckBox text="Fixed Layout" selected="true" select="onCheckBoxSelect"/> -->
                                             <Button icon="sap-icon://action-settings" press="onPersoButtonPressed">
-                                                <layoutData>
+                                                <!-- <layoutData>
                                                     <OverflowToolbarLayoutData priority="NeverOverflow"/>
-                                                </layoutData>
+                                                </layoutData> -->
                                             </Button>
                                         </content>
-                                    </OverflowToolbar>
+                                    </Toolbar>
                                 </headerToolbar>
                                 <columns>
                                     <Column width="28px">
@@ -131,38 +163,18 @@
                         </content>
                     </IconTabFilter>
                     <!--                                   <IconTabFilter icon="sap-icon://inventory" iconColor="Negative" count="{/ProductCollectionStats/Counts/Weight/Overweight}" text="Overweight" key="Overweight"/> -->
-                    <IconTabFilter icon="sap-icon://save" iconColor="Critical" text="Draft" key="draft" visible="false">
+                    <IconTabFilter icon="sap-icon://expense-report" iconColor="Critical" text="WIP Expenses" key="wipexpense" visible="true">
                         <content>
-                            <Table id="table_approvedcer" width="auto" mode="None" showSeparators="All" growing="true" growingThreshold="20" growingScrollToLoad="true" class="sapUiResponsiveMargin" items="{path : 'aprdcers>/'}">
-                                <infoToolbar/>
-                                <headerToolbar/>
-                                <columns>
-                                    <Column width="300px" hAlign="Left" vAlign="Top" minScreenWidth="Phone" demandPopin="false" popinDisplay="Inline" mergeDuplicates="false">
-                                        <header>
-                                            <Text text="Project" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                        </header>
-                                        <footer/>
-                                    </Column>
-                                    <Column width="auto" hAlign="Left" vAlign="Top" minScreenWidth="Phone" demandPopin="false" popinDisplay="Inline" mergeDuplicates="false">
-                                        <header>
-                                            <Text text="Internal Order" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                        </header>
-                                        <footer/>
-                                    </Column>
-                                </columns>
-                                <items>
-                                    <ColumnListItem>
-                                        <cells>
-                                            <ObjectIdentifier title="{aprdcers>ZProjectDescription}" titlePress="_ceriddetailsappr" text="{aprdcers>ZCerId}(Status : {aprdcers>ZCerStatusDes})" titleActive="true" visible="true"/>
-                                            <Text text="{aprdcers>ZInternalOrder}" width="auto" maxLines="1" wrapping="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
-                                        </cells>
-                                    </ColumnListItem>
-                                </items>
-                            </Table>
+                          <Text text="WIP EXPENSES" />
                         </content>
 
                     </IconTabFilter>
+                    <IconTabFilter icon="sap-icon://tools-opportunity" iconColor="Negative" text="WIP Unit Based" key="wipunitbased" visible="true">
+                        <content>
+                            <Text text="WIP Unit Based" />
+                        </content>
 
+                    </IconTabFilter>
                 </items>
 
             </IconTabBar>

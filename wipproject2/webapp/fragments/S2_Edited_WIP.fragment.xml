@@ -80,7 +80,7 @@
                                 <layout:content>
                                     <form:Form width="100%" editable="true" visible="true">
                                         <form:title>
-                                            <core:Title text="Change Data" level="Auto"/>
+                                            <core:Title text="Change Data (if no changes, leave the field blank)" level="Auto" />
                                         </form:title>
                                         <form:formContainers>
                                             <form:FormContainer visible="true">
@@ -150,7 +150,7 @@
             </layout:BlockLayout>
 
     <buttons>
-        <Button text="Edit" type="Accept" press="_editjerecord"/>
+        <Button text="Save" type="Accept" press="_editjerecord"/>
         <Button text="Close" type="Reject" press="_closechangerecord"/>
       </buttons>
 
