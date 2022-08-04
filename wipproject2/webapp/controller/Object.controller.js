@@ -91,7 +91,7 @@ sap.ui.define([
                             var jsonmodelwipedit = new JSONModel();
                            
                             jsonmodelwipedit.setData(odata2.results);
-                            var changedflag = 0, newFlag = 0;
+                            var changedflag = 0, newFlag = 0, updateflag =0;
 
                             for (var i = 0; i < odata.results.length; i++) {
                                 for (var j = 0; j < odata2.results.length; j++) {
@@ -101,6 +101,10 @@ sap.ui.define([
                                         odata.results[i].StatusObject = "Error";
                                         odata.results[i].StatusIcon = 'sap-icon://edit';
                                         changedflag++;
+                                        updateflag++;
+                                        if(updateflag === 1){
+                                            this.i = i;
+                                        }
                                     }
 
                                 }
@@ -120,8 +124,24 @@ sap.ui.define([
                                     odata.results[odata.results.length - 1].StatusIcon = 'sap-icon://notes';
                                     newFlag++;
                                 }
+                                if (jsonmodelwipedit.oData[j].Status === "02" 
+                                &  odata.results[0].Project === jsonmodelwipedit.oData[j].ProjectID
+                                    & this.accdocjeid === jsonmodelwipedit.oData[j].JEID
+                                    ) {
+                                        odata.results[this.i].Quantity = jsonmodelwipedit.oData[j].Quantity
+
+                        }
 
                             }
+                            // for (var j = 0; j < odata2.results.length; j++) {
+                            //     if (jsonmodelwipedit.oData[j].Status === "02" 
+                            //             &  odata.results[0].Project === jsonmodelwipedit.oData[j].ProjectID
+                            //                 & odata.results[0].AccountingDocument === jsonmodelwipedit.oData[j].JEID
+                            //                 ) {
+                            //                     odata.results[j]. Quantity = jsonmodelwipedit.oData[j].Quantity
+
+                            //     }
+                            // }
 
                             var changedjson = new JSONModel();
                             changedjson.setData(changedflag);
@@ -145,7 +165,7 @@ sap.ui.define([
                             busyDialog.close();
                             // this.getView().byId("wiptable").setModel(jsonmodelwipedit, "wipentry");
                         }.bind(this),
-                        error: function (msg2) {}.bind(this)
+                        error: function (msg2) { busyDialog.close();}.bind(this)
 
 
                     });
@@ -309,8 +329,9 @@ sap.ui.define([
             debugger;
             var editapi = this.getOwnerComponent().getModel("wipeditsMDL");
             var eset = "/YY1_WIPEDITS('" + this.accdocjeid + "')";
-
-            editapi.update(eset, editpayload, {
+            var esetguid = "42010a03-27dd-1eed-8390-6dc4fe7aa967";
+            var esetwithguid = "/YY1_WIPEDITS(guid'" + esetguid + "')";
+            editapi.update(esetwithguid, editpayload, {
                 success: (odata) => {
                     MessageToast.show("Updated!");
                     this._getwipprojectdata();
@@ -320,6 +341,7 @@ sap.ui.define([
                 error: (err) => {
                     MessageToast.show(err);
                     this.pDialog.close();
+                    busyDialog.close();
                     debugger;
                 }
             });
