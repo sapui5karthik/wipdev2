@@ -1,6 +1,7 @@
-sap.ui.define([], function () {
-    "use strict";
-
+sap.ui.define([
+	"sap/ui/core/format/DateFormat"
+], function(DateFormat) {
+	"use strict";
     return {
         date1: function(d1) {
 			if (!d1 || d1 === undefined) {
@@ -77,14 +78,14 @@ dateTimebackend: function(date) {
 				});
 				var subFromDate = oDateFormat.format(new Date(date));
 
-				return subFromDate + "T18:00:00";
+				return subFromDate + "T00:00:00";
 			} else {
 				return "";
 			}
 
 		},
 		dateTime: function(date) {
-		//12 01, 2021
+		//Dec 01, 2021
 			if (date !== undefined) {
 
 				var oDateFormat = DateFormat.getDateInstance({

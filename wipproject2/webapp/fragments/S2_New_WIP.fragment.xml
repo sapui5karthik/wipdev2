@@ -31,7 +31,7 @@
 				<Label text="Activity Type" />
 				<Input width="auto" id="newacttype"/>
                 <Label text="Service Date" />
-				<DatePicker width="auto" id="servicedate"/>
+				<DatePicker width="auto" id="newservicedate"/>
 <!--                 
                  <Button text="Save" type="Accept"/>
                 <Button text="Close" type="Reject" press="_closenewrecord"/> -->

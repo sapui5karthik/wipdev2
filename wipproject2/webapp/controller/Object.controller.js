@@ -204,28 +204,19 @@ sap.ui.define([
         },
         _newjecreation: function (oevent) {
 
-            // create dialog lazily
-            // if (!this.nDialog) {
-            // this.nDialog = this.loadFragment({
-            // name: "com.chappota.wippoc2.wipproject2.fragments.S2_New_WIP"
-            // });
-            // }
-            // this.nDialog.then(function(oDialog) {
-            // oDialog.open();
-
-
-            // });
+           
             if (!this.nDialog) {
                 this.nDialog = sap.ui.xmlfragment(this.getView().getId(), "com.chappota.wippoc2.wipproject2.fragments.S2_New_WIP", this);
                 this.getView().addDependent(this.nDialog);
             }
 
             this.nDialog.open();
-            //        var projectid = this.byId("newprojectid").getValue();
+         
 
             var unbilled = this.byId("newunbilled").getValue();
             var notes = this.byId("newnotes").getValue();
             var acttype = this.byId("newacttype").getValue();
+            this.getView().byId("newservicedate").setValue(this.formatter.dateTime(new Date()));
             if (unbilled !== "") {
                 this.byId("newunbilled").setValue();
             }
@@ -260,8 +251,8 @@ sap.ui.define([
                         Quantity: this.getView().byId("newunbilled").getValue(),
                         WBS: this.getView().byId("newworkpackage").getValue(),
                         Notes: this.getView().byId("newnotes").getValue(),
-                        ActivityType: this.getView().byId("newacttype").getValue()
-                        //          ServiceDate : "2022-07-29:T00:00:00" //this.getView().byId("newservicedate").getValue()  //
+                        ActivityType: this.getView().byId("newacttype").getValue(),
+                        ServiceDate : this.formatter.dateTimebackendwithtime(this.getView().byId("newservicedate").getValue())
                     };
                     var saveapi = this.getOwnerComponent().getModel("wipeditsMDL");
                     saveapi.create("/YY1_WIPEDITS", newpayload, {
@@ -327,11 +318,6 @@ sap.ui.define([
                     success: (odata) => {
 
 
-                        // for(var i=0;i<odata.results.length;++i){
-                        //     if(odata.results[i].JEID === this.accdocjeid){
-                        //        var esetguid = odata.results[i].SAP_UUID;
-                        //     }
-                        // }
 
                         var esetguid = odata.results[0].SAP_UUID;
 
@@ -346,8 +332,7 @@ sap.ui.define([
                         };
 
                         var editapi = this.getOwnerComponent().getModel("wipeditsMDL");
-                        // var eset = "/YY1_WIPEDITS('" + this.accdocjeid + "')";
-                        // var esetguid = "42010a03-27dd-1eed-8390-6dc4fe7aa967";
+                       
                         var esetwithguid = "/YY1_WIPEDITS(guid'" + esetguid + "')";
                         editapi.update(esetwithguid, editpayload, {
                             success: (odata) => {
@@ -382,12 +367,6 @@ sap.ui.define([
                     success: (odata) => {
 
 
-                        // for(var i=0;i<odata.results.length;++i){
-                        //     if(odata.results[i].JEID === this.accdocjeid){
-                        //        var esetguid = odata.results[i].SAP_UUID;
-                        //     }
-                        // }
-
                         var esetguid = odata.results[0].SAP_UUID;
 
                         var editpayload = {
@@ -401,8 +380,7 @@ sap.ui.define([
                         };
 
                         var editapi = this.getOwnerComponent().getModel("wipeditsMDL");
-                        // var eset = "/YY1_WIPEDITS('" + this.accdocjeid + "')";
-                        // var esetguid = "42010a03-27dd-1eed-8390-6dc4fe7aa967";
+                      
                         var esetwithguid = "/YY1_WIPEDITS(guid'" + esetguid + "')";
                         editapi.update(esetwithguid, editpayload, {
                             success: (odata) => {
@@ -455,9 +433,7 @@ sap.ui.define([
         },
 
         _closenewrecord: function () {
-            // this.nDialog.then(function(oDialog) {
-            // oDialog.close();
-            // });
+           
             this.nDialog.close();
         },
         _updatejeRecord: function (oevent) {
@@ -470,10 +446,7 @@ sap.ui.define([
             if (this.selflag < 1) {
                 MessageBox.alert("Please select atleast 1 row to edit");
             }
-            // else {
-            //     this.pDialog.open();
-
-            // }
+           
 
             if (this.selflag === 1) {
 
@@ -527,10 +500,7 @@ sap.ui.define([
                 }
                 this.pDialog.open();
 
-                // this.getView().byId("editrightunbilamnt").setValue(this.qty);
-                // this.getView().byId("editrightwpkg").setValue(this.wrkpkg);
-                // this.getView().byId("editrightnotes").setValue(this.notes);
-                // this.getView().byId("editrightacttype").setValue(this.acttype);
+              
             }
 
         },
