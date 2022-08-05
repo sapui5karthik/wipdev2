@@ -53,7 +53,12 @@
 								showSuggestion="true" showTableSuggestionValueHelp="false" suggestionRows="{wipentry>/}"
 								suggestionItemSelected="onSuggestionItemSelected">
 								<suggestionColumns>
-                                
+                                 <Column visible="false">
+                                  <Text text=""/>
+                                    </Column>
+                                    <Column visible="false">
+                                        <Text text="{i18n>txt_chngind}"/>
+                                    </Column>
 									<Column >
 										<Label text="{i18n>txt_jeid}"/>
 									</Column>
@@ -73,7 +78,9 @@
 								</suggestionColumns>
 								<suggestionRows>
 									<ColumnListItem>
-								
+<ObjectStatus state="{= ${wipentry>StatusObject} === undefined ? 'Success' : ${wipentry>StatusObject}}" icon="{= ${wipentry>StatusIcon} === undefined ? 'sap-icon://accept' : ${wipentry>StatusIcon}}"/>
+<ObjectStatus state="{= ${wipentry>StatusObject} === undefined ? 'Success' : ${wipentry>StatusObject}}" text="{= ${wipentry>Status} === undefined ? 'Original' : ${wipentry>Status}}"/>
+
 <ObjectStatus state="{= ${wipentry>StatusObject} === undefined ? 'Success' : ${wipentry>StatusObject}}" text="{wipentry>AccountingDocument}"/>
 
 <ObjectStatus state="{= ${wipentry>StatusObject} === undefined ? 'Success' : ${wipentry>StatusObject}}" text="{wipentry>ReferenceDocument}"/>
@@ -82,6 +89,7 @@
 <ObjectStatus state="{= ${wipentry>StatusObject} === undefined ? 'Success' : ${wipentry>StatusObject}}" text="{wipentry>WBSElement}"/>
 <ObjectStatus state="{= ${wipentry>StatusObject} === undefined ? 'Success' : ${wipentry>StatusObject}}" text="{wipentry>AmountInGlobalCurrency}"/>
 <ObjectStatus state="{= ${wipentry>StatusObject} === undefined ? 'Success' : ${wipentry>StatusObject}}" text="{wipentry>DocumentItemText}"/>
+
 									</ColumnListItem>
 								</suggestionRows>
 							</Input>

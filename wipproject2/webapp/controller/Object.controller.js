@@ -67,7 +67,7 @@ sap.ui.define([
                                     var jsonmodelwipedit = new JSONModel();
 
                                     jsonmodelwipedit.setData(odata2.results);
-                                    debugger;
+                                    
                                     var changedflag = 0,
                                         newFlag = 0,
                                         updateflag = 0;
@@ -190,7 +190,7 @@ sap.ui.define([
                                         var jsonmodelwipedit = new JSONModel();
 
                                         jsonmodelwipedit.setData(odata2.results);
-                                        debugger;
+                                        
                                         var changedflag = 0,
                                             newFlag = 0,
                                             updateflag = 0;
@@ -270,14 +270,23 @@ sap.ui.define([
 
         },
         onSuggestionItemSelected: function (oevent) {
+            debugger;
             var oSelectedRow = oevent.getParameter("selectedRow").getBindingContext("wipentry").getObject();
 
             var jsonarray = [];
          
 
             var owndata = {
+                Status: oSelectedRow.Status,
+                StatusIcon: oSelectedRow.StatusIcon,
+                StatusObject: oSelectedRow.StatusObject,
                 AccountingDocument: oSelectedRow.AccountingDocument,
+                GLAccount :  oSelectedRow.GLAccount,
                 ReferenceDocument: oSelectedRow.ReferenceDocument,
+                Customer :  oSelectedRow.Customer,
+                Project :  oSelectedRow.Project,
+                Quantity :  oSelectedRow.Quantity,
+                WorkItem :  oSelectedRow.WorkItem,
                 WBSElement: oSelectedRow.WBSElement,
                 AmountInGlobalCurrency: oSelectedRow.AmountInGlobalCurrency,
                 DocumentItemText: oSelectedRow.DocumentItemText
