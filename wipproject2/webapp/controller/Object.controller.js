@@ -25,10 +25,7 @@ sap.ui.define([
 
 
         },
-  
-      
-        _refreshWipTable: function () {
-            this.byId("suggestionhelpbox").setValue();
+        _tableDataReusable(){
             var oTable = this.byId("wiptable");
             oTable.setBusy(true);
             const pid = this.pid,
@@ -144,129 +141,136 @@ sap.ui.define([
                 oTable.setBusy(false);
             }.bind(this)
         });
+        },
+  
+      
+        _refreshWipTable: function () {
+            this.byId("suggestionhelpbox").setValue();
+            this._tableDataReusable();          
           
         },
         _getwipprojectdata: function (oevent) {
 
             if (oevent !== undefined) {
                 this.pid = oevent.getParameter("arguments").pid;
-            }          
-            var oTable = this.byId("wiptable");
-            oTable.setBusy(true);
+            }     
+            this._tableDataReusable();     
+            // var oTable = this.byId("wiptable");
+            // oTable.setBusy(true);
 
-            const pid = this.pid,
-                jrnlentrymdl = this.getOwnerComponent().getModel("jrnlentryMDL"),
-                wipeditsmdl = this.getOwnerComponent().getModel("wipeditsMDL"),
+            // const pid = this.pid,
+            //     jrnlentrymdl = this.getOwnerComponent().getModel("jrnlentryMDL"),
+            //     wipeditsmdl = this.getOwnerComponent().getModel("wipeditsMDL"),
 
-                projectfilter = new Filter("Project", FilterOperator.EQ, pid);
+            //     projectfilter = new Filter("Project", FilterOperator.EQ, pid);
 
-            const wipprojlist = this.getOwnerComponent().getModel(),
-                engagementProjectFilter = new Filter("EngagementProject", FilterOperator.EQ, pid);
-            wipprojlist.read("/YY1_WIPProjectListAPI1", {
-                filters: [engagementProjectFilter],
-                success: (odata) => {
+            // const wipprojlist = this.getOwnerComponent().getModel(),
+            //     engagementProjectFilter = new Filter("EngagementProject", FilterOperator.EQ, pid);
+            // wipprojlist.read("/YY1_WIPProjectListAPI1", {
+            //     filters: [engagementProjectFilter],
+            //     success: (odata) => {
 
-                    var wipprojjson = new JSONModel();
-                    wipprojjson.setData(odata.results[0]);
-                    this.getView().setModel(wipprojjson, "prjlst");
-                },
-                error: (err) => {
-                    MessageToast.show(err);
-                    // busyDialog.close();
-                }
-            });
-            jrnlentrymdl.read("/YY1_JournalEntryItem", {
-                filters: [projectfilter],
-                success: function (odata) {
+            //         var wipprojjson = new JSONModel();
+            //         wipprojjson.setData(odata.results[0]);
+            //         this.getView().setModel(wipprojjson, "prjlst");
+            //     },
+            //     error: (err) => {
+            //         MessageToast.show(err);
+            //         // busyDialog.close();
+            //     }
+            // });
+            // jrnlentrymdl.read("/YY1_JournalEntryItem", {
+            //     filters: [projectfilter],
+            //     success: function (odata) {
                  
-                                var jsonmodelmainjrnlentry = new JSONModel();
-                                jsonmodelmainjrnlentry.setData(odata.results);
+            //                     var jsonmodelmainjrnlentry = new JSONModel();
+            //                     jsonmodelmainjrnlentry.setData(odata.results);
 
-                                // Read 2nd API wipedits
+            //                     // Read 2nd API wipedits
                                
-                                wipeditsmdl.read("/YY1_WIPEDITS", {
-                                    success: function (odata2) {
-                                        oTable.setBusy(false);
-                                        var jsonmodelwipedit = new JSONModel();
+            //                     wipeditsmdl.read("/YY1_WIPEDITS", {
+            //                         success: function (odata2) {
+            //                             oTable.setBusy(false);
+            //                             var jsonmodelwipedit = new JSONModel();
 
-                                        jsonmodelwipedit.setData(odata2.results);
+            //                             jsonmodelwipedit.setData(odata2.results);
                                         
-                                        var changedflag = 0,
-                                            newFlag = 0,
-                                            updateflag = 0;
+            //                             var changedflag = 0,
+            //                                 newFlag = 0,
+            //                                 updateflag = 0;
                                 
-                                        for (var i = 0; i < odata.results.length; i++) {
-                                            for (var j = 0; j < odata2.results.length; j++) {
-                                                if (odata.results[i].AccountingDocument === jsonmodelwipedit.oData[j].JEID) {
+            //                             for (var i = 0; i < odata.results.length; i++) {
+            //                                 for (var j = 0; j < odata2.results.length; j++) {
+            //                                     if (odata.results[i].AccountingDocument === jsonmodelwipedit.oData[j].JEID) {
 
-                                                    odata.results[i].Status = "Updated";
-                                                    odata.results[i].StatusObject = "Error";
-                                                    odata.results[i].StatusIcon = 'sap-icon://edit';
-                                                    odata.results[i].Quantity = jsonmodelwipedit.oData[j].Quantity;
-                                                    odata.results[i].WBSElement = jsonmodelwipedit.oData[j].WBS;
-                                                    odata.results[i].DocumentItemText = jsonmodelwipedit.oData[j].Notes;                                                
+            //                                         odata.results[i].Status = "Updated";
+            //                                         odata.results[i].StatusObject = "Error";
+            //                                         odata.results[i].StatusIcon = 'sap-icon://edit';
+            //                                         odata.results[i].Quantity = jsonmodelwipedit.oData[j].Quantity;
+            //                                         odata.results[i].WBSElement = jsonmodelwipedit.oData[j].WBS;
+            //                                         odata.results[i].DocumentItemText = jsonmodelwipedit.oData[j].Notes;                                                
 
-                                                    changedflag++;
-                                                    updateflag++;
-                                                    if (updateflag === 1) {
-                                                        this.i = i;
-                                                    }                                                }
+            //                                         changedflag++;
+            //                                         updateflag++;
+            //                                         if (updateflag === 1) {
+            //                                             this.i = i;
+            //                                         }                                                }
 
-                                            }                                      
+            //                                 }                                      
 
-                                        }                                   
+            //                             }                                   
 
-                                        for (var j = 0; j < odata2.results.length; j++) {
-                                            if ((jsonmodelwipedit.oData[j].Status === "01" & odata.results[0].Project === jsonmodelwipedit.oData[j].ProjectID) 
-                                            ) {
-                                                odata.results[odata.results.length] = {}
-                                                odata.results[odata.results.length - 1].AccountingDocument = jsonmodelwipedit.oData[j].JEID,
-                                                odata.results[odata.results.length - 1].Project = jsonmodelwipedit.oData[j].ProjectID,
-                                                odata.results[odata.results.length - 1].DocumentItemText = jsonmodelwipedit.oData[j].Notes,
-                                                odata.results[odata.results.length - 1].WBSElement = jsonmodelwipedit.oData[j].WBS,
-                                                odata.results[odata.results.length - 1].Quantity = jsonmodelwipedit.oData[j].Quantity
-                                                odata.results[odata.results.length - 1].Status = "New";
-                                                odata.results[odata.results.length - 1].StatusObject = "Information";
-                                                odata.results[odata.results.length - 1].StatusIcon = 'sap-icon://notes';
-                                                newFlag++;
-                                            }
+            //                             for (var j = 0; j < odata2.results.length; j++) {
+            //                                 if ((jsonmodelwipedit.oData[j].Status === "01" & odata.results[0].Project === jsonmodelwipedit.oData[j].ProjectID) 
+            //                                 ) {
+            //                                     odata.results[odata.results.length] = {}
+            //                                     odata.results[odata.results.length - 1].AccountingDocument = jsonmodelwipedit.oData[j].JEID,
+            //                                     odata.results[odata.results.length - 1].Project = jsonmodelwipedit.oData[j].ProjectID,
+            //                                     odata.results[odata.results.length - 1].DocumentItemText = jsonmodelwipedit.oData[j].Notes,
+            //                                     odata.results[odata.results.length - 1].WBSElement = jsonmodelwipedit.oData[j].WBS,
+            //                                     odata.results[odata.results.length - 1].Quantity = jsonmodelwipedit.oData[j].Quantity
+            //                                     odata.results[odata.results.length - 1].Status = "New";
+            //                                     odata.results[odata.results.length - 1].StatusObject = "Information";
+            //                                     odata.results[odata.results.length - 1].StatusIcon = 'sap-icon://notes';
+            //                                     newFlag++;
+            //                                 }
                                           
-                                        }
+            //                             }
 
-                                        var changedjson = new JSONModel();
-                                        changedjson.setData(changedflag);
-                                        this.getView().setModel(changedjson, "changedcount");
+            //                             var changedjson = new JSONModel();
+            //                             changedjson.setData(changedflag);
+            //                             this.getView().setModel(changedjson, "changedcount");
 
-                                        var newcount = newFlag;
-                                        var newjson = new JSONModel();
-                                        newjson.setData(newcount);
-                                        this.getView().setModel(newjson, "newcount");
+            //                             var newcount = newFlag;
+            //                             var newjson = new JSONModel();
+            //                             newjson.setData(newcount);
+            //                             this.getView().setModel(newjson, "newcount");
 
-                                        var orignal = odata.results.length - newcount - changedflag;
-                                        var orignaljson = new JSONModel();
-                                        orignaljson.setData(orignal);
-                                        this.getView().setModel(orignaljson, "orignal");
+            //                             var orignal = odata.results.length - newcount - changedflag;
+            //                             var orignaljson = new JSONModel();
+            //                             orignaljson.setData(orignal);
+            //                             this.getView().setModel(orignaljson, "orignal");
 
-                                        var count = new JSONModel();
-                                        count.setData(odata.results.length);
-                                        this.getView().setModel(count, "count1");
+            //                             var count = new JSONModel();
+            //                             count.setData(odata.results.length);
+            //                             this.getView().setModel(count, "count1");
 
-                                        this.getView().byId("wiptable").setModel(jsonmodelmainjrnlentry, "wipentry");
+            //                             this.getView().byId("wiptable").setModel(jsonmodelmainjrnlentry, "wipentry");
                                        
-                                    }.bind(this),
-                                    error: function (msg2) {
-                                        oTable.setBusy(false);
+            //                         }.bind(this),
+            //                         error: function (msg2) {
+            //                             oTable.setBusy(false);
                                        
-                                    }.bind(this)
+            //                         }.bind(this)
 
 
-                                });
+            //                     });
 
-                }.bind(this),
-                error: function (msg) { // busyDialog.close();
-                    oTable.setBusy(false);
-                }.bind(this)
-            });
+            //     }.bind(this),
+            //     error: function (msg) { // busyDialog.close();
+            //         oTable.setBusy(false);
+            //     }.bind(this)
+            // });
 
         },
         onSuggestionItemSelected: function (oevent) {
