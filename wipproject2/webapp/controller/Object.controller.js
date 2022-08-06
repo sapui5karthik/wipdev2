@@ -78,8 +78,10 @@ sap.ui.define([
                                                 odata.results[i].StatusIcon = 'sap-icon://edit';
                                                 odata.results[i].Quantity = jsonmodelwipedit.oData[j].Quantity;
                                                 odata.results[i].WBSElement = jsonmodelwipedit.oData[j].WBS;
-                                                odata.results[i].DocumentItemText = jsonmodelwipedit.oData[j].Notes;                                                
+                                                odata.results[i].DocumentItemText = jsonmodelwipedit.oData[j].Notes;  
+                                                odata.results[i].ActivityType = jsonmodelwipedit.oData[j].ActivityType;
 
+                                                //ActivityType
                                                 changedflag++;
                                                 updateflag++;
                                                 if (updateflag === 1) {
@@ -94,11 +96,12 @@ sap.ui.define([
                                         if ((jsonmodelwipedit.oData[j].Status === "01" & odata.results[0].Project === jsonmodelwipedit.oData[j].ProjectID) 
                                         ) {
                                             odata.results[odata.results.length] = {}
-                                            odata.results[odata.results.length - 1].AccountingDocument = jsonmodelwipedit.oData[j].JEID,
-                                            odata.results[odata.results.length - 1].Project = jsonmodelwipedit.oData[j].ProjectID,
-                                            odata.results[odata.results.length - 1].DocumentItemText = jsonmodelwipedit.oData[j].Notes,
-                                            odata.results[odata.results.length - 1].WBSElement = jsonmodelwipedit.oData[j].WBS,
-                                            odata.results[odata.results.length - 1].Quantity = jsonmodelwipedit.oData[j].Quantity
+                                            odata.results[odata.results.length - 1].AccountingDocument = jsonmodelwipedit.oData[j].JEID;
+                                            odata.results[odata.results.length - 1].Project = jsonmodelwipedit.oData[j].ProjectID;
+                                            odata.results[odata.results.length - 1].DocumentItemText = jsonmodelwipedit.oData[j].Notes;
+                                            odata.results[odata.results.length - 1].WBSElement = jsonmodelwipedit.oData[j].WBS;
+                                            odata.results[odata.results.length - 1].Quantity = jsonmodelwipedit.oData[j].Quantity;
+                                            odata.results[odata.results.length - 1].ActivityType = jsonmodelwipedit.oData[j].ActivityType;
                                             odata.results[odata.results.length - 1].Status = "New";
                                             odata.results[odata.results.length - 1].StatusObject = "Information";
                                             odata.results[odata.results.length - 1].StatusIcon = 'sap-icon://notes';

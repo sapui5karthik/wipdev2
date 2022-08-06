@@ -147,6 +147,9 @@
                                     <Column>
                                         <Text text="{i18n>txt_amnt}"/>
                                     </Column>
+                                      <Column>
+                                        <Text text="{i18n>txt_acttype}"/>
+                                    </Column>
                                     <Column>
                                         <Text text="{i18n>txt_notes}"/>
                                     </Column>
@@ -166,6 +169,7 @@
                                             <ObjectStatus state="{= ${wipentry>StatusObject} === undefined ? 'Success' : ${wipentry>StatusObject}}" text="{wipentry>WorkItem}"/>
                                             <ObjectStatus state="{= ${wipentry>StatusObject} === undefined ? 'Success' : ${wipentry>StatusObject}}" text="{wipentry>WBSElement}"/>
                                             <ObjectStatus state="{= ${wipentry>StatusObject} === undefined ? 'Success' : ${wipentry>StatusObject}}" text="{wipentry>AmountInGlobalCurrency}"/>
+                                            <ObjectStatus state="{= ${wipentry>StatusObject} === undefined ? 'Success' : ${wipentry>StatusObject}}" text="{wipentry>ActivityType}"/>
                                             <ObjectStatus state="{= ${wipentry>StatusObject} === undefined ? 'Success' : ${wipentry>StatusObject}}" text="{wipentry>DocumentItemText}"/>
                                         </cells>
 
