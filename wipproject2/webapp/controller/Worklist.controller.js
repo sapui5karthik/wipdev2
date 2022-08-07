@@ -77,10 +77,12 @@ sap.ui.define([
            // this._showObject(oEvent.getSource());
            //sap.ui.core.BusyIndicator.show(0);
            this.oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+        
            this.oRouter.navTo("object",{
             from : "worklist",
             to : "object",
-            pid : oEvent.getSource().getBindingContext().getProperty("EngagementProject")
+            pid : oEvent.getSource().getBindingContext().getProperty("EngagementProject"),
+            custid : oEvent.getSource().getBindingContext().getProperty("Customer")
            },true);
         },
 

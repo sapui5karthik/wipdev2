@@ -102,7 +102,7 @@
                                             <Button text="Combine" width="auto"/>
                                             <Button text="Split" width="auto"/>
                                             <Button
-                                            text="Finalize" width="auto"/>
+                                            text="Finalize" width="auto" press="_finalizeRecord"/>
                                             <!-- <CheckBox text="Fixed Layout" selected="true" select="onCheckBoxSelect"/> -->
                                             <Button icon="sap-icon://action-settings" press="onPersoButtonPressed">
                                                 <!-- <layoutData>
@@ -150,7 +150,10 @@
                                       <Column>
                                         <Text text="{i18n>txt_acttype}"/>
                                     </Column>
-                                    <Column>
+                                    <Column >
+                                        <Text text="{i18n>txt_notes}"/>
+                                    </Column>
+                                     <Column >
                                         <Text text="{i18n>txt_notes}"/>
                                     </Column>
                                 </columns>
@@ -171,6 +174,7 @@
                                             <ObjectStatus state="{= ${wipentry>StatusObject} === undefined ? 'Success' : ${wipentry>StatusObject}}" text="{wipentry>AmountInGlobalCurrency}"/>
                                             <ObjectStatus state="{= ${wipentry>StatusObject} === undefined ? 'Success' : ${wipentry>StatusObject}}" text="{wipentry>ActivityType}"/>
                                             <ObjectStatus state="{= ${wipentry>StatusObject} === undefined ? 'Success' : ${wipentry>StatusObject}}" text="{wipentry>DocumentItemText}"/>
+                                            <Button text="Notes" press="_notespopover"/>
                                         </cells>
 
                                     </ColumnListItem>

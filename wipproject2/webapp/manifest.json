@@ -42,7 +42,17 @@
           "localUri": "localService/metadata.xml",
           "odataVersion": "2.0"
         }
+      },
+      "wipsaves": {
+        "uri": "/sap/opu/odata/sap/API_MANAGE_WORKFORCE_TIMESHEET/",
+        "type": "OData",
+        "settings": {
+          "annotations": [],
+          "localUri": "localService/metadata.xml",
+          "odataVersion": "2.0"
+        }
       }
+
     }
   },
   "sap.ui": {
@@ -101,6 +111,11 @@
         "dataSource": "wipedits",
         "preload": true,
         "settings": {}
+      },
+      "wipsavesMDL": {
+        "dataSource": "wipsaves",
+        "preload": true,
+        "settings": {}
       }
     },
     "resources": {
@@ -129,7 +144,7 @@
           ]
         },
         {
-            "pattern" : "{pid}",
+            "pattern" : "{pid},{custid}",
           "name": "object",
           "target": [
             "object"

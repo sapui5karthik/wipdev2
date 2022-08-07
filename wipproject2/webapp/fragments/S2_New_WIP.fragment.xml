@@ -17,7 +17,9 @@
 			>
 			<f:content>
                 <Label text="Customer" />
-                <Input  width="auto" id="newcustomerid" value="{prjlst>/CustomerName}" editable = "false"/>                
+                <Input  width="auto" id="newcustomerid" value="{prjlst>/CustomerName}" editable = "false"/>  
+                <Label text="Customer Id" />
+                <Input  width="auto" id="newcustomerid2"  editable = "false"/>                
 				<Label text="Project ID" />
                 <Input  width="auto" id="newprojectid" value="{prjlst>/EngagementProject}" editable = "false"/>                
 				<Label text="Journal Entry ID" />

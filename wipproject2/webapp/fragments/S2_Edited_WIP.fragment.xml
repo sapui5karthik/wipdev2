@@ -32,7 +32,7 @@
                                                     </form:FormElement>                                                    
                                                     <form:FormElement visible="true">
                                                         <form:label>
-                                                            <Label text="Unbilled Amount" design="Standard" width="231.40625px" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                                            <Label text="Unbilled Quantity" design="Standard" width="231.40625px" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                                         </form:label>
                                                         <form:fields>
                                                            <ObjectStatus state="Information" id="editleftunbilamnt"/>
@@ -103,7 +103,7 @@
                                                     </form:FormElement>                                                    
                                                     <form:FormElement visible="true">
                                                         <form:label>
-                                                            <Label text="Unbilled Amount" design="Standard" width="231.40625px" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                                            <Label text="Unbilled Quantity" design="Standard" width="231.40625px" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                                         </form:label>
                                                         <form:fields>
                                                             <Input id="editrightunbilamnt"/>
