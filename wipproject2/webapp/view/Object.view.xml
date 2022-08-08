@@ -1,4 +1,5 @@
-<mvc:View xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc" xmlns:semantic="sap.m.semantic" xmlns:si="sap.suite.ui.commons.statusindicator" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:form="sap.ui.layout.form" xmlns:core="sap.ui.core" controllerName="com.chappota.wippoc2.wipproject2.controller.Object">
+<mvc:View xmlns="sap.m" xmlns:mvc="sap.ui.core.mvc" xmlns:semantic="sap.m.semantic" xmlns:si="sap.suite.ui.commons.statusindicator" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:form="sap.ui.layout.form" xmlns:core="sap.ui.core"
+    	xmlns:plugins="sap.m.plugins" controllerName="com.chappota.wippoc2.wipproject2.controller.Object">
 
     <semantic:SemanticPage id="objectpage" showNavButton="true" navButtonPress="onNavBack">
 
@@ -112,55 +113,58 @@
                                         </content>
                                     </Toolbar>
                                 </headerToolbar>
+                                	<dependents>
+                                        <plugins:ColumnResizer/>
+                                    </dependents>
                                <columns>
-                                    <Column width="28px">
+                                    <Column width="20px">
                                         <Text text=""/>
                                     </Column>
                                     <Column>
                                         <Text text="{i18n>txt_chngind}"/>
                                     </Column>
 
-                                    <Column>
+                                    <Column width="100px">
                                         <Text text="{i18n>txt_jeid}"/>
                                     </Column>
-                                    <Column>
+                                    <Column width="100px">
                                         <Text text="{i18n>txt_glacc}"/>
                                     </Column>
-                                    <Column>
+                                    <Column >
                                         <Text text="{i18n>txt_ref}"/>
                                     </Column>
                                     <Column>
                                         <Text text="{i18n>txt_cust}"/>
                                     </Column>
-                                    <Column>
+                                    <Column >
                                         <Text text="{i18n>txt_proj}"/>
                                     </Column>
-                                    <Column>
+                                    <Column >
                                         <Text text="{i18n>txt_unbqty}"/>
                                     </Column>
-                                    <Column>
+                                    <Column >
                                         <Text text="{i18n>txt_wrkitem}"/>
                                     </Column>
-                                    <Column width="150px">
+                                    <Column >
                                         <Text text="{i18n>txt_wrkpckg}"/>
                                     </Column>
-                                    <Column>
+                                    <Column >
                                         <Text text="{i18n>txt_amnt}"/>
                                     </Column>
                                       <Column>
                                         <Text text="{i18n>txt_acttype}"/>
                                     </Column>
-                                    <Column >
+                                    <Column visible="false">
                                         <Text text="{i18n>txt_notes}"/>
                                     </Column>
-                                     <Column >
+                                     <Column width="100px">
                                         <Text text="Personnel Number"/>
                                     </Column>
                                      <Column >
                                         <Text text="Service Rendered Date"/>
                                     </Column>
                                      <Column >
-                                        <Text text="Notes link"/>
+                                        <Text text="{i18n>txt_notes}"/>
                                     </Column>                                                                        
                                 </columns>
                                 <items>
@@ -180,8 +184,8 @@
                                             <ObjectStatus state="{= ${wipentry>StatusObject} === undefined ? 'Success' : ${wipentry>StatusObject}}" text="{wipentry>CostCtrActivityType}"/>
                                             <ObjectStatus state="{= ${wipentry>StatusObject} === undefined ? 'Success' : ${wipentry>StatusObject}}" text="{wipentry>DocumentItemText}"/>
                                             <ObjectStatus state="{= ${wipentry>StatusObject} === undefined ? 'Success' : ${wipentry>StatusObject}}" text="{wipentry>PersonnelNumber}"/>
-                                            <ObjectStatus state="{= ${wipentry>StatusObject} === undefined ? 'Success' : ${wipentry>StatusObject}}" text="{wipentry>ServicesRenderedDate}"/>
-                                            <Button text="Notes" press="_notespopover"/>
+                                            <ObjectStatus state="{= ${wipentry>StatusObject} === undefined ? 'Success' : ${wipentry>StatusObject}}" text="{path : 'wipentry>ServicesRenderedDate',formatter:'.formatter.dateTime'}"/>
+                                            <Button  icon="sap-icon://list" press="_notespopover" type="Transparent"/>
                                         </cells>
 
                                     </ColumnListItem>

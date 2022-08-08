@@ -58,9 +58,11 @@ sap.ui.define([
                     jsonmodelmainjrnlentry.setData(odata.results);
 
                     // Read 2nd API wipedits
-
+                    var projidfilter = new Filter("ProjectID", FilterOperator.EQ, pid);
                     wipeditsmdl.read("/YY1_WIPEDITS", {
+                        filters: [projidfilter],
                         success: function (odata2) {
+                            debugger;
                             oTable.setBusy(false);
                             var jsonmodelwipedit = new JSONModel();
 
@@ -153,23 +155,29 @@ sap.ui.define([
             var oButton = oEvent.getSource(),
             notes = oEvent.getSource().getBindingContext("wipentry").getProperty("DocumentItemText"),
             oView = this.getView();
-
-
-        // create popover
-        if (!this._pPopover) {
-            this._pPopover = Fragment.load({
-                id: oView.getId(),
-                name: "com.chappota.wippoc2.wipproject2.fragments.S2_NotesPopover",
-                controller: this
-            }).then(function(oPopover) {
-                oView.addDependent(oPopover);
-                oView.byId("popovernotes").setText(notes);
-                return oPopover;
-            });
+            
+        if(!this.noteslink){
+            this.noteslink = sap.ui.xmlfragment(this.getView().getId(),"com.chappota.wippoc2.wipproject2.fragments.S2_NotesPopover",this);
+            oView.addDependent(this.noteslink);
+            
         }
-        this._pPopover.then(function(oPopover) {
-            oPopover.openBy(oButton);
-        });
+        this.byId("popovernotes").setText(notes);
+        this.noteslink.openBy(oButton);
+        // // create popover
+        // if (!this._pPopover) {
+        //     this._pPopover = Fragment.load({
+        //         id: oView.getId(),
+        //         name: "com.chappota.wippoc2.wipproject2.fragments.S2_NotesPopover",
+        //         controller: this
+        //     }).then(function(oPopover) {
+        //         oView.addDependent(oPopover);
+        //         oView.byId("popovernotes").setText(notes);
+        //         return oPopover;
+        //     });
+        // }
+        // this._pPopover.then(function(oPopover) {
+        //     oPopover.openBy(oButton);
+        // });
         },
 
 

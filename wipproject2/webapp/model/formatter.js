@@ -86,7 +86,8 @@ dateTimebackend: function(date) {
 		},
 		dateTime: function(date) {
 		//Dec 01, 2021
-			if (date !== undefined) {
+        
+			if (date !== undefined && date !== null) {
 
 				var oDateFormat = DateFormat.getDateInstance({
 					scale: "medium",
@@ -97,8 +98,9 @@ dateTimebackend: function(date) {
 
 				return subFromDate;
 			} else {
+            
 				return "";
-			}
+            }
 
 		},
         /**
