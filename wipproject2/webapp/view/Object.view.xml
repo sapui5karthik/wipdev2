@@ -41,7 +41,8 @@
 
                     <IconTabFilter iconColor="Positive" count="{count1>/}" text="WIP Time" key="Ok" icon="sap-icon://time-account">
                         <content>
-                            <Table id="wiptable" items="{path : 'wipentry>/'}" mode="MultiSelect" selectionChange="_wiptableselchange">
+                            <Table id="wiptable" items="{path : 'wipentry>/'}" mode="MultiSelect" selectionChange="_wiptableselchange" growing="true" growingScrollToLoad="false"
+                            growingThreshold="100">
                                 <headerToolbar>
                                     <Toolbar>
                                         <content>
@@ -98,7 +99,7 @@
                                             <Button icon="sap-icon://refresh" press="_refreshWipTable"/>
                                             <Button text="New" width="auto" press="_newjecreation"/>
                                             <Button text="Edit" width="auto" press="_updatejeRecord"/>
-                                            <Button text="Delete" width="auto"/>
+                                            <Button text="Delete" width="auto" press="_deleteRecord"/>
                                             <Button text="Transfer" width="auto" visible="false"/>
                                             <Button text="Combine" width="auto"/>
                                             <Button text="Split" width="auto"/>

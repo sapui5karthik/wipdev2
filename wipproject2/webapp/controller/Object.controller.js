@@ -56,7 +56,14 @@ sap.ui.define([
 
                     var jsonmodelmainjrnlentry = new JSONModel();
                     jsonmodelmainjrnlentry.setData(odata.results);
-
+        // if(odata.results.length === 0){
+        //     MessageToast.show("No Records found!, you can create New record");
+        //     oTable.setBusy(false);
+            // var tempjson = new JSONModel();
+            // tempjson.setData();
+            // this.getView().byId("wiptable").setModel(tempjson, "wipentry");
+       // }
+        //else {
                     // Read 2nd API wipedits
                     var projidfilter = new Filter("ProjectID", FilterOperator.EQ, pid);
                     wipeditsmdl.read("/YY1_WIPEDITS", {
@@ -97,7 +104,8 @@ sap.ui.define([
                             }
 
                             for (var j = 0; j < odata2.results.length; j++) {
-                                if ((jsonmodelwipedit.oData[j].Status === "01" & odata.results[0].Project === jsonmodelwipedit.oData[j].ProjectID)) {
+                              //  if ((jsonmodelwipedit.oData[j].Status === "01" & odata.results[0].Project === jsonmodelwipedit.oData[j].ProjectID)) {
+                                if ((jsonmodelwipedit.oData[j].Status === "01")) {
                                     odata.results[odata.results.length] = {}
                                     odata.results[odata.results.length - 1].AccountingDocument = jsonmodelwipedit.oData[j].JEID;
                                     odata.results[odata.results.length - 1].Project = jsonmodelwipedit.oData[j].ProjectID;
@@ -144,12 +152,14 @@ sap.ui.define([
 
 
                     });
-
+               // }
                 }.bind(this),
                 error: function (msg) {
                     oTable.setBusy(false);
                 }.bind(this)
             });
+        
+
         },
         _notespopover : function(oEvent){
             var oButton = oEvent.getSource(),
@@ -501,6 +511,7 @@ sap.ui.define([
                 success: (odata) => {              
                    debugger;
                    MessageToast.show("Record posted");
+                   this.byId("wiptable").removeSelections();
                     this._getwipprojectdata();
                 },
                 error: (err) => {
