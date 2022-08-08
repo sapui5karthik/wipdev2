@@ -438,44 +438,57 @@ sap.ui.define([
 
             }
         },
+             /****
+         * Method to Finalize the record
+         */             
         _finalizeRecord: function(oevent){
             debugger;
-           
-            if(this.statustext === "Updated"){ var sttext = 'U';}
-            if(this.statustext === "New"){ var sttext = 'C';}
-           
-
-
-
-
+            if(this.statustext === "Updated") { 
+                var sttext = 'U';
+                var sttimsesheetid = this.timesheetrecordref.padStart(12,'0');
+                //(HARD CODED THIS.  Should be replaced by the DATE from the screen)
+                var sttimesheetdate = "2022-02-23T00:00:00";
+                var personalnum = "50000147";
+                var personalextid = "99999737";
+                var timesheetstatus = "";
+            }
+            if(this.statustext === "New"){ 
+                var sttext = 'C';
+                var sttimsesheetid = ""; 
+                //(HARD CODED THIS.  Should be replaced by the DATE from the screen)                
+                var sttimesheetdate = "2022-08-06T00:00:00";
+                var personalnum = "50000147";
+                var personalextid = "";
+                var timesheetstatus = "30";
+            }
             var finalRecordPayload = {
-
                 "TimeSheetDataFields": {
                     "ControllingArea": "A000", // (Hard Code)
-                    "SenderCostCenter": "1720P001", // (Hard code)
-                    "ActivityType": this.acttype, // (From the record – “Activity Type”)
+                    //"SenderCostCenter": "1720P001", // (Hard code)
+                    "ActivityType": "T001", //this.acttype, // (From the record – “Activity Type”)
                     "WBSElement": this.wrkpkg, // (From the record – “WBS Element”)
-                    "RecordedHours": this.rechrs, // (From the record – “Unbilled Quantity”)
+                    "RecordedHours": this.recqty, // (From the record – “Unbilled Quantity”)
                     "RecordedQuantity": this.recqty, // (From the record – “Unbilled Quantity”)
-                    "HoursUnitOfMeasure": "H" // (Hard Code)
+                    "HoursUnitOfMeasure": "H", // (Hard Code)
+                    "TimeSheetNote": this.notes
                 },
-
                 "CompanyCode": "1720", // (Hard Code)
-                "PersonWorkAgreement": "50011130", // (Optional, Will be included in the Screen 2 API)
-                "TimeSheetRecord": "", // (From the record – “Reference”)
-                "TimeSheetDate": "2022-01-21T00:00:00", // (From the record – “Timesheet date”)
+                //"PersonWorkAgreementExternalID": personalextid,
+                "PersonWorkAgreement": personalnum, // (Optional, Will be included in the Screen 2 API)
+                "TimeSheetRecord": sttimsesheetid,
+                "TimeSheetDate": sttimesheetdate, // (From the record – “Timesheet date”)
                 "TimeSheetIsReleasedOnSave": true, // (Hard Code)
-                "TimeSheetStatus": "30", // (Hard Code)
+                //"TimeSheetStatus": timesheetstatus, // (Hard Code)
                 "TimeSheetOperation": sttext // (Use “C” for new, “U” for Edited and “D” for deleted)
-
             };
-if(this.statustext === 'New'){
+            if(this.statustext === 'New'){
             var wipsaves = this.getOwnerComponent().getModel("wipsavesMDL");
           
             wipsaves.create("/TimeSheetEntryCollection", finalRecordPayload, {
                 success: (odata) => {              
                    
-                   debugger;
+                    debugger;
+                    MessageToast.show("Record posted");                  
                     this._getwipprojectdata();
 
                 },
@@ -489,24 +502,90 @@ if(this.statustext === 'New'){
         }
         if(this.statustext === 'Updated'){
             var wipsaves = this.getOwnerComponent().getModel("wipsavesMDL");
-            var wipwithaied = "/TimeSheetEntryCollection('" + this.accdocjeid + "')";
-            wipsaves.update(wipwithaied, finalRecordPayload, {
+            var wipwithaied = "/TimeSheetEntryCollection";
+            wipsaves.create(wipwithaied, finalRecordPayload, {
                 success: (odata) => {              
-                   
                    debugger;
+                   MessageToast.show("Record posted");
                     this._getwipprojectdata();
-
                 },
                 error: (err) => {
                     debugger;
                     MessageToast.show(err);
-                   
-
                 }
             });
         }
 
         },
+//         _finalizeRecord: function(oevent){
+//             debugger;
+           
+//             if(this.statustext === "Updated"){ var sttext = 'U';}
+//             if(this.statustext === "New"){ var sttext = 'C';}
+           
+
+
+
+
+//             var finalRecordPayload = {
+
+//                 "TimeSheetDataFields": {
+//                     "ControllingArea": "A000", // (Hard Code)
+//                     "SenderCostCenter": "1720P001", // (Hard code)
+//                     "ActivityType": this.acttype, // (From the record – “Activity Type”)
+//                     "WBSElement": this.wrkpkg, // (From the record – “WBS Element”)
+//                     "RecordedHours": this.rechrs, // (From the record – “Unbilled Quantity”)
+//                     "RecordedQuantity": this.recqty, // (From the record – “Unbilled Quantity”)
+//                     "HoursUnitOfMeasure": "H" // (Hard Code)
+//                 },
+
+//                 "CompanyCode": "1720", // (Hard Code)
+//                 "PersonWorkAgreement": "50011130", // (Optional, Will be included in the Screen 2 API)
+//                 "TimeSheetRecord": "", // (From the record – “Reference”)
+//                 "TimeSheetDate": "2022-01-21T00:00:00", // (From the record – “Timesheet date”)
+//                 "TimeSheetIsReleasedOnSave": true, // (Hard Code)
+//                 "TimeSheetStatus": "30", // (Hard Code)
+//                 "TimeSheetOperation": sttext // (Use “C” for new, “U” for Edited and “D” for deleted)
+
+//             };
+// if(this.statustext === 'New'){
+//             var wipsaves = this.getOwnerComponent().getModel("wipsavesMDL");
+          
+//             wipsaves.create("/TimeSheetEntryCollection", finalRecordPayload, {
+//                 success: (odata) => {              
+                   
+//                    debugger;
+//                     this._getwipprojectdata();
+
+//                 },
+//                 error: (err) => {
+//                     debugger;
+//                     MessageToast.show(err);
+                   
+
+//                 }
+//             });
+//         }
+//         if(this.statustext === 'Updated'){
+//             var wipsaves = this.getOwnerComponent().getModel("wipsavesMDL");
+//             var wipwithaied = "/TimeSheetEntryCollection('" + this.accdocjeid + "')";
+//             wipsaves.update(wipwithaied, finalRecordPayload, {
+//                 success: (odata) => {              
+                   
+//                    debugger;
+//                     this._getwipprojectdata();
+
+//                 },
+//                 error: (err) => {
+//                     debugger;
+//                     MessageToast.show(err);
+                   
+
+//                 }
+//             });
+//         }
+
+//         },
         _wiptableselchange: function (oevent) {
 
 
