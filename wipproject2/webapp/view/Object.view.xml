@@ -112,7 +112,7 @@
                                         </content>
                                     </Toolbar>
                                 </headerToolbar>
-                                <columns>
+                               <columns>
                                     <Column width="28px">
                                         <Text text=""/>
                                     </Column>
@@ -154,15 +154,20 @@
                                         <Text text="{i18n>txt_notes}"/>
                                     </Column>
                                      <Column >
-                                        <Text text="{i18n>txt_notes}"/>
+                                        <Text text="Personnel Number"/>
                                     </Column>
+                                     <Column >
+                                        <Text text="Service Rendered Date"/>
+                                    </Column>
+                                     <Column >
+                                        <Text text="Notes link"/>
+                                    </Column>                                                                        
                                 </columns>
                                 <items>
                                     <ColumnListItem>
                                         <cells>
                                             <ObjectStatus state="{= ${wipentry>StatusObject} === undefined ? 'Success' : ${wipentry>StatusObject}}" icon="{= ${wipentry>StatusIcon} === undefined ? 'sap-icon://accept' : ${wipentry>StatusIcon}}"/>
                                             <ObjectStatus state="{= ${wipentry>StatusObject} === undefined ? 'Success' : ${wipentry>StatusObject}}" text="{= ${wipentry>Status} === undefined ? 'Original' : ${wipentry>Status}}"/>
-
                                             <ObjectStatus state="{= ${wipentry>StatusObject} === undefined ? 'Success' : ${wipentry>StatusObject}}" text="{wipentry>AccountingDocument}"/>
                                             <ObjectStatus state="{= ${wipentry>StatusObject} === undefined ? 'Success' : ${wipentry>StatusObject}}" text="{wipentry>GLAccount}"/>
                                             <ObjectStatus state="{= ${wipentry>StatusObject} === undefined ? 'Success' : ${wipentry>StatusObject}}" text="{wipentry>ReferenceDocument}"/>
@@ -172,8 +177,10 @@
                                             <ObjectStatus state="{= ${wipentry>StatusObject} === undefined ? 'Success' : ${wipentry>StatusObject}}" text="{wipentry>WorkItem}"/>
                                             <ObjectStatus state="{= ${wipentry>StatusObject} === undefined ? 'Success' : ${wipentry>StatusObject}}" text="{wipentry>WBSElement}"/>
                                             <ObjectStatus state="{= ${wipentry>StatusObject} === undefined ? 'Success' : ${wipentry>StatusObject}}" text="{wipentry>AmountInGlobalCurrency}"/>
-                                            <ObjectStatus state="{= ${wipentry>StatusObject} === undefined ? 'Success' : ${wipentry>StatusObject}}" text="{wipentry>ActivityType}"/>
+                                            <ObjectStatus state="{= ${wipentry>StatusObject} === undefined ? 'Success' : ${wipentry>StatusObject}}" text="{wipentry>CostCtrActivityType}"/>
                                             <ObjectStatus state="{= ${wipentry>StatusObject} === undefined ? 'Success' : ${wipentry>StatusObject}}" text="{wipentry>DocumentItemText}"/>
+                                            <ObjectStatus state="{= ${wipentry>StatusObject} === undefined ? 'Success' : ${wipentry>StatusObject}}" text="{wipentry>PersonnelNumber}"/>
+                                            <ObjectStatus state="{= ${wipentry>StatusObject} === undefined ? 'Success' : ${wipentry>StatusObject}}" text="{wipentry>ServicesRenderedDate}"/>
                                             <Button text="Notes" press="_notespopover"/>
                                         </cells>
 
