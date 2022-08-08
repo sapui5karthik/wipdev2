@@ -373,6 +373,7 @@ sap.ui.define([
                     WBS: this.getView().byId("editrightwpkg").getValue(),
                     Notes: this.getView().byId("editrightnotes").getValue(),
                     ActivityType: this.getView().byId("editrightacttype").getValue()
+                   // ServicesRenderedDate: this.formatter.dateTimebackendwithtime(this.getView().byId("editrightservdate").getValue())
                 };
 
                 var saveeditapi = this.getOwnerComponent().getModel("wipeditsMDL");
@@ -387,6 +388,7 @@ sap.ui.define([
                     error: (err) => {
                         MessageToast.show(err);
                         this.pDialog.close();
+                        this.byId("wiptable").removeSelections();
 
                     }
                 });
@@ -411,6 +413,7 @@ sap.ui.define([
                             WBS: this.getView().byId("editrightwpkg").getValue(),
                             Notes: this.getView().byId("editrightnotes").getValue(),
                             ActivityType: this.getView().byId("editrightacttype").getValue()
+                           // ServicesRenderedDate: this.formatter.dateTimebackendwithtime(this.getView().byId("editrightservdate").getValue())
                         };
 
                         var editapi = this.getOwnerComponent().getModel("wipeditsMDL");
@@ -426,7 +429,7 @@ sap.ui.define([
                             error: (err) => {
                                 MessageToast.show(err);
                                 this.pDialog.close();
-                                busyDialog.close();
+                                this.byId("wiptable").removeSelections();
 
                             }
                         });
@@ -458,7 +461,8 @@ sap.ui.define([
                             Quantity: this.getView().byId("editrightunbilamnt").getValue(),
                             WBS: this.getView().byId("editrightwpkg").getValue(),
                             Notes: this.getView().byId("editrightnotes").getValue(),
-                            ActivityType: this.getView().byId("editrightacttype").getValue()
+                            ActivityType: this.getView().byId("editrightacttype").getValue(),
+                            ServicesRenderedDate: this.formatter.dateTimebackendwithtime(this.getView().byId("editrightservdate").getValue())
                         };
 
                         var editapi = this.getOwnerComponent().getModel("wipeditsMDL");
@@ -474,7 +478,8 @@ sap.ui.define([
                             error: (err) => {
                                 MessageToast.show(err);
                                 this.pDialog.close();
-                                busyDialog.close();
+                                this.byId("wiptable").removeSelections();
+                                
 
                             }
                         });
@@ -546,7 +551,7 @@ sap.ui.define([
                 error: (err) => {
                     
                     MessageToast.show(err);
-                   
+                    this.byId("wiptable").removeSelections();
 
                 }
             });
@@ -564,6 +569,7 @@ sap.ui.define([
                 error: (err) => {
                     
                     MessageToast.show(err);
+                    this.byId("wiptable").removeSelections();
                 }
             });
         }
@@ -596,8 +602,7 @@ sap.ui.define([
                         },
                         error: (err) => {
                             MessageToast.show(err);
-                            //this.pDialog.close();
-                            busyDialog.close();
+                            this.byId("wiptable").removeSelections();
 
                         }
                     });
@@ -675,6 +680,7 @@ sap.ui.define([
                 this.getView().byId("editleftwpkg").setText(this.wrkpkg);
                 this.getView().byId("editleftnotes").setText(this.notes);
                 this.getView().byId("editleftacttype").setText(this.acttype);
+                this.getView().byId("editleftservdate").setText(this.formatter.dateTime(this.timesheetdate));
 
                 if (this.getView().byId("editrightunbilamnt").getValue() !== '') {
                     this.getView().byId("editrightunbilamnt").setValue();
@@ -688,12 +694,17 @@ sap.ui.define([
                 if (this.getView().byId("editrightacttype").getValue() !== '') {
                     this.getView().byId("editrightacttype").setValue();
                 }
+                if (this.getView().byId("editrightservdate").getValue() !== '') {
+                    this.getView().byId("editrightservdate").setValue();
+                }
 
 
                 this.getView().byId("editrightunbilamnt").setValue(this.qty);
                 this.getView().byId("editrightwpkg").setValue(this.wrkpkg);
                 this.getView().byId("editrightnotes").setValue(this.notes);
                 this.getView().byId("editrightacttype").setValue(this.acttype);
+                this.getView().byId("editrightservdate").setValue(this.formatter.dateTime(this.timesheetdate));
+
                 this.selflag = 0;
                 this.pDialog.open();
             }
@@ -704,6 +715,8 @@ sap.ui.define([
                 this.getView().byId("editleftwpkg").setText("<Multiple Values>");
                 this.getView().byId("editleftnotes").setText("<Multiple Values>");
                 this.getView().byId("editleftacttype").setText("<Multiple Values>");
+                this.getView().byId("editleftservdate").setText("<Multiple Values>");
+
                 this.selflag = 0;
 
                 if (this.getView().byId("editrightunbilamnt").getValue() !== '') {
@@ -717,6 +730,9 @@ sap.ui.define([
                 }
                 if (this.getView().byId("editrightacttype").getValue() !== '') {
                     this.getView().byId("editrightacttype").setValue();
+                }
+                if (this.getView().byId("editrightservdate").getValue() !== '') {
+                    this.getView().byId("editrightservdate").setValue();
                 }
                 this.pDialog.open();
 
@@ -730,18 +746,7 @@ sap.ui.define([
 
         },
         _deleteRecord : function(){
-            // var newpayload = {
-            //     JEID: (jeid + 1).toString(),
-            //     ID: "1",
-            //     Status: "01",
-            //     ProjectID: this.byId("newprojectid").getValue(),
-            //     Quantity: this.getView().byId("newunbilled").getValue(),
-            //     WBS: this.getView().byId("newworkpackage").getValue(),
-            //     Notes: this.getView().byId("newnotes").getValue(),
-            //     ActivityType: this.getView().byId("newacttype").getValue(),
-            //     ServiceDate: this.formatter.dateTimebackendwithtime(this.getView().byId("newservicedate").getValue())
-            // };
-            debugger;
+            
             var delapi = this.getOwnerComponent().getModel("wipeditsMDL");
             if (this.statustext === 'Original') {
 
@@ -767,7 +772,7 @@ sap.ui.define([
                     },
                     error: (err) => {
                         MessageToast.show(err);
-                       
+                        this.byId("wiptable").removeSelections();
 
                     }
                 });
@@ -797,11 +802,13 @@ sap.ui.define([
                             },
                             error: (err) => {
                                 MessageToast.show(err);                             
-
+                                this.byId("wiptable").removeSelections();
                             }
                         });
                     },
-                    error: (err) => {}
+                    error: (err) => {
+                        this.byId("wiptable").removeSelections();
+                    }
 
 
                 });
@@ -831,11 +838,13 @@ sap.ui.define([
                             },
                             error: (err) => {
                                 MessageToast.show(err);                             
-
+                                this.byId("wiptable").removeSelections();
                             }
                         });
                     },
-                    error: (err) => {}
+                    error: (err) => {
+                        this.byId("wiptable").removeSelections();
+                    }
 
 
                 });
