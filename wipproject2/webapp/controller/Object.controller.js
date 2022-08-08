@@ -82,7 +82,7 @@ sap.ui.define([
                                         odata.results[i].Quantity = jsonmodelwipedit.oData[j].Quantity;
                                         odata.results[i].WBSElement = jsonmodelwipedit.oData[j].WBS;
                                         odata.results[i].DocumentItemText = jsonmodelwipedit.oData[j].Notes;
-                                        odata.results[i].ActivityType = jsonmodelwipedit.oData[j].ActivityType;
+                                        odata.results[i].CostCtrActivityType = jsonmodelwipedit.oData[j].ActivityType;
 
                                         // ActivityType
                                         changedflag++;
@@ -163,21 +163,7 @@ sap.ui.define([
         }
         this.byId("popovernotes").setText(notes);
         this.noteslink.openBy(oButton);
-        // // create popover
-        // if (!this._pPopover) {
-        //     this._pPopover = Fragment.load({
-        //         id: oView.getId(),
-        //         name: "com.chappota.wippoc2.wipproject2.fragments.S2_NotesPopover",
-        //         controller: this
-        //     }).then(function(oPopover) {
-        //         oView.addDependent(oPopover);
-        //         oView.byId("popovernotes").setText(notes);
-        //         return oPopover;
-        //     });
-        // }
-        // this._pPopover.then(function(oPopover) {
-        //     oPopover.openBy(oButton);
-        // });
+        
         },
 
 
@@ -455,7 +441,7 @@ sap.ui.define([
                 var sttext = 'U';
                 var sttimsesheetid = this.timesheetrecordref.padStart(12,'0');
                 //(HARD CODED THIS.  Should be replaced by the DATE from the screen)
-                var sttimesheetdate = "2022-02-23T00:00:00";
+                var sttimesheetdate = this.formatter.dateTimebackendwithtime(this.timesheetdate);//"2022-02-23T00:00:00";
                 var personalnum = "50000147";
                 var personalextid = "99999737";
                 var timesheetstatus = "";
@@ -497,7 +483,7 @@ sap.ui.define([
                    
                     debugger;
                     MessageToast.show("Record posted");                  
-                    this._getwipprojectdata();
+                   this._newAfterFinalized();                 
 
                 },
                 error: (err) => {
@@ -525,75 +511,48 @@ sap.ui.define([
         }
 
         },
-//         _finalizeRecord: function(oevent){
-//             debugger;
-           
-//             if(this.statustext === "Updated"){ var sttext = 'U';}
-//             if(this.statustext === "New"){ var sttext = 'C';}
-           
+        _newAfterFinalized : function(){
+            var editapi = this.getOwnerComponent().getModel("wipeditsMDL");
+            var filterjeid = new Filter("JEID", FilterOperator.EQ, this.accdocjeid)
+            editapi.read("/YY1_WIPEDITS", {
+                filters: [filterjeid],
+                success: (odata) => {
 
 
+                    var esetguid = odata.results[0].SAP_UUID;
+
+                    var editpayload = {
+                        Status: "13"
+                     
+                    };
+
+                    var editapi = this.getOwnerComponent().getModel("wipeditsMDL");
+
+                    var esetwithguid = "/YY1_WIPEDITS(guid'" + esetguid + "')";
+                    editapi.update(esetwithguid, editpayload, {
+                        success: (odata) => {
+                            //MessageToast.show("Updated!");
+                            this._getwipprojectdata();
+                           // this.pDialog.close();
+
+                        },
+                        error: (err) => {
+                            MessageToast.show(err);
+                            //this.pDialog.close();
+                            busyDialog.close();
+
+                        }
+                    });
 
 
-//             var finalRecordPayload = {
+                },
+                error: (err) => {}
 
-//                 "TimeSheetDataFields": {
-//                     "ControllingArea": "A000", // (Hard Code)
-//                     "SenderCostCenter": "1720P001", // (Hard code)
-//                     "ActivityType": this.acttype, // (From the record – “Activity Type”)
-//                     "WBSElement": this.wrkpkg, // (From the record – “WBS Element”)
-//                     "RecordedHours": this.rechrs, // (From the record – “Unbilled Quantity”)
-//                     "RecordedQuantity": this.recqty, // (From the record – “Unbilled Quantity”)
-//                     "HoursUnitOfMeasure": "H" // (Hard Code)
-//                 },
 
-//                 "CompanyCode": "1720", // (Hard Code)
-//                 "PersonWorkAgreement": "50011130", // (Optional, Will be included in the Screen 2 API)
-//                 "TimeSheetRecord": "", // (From the record – “Reference”)
-//                 "TimeSheetDate": "2022-01-21T00:00:00", // (From the record – “Timesheet date”)
-//                 "TimeSheetIsReleasedOnSave": true, // (Hard Code)
-//                 "TimeSheetStatus": "30", // (Hard Code)
-//                 "TimeSheetOperation": sttext // (Use “C” for new, “U” for Edited and “D” for deleted)
+            });
 
-//             };
-// if(this.statustext === 'New'){
-//             var wipsaves = this.getOwnerComponent().getModel("wipsavesMDL");
-          
-//             wipsaves.create("/TimeSheetEntryCollection", finalRecordPayload, {
-//                 success: (odata) => {              
-                   
-//                    debugger;
-//                     this._getwipprojectdata();
+        },
 
-//                 },
-//                 error: (err) => {
-//                     debugger;
-//                     MessageToast.show(err);
-                   
-
-//                 }
-//             });
-//         }
-//         if(this.statustext === 'Updated'){
-//             var wipsaves = this.getOwnerComponent().getModel("wipsavesMDL");
-//             var wipwithaied = "/TimeSheetEntryCollection('" + this.accdocjeid + "')";
-//             wipsaves.update(wipwithaied, finalRecordPayload, {
-//                 success: (odata) => {              
-                   
-//                    debugger;
-//                     this._getwipprojectdata();
-
-//                 },
-//                 error: (err) => {
-//                     debugger;
-//                     MessageToast.show(err);
-                   
-
-//                 }
-//             });
-//         }
-
-//         },
         _wiptableselchange: function (oevent) {
 
 
@@ -610,7 +569,7 @@ sap.ui.define([
                 this.rechrs = oevent.getSource().getModel("wipentry").getData()[oevent.getSource().getSelectedContextPaths()[0].split('/')[1]].Quantity;
                 this.recqty = oevent.getSource().getModel("wipentry").getData()[oevent.getSource().getSelectedContextPaths()[0].split('/')[1]].Quantity;
                 this.timesheetrecordref = oevent.getSource().getModel("wipentry").getData()[oevent.getSource().getSelectedContextPaths()[0].split('/')[1]].ReferenceDocument;
-                this.timesheetdate = oevent.getSource().getModel("wipentry").getData()[oevent.getSource().getSelectedContextPaths()[0].split('/')[1]].ActivityType;
+                this.timesheetdate = oevent.getSource().getModel("wipentry").getData()[oevent.getSource().getSelectedContextPaths()[0].split('/')[1]].ServicesRenderedDate;
               
 
 
