@@ -141,7 +141,7 @@ sap.ui.define([
                                     odata.results[odata.results.length - 1].DocumentItemText = jsonmodelwipedit.oData[j].Notes;
                                     odata.results[odata.results.length - 1].WBSElement = jsonmodelwipedit.oData[j].WBS;
                                     odata.results[odata.results.length - 1].Quantity = jsonmodelwipedit.oData[j].Quantity;
-                                    odata.results[odata.results.length - 1].ActivityType = jsonmodelwipedit.oData[j].ActivityType;
+                                    odata.results[odata.results.length - 1].CostCtrActivityType = jsonmodelwipedit.oData[j].ActivityType;
                                     odata.results[odata.results.length - 1].GLAccount = "<New>";
                                     odata.results[odata.results.length - 1].ReferenceDocument = "<New>";
                                     odata.results[odata.results.length - 1].AmountInGlobalCurrency = "<New>";
@@ -157,7 +157,7 @@ sap.ui.define([
                                     odata.results[odata.results.length - 1].DocumentItemText = jsonmodelwipedit.oData[j].Notes;
                                     odata.results[odata.results.length - 1].WBSElement = jsonmodelwipedit.oData[j].WBS;
                                     odata.results[odata.results.length - 1].Quantity = jsonmodelwipedit.oData[j].Quantity;
-                                    odata.results[odata.results.length - 1].ActivityType = jsonmodelwipedit.oData[j].ActivityType;
+                                    odata.results[odata.results.length - 1].CostCtrActivityType = jsonmodelwipedit.oData[j].ActivityType;
                                     odata.results[odata.results.length - 1].GLAccount = "<New>";
                                     odata.results[odata.results.length - 1].ReferenceDocument = "<New>";
                                     odata.results[odata.results.length - 1].AmountInGlobalCurrency = "<New>";
