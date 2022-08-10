@@ -15,12 +15,15 @@ sap.ui.define([
     return BaseController.extend("com.chappota.wippoc2.wipproject2.controller.Object", {
 
         formatter: formatter,
-
+      
         /* =========================================================== */
         /* lifecycle methods                                           */
         /* =========================================================== */
         onInit: function () {
             this.selflag = 0;
+            this.editflag = false;
+            this.multistatus=[],this.multiaccdoc=[],this.multiprojid=[],this.multiqty=[],this.multiwbs=[],this.multinotes=[],this.multiacttype=[],this.multiservdate = [];
+            
             this.oRouter = sap.ui.core.UIComponent.getRouterFor(this);
             this.oRouter.getRoute("object").attachPatternMatched(this._getwipprojectdata, this);
 
@@ -29,15 +32,16 @@ sap.ui.define([
         _tableDataReusable() {
             var oTable = this.byId("wiptable");
             oTable.setBusy(true);
-            const pid = this.pid,
+            const pid = this.pid, cc = this.compcode,
                 jrnlentrymdl = this.getOwnerComponent().getModel("jrnlentryMDL"),
                 wipeditsmdl = this.getOwnerComponent().getModel("wipeditsMDL"),
-
+                compcodefilter = new Filter("CompanyCode",FilterOperator.EQ,cc),
                 projectfilter = new Filter("Project", FilterOperator.EQ, pid);
 
             const wipprojlist = this.getOwnerComponent().getModel(),
-                engagementProjectFilter = new Filter("EngagementProject", FilterOperator.EQ, pid);
-            wipprojlist.read("/YY1_WIPProjectListAPI1", {
+                
+                engagementProjectFilter = new Filter("ProjectID", FilterOperator.EQ, pid);
+            wipprojlist.read("/ProjectSet", {
                 filters: [engagementProjectFilter],
                 success: (odata) => {
 
@@ -51,9 +55,9 @@ sap.ui.define([
                 }
             });
             jrnlentrymdl.read("/YY1_JournalEntryItem", {
-                filters: [projectfilter],
+                filters: [projectfilter,compcodefilter],
                 success: function (odata) {
-
+debugger;
                     var jsonmodelmainjrnlentry = new JSONModel();
                     jsonmodelmainjrnlentry.setData(odata.results);
       
@@ -91,6 +95,22 @@ sap.ui.define([
 
                                     }
                                 }
+                                // for (var i = 0; i < odata.results.length; i++) {
+                                //     for (var j = 0; j < odata2.results.length; j++) {
+                                //         debugger;
+                                //         odata.results[i].Status = "Original";
+                                //         odata.results[i].StatusObject = "Success";
+                                //         odata.results[i].StatusIcon = 'sap-icon://Accept';
+
+                                //         odata.results[i].AccountingDocument = jsonmodelwipedit.oData[j].JEID;                      
+
+
+                                //         odata.results[i].Quantity = jsonmodelwipedit.oData[j].Quantity;
+                                //         odata.results[i].WBSElement = jsonmodelwipedit.oData[j].WBS;
+                                //         odata.results[i].DocumentItemText = jsonmodelwipedit.oData[j].Notes;
+                                //         odata.results[i].CostCtrActivityType = jsonmodelwipedit.oData[j].ActivityType;
+                                //     }
+                                // }
 
                             for (var i = 0; i < odata.results.length; i++) {
                                 for (var j = 0; j < odata2.results.length; j++) {
@@ -235,6 +255,7 @@ sap.ui.define([
                 
                 this.pid = oevent.getParameter("arguments").pid;
                 this.custid = oevent.getParameter("arguments").custid;
+                this.compcode = oevent.getParameter("arguments").orgid;
             }
             this._tableDataReusable();
 
@@ -306,9 +327,9 @@ sap.ui.define([
             if (notes !== "") {
                 this.byId("newnotes").setValue();
             }
-            if (acttype !== "") {
-                this.byId("newacttype").setValue();
-            }
+            // if (acttype !== "") {
+            //     this.byId("newacttype").setValue();
+            // }
         },
 
         _savenewrecord: function () {
@@ -360,7 +381,151 @@ sap.ui.define([
 
 
         },
+        _multiEditUpdated : function(multiaccdoc){
+            debugger;
+            // for(i=0;i<this.multistatus.length;i++){
+                var editapi = this.getOwnerComponent().getModel("wipeditsMDL");
+                var filterjeid = new Filter("JEID", FilterOperator.EQ, multiaccdoc)
+                editapi.read("/YY1_WIPEDITS", {
+                    filters: [filterjeid],
+                    success: (odata) => {
+
+
+                        var esetguid = odata.results[0].SAP_UUID;
+
+                        var editpayload = {
+                            Status: "02",
+                            ID: "1",
+                            ProjectID: this.byId("editrightprojectid").getValue(),
+                            Quantity: this.getView().byId("editrightunbilamnt").getValue(),
+                            WBS: this.getView().byId("editrightwpkg").getValue(),
+                            Notes: this.getView().byId("editrightnotes").getValue(),
+                            ActivityType: this.getView().byId("editrightacttype").getValue()
+                           // ServicesRenderedDate: this.formatter.dateTimebackendwithtime(this.getView().byId("editrightservdate").getValue())
+                        };
+
+                        var editapi = this.getOwnerComponent().getModel("wipeditsMDL");
+
+                        var esetwithguid = "/YY1_WIPEDITS(guid'" + esetguid + "')";
+                        editapi.update(esetwithguid, editpayload, {
+                            success: (odata) => {
+                                MessageToast.show("Updated!");
+                                this._getwipprojectdata();
+                                this.pDialog.close();
+
+                            },
+                            error: (err) => {
+                                MessageToast.show(err);
+                                this.pDialog.close();
+                                this.byId("wiptable").removeSelections();
+
+                            }
+                        });
+
+
+                    },
+                    error: (err) => {}
+
+
+                });
+            // }
+        },
+        _multiEditOriginal : function(multiaccdoc){
+            var editpayload = {
+                JEID: multiaccdoc,
+                Status: "02",
+                ID: "1",
+                ProjectID: this.byId("editrightprojectid").getValue(),
+                Quantity: this.getView().byId("editrightunbilamnt").getValue(),
+                WBS: this.getView().byId("editrightwpkg").getValue(),
+                Notes: this.getView().byId("editrightnotes").getValue(),
+                ActivityType: this.getView().byId("editrightacttype").getValue()
+               // ServicesRenderedDate: this.formatter.dateTimebackendwithtime(this.getView().byId("editrightservdate").getValue())
+            };
+
+            var saveeditapi = this.getOwnerComponent().getModel("wipeditsMDL");
+            saveeditapi.create("/YY1_WIPEDITS", editpayload, {
+                success: (odata) => {
+                    // MessageToast.show("Record Created");
+                    // this.onInit();
+                    this.pDialog.close();
+                    this._getwipprojectdata();
+
+                },
+                error: (err) => {
+                    MessageToast.show(err);
+                    this.pDialog.close();
+                    this.byId("wiptable").removeSelections();
+
+                }
+            });
+        },
+        _multiEditNew : function(multiaccdoc){
+            var editapi = this.getOwnerComponent().getModel("wipeditsMDL");
+            var filterjeid = new Filter("JEID", FilterOperator.EQ, multiaccdoc)
+            editapi.read("/YY1_WIPEDITS", {
+                filters: [filterjeid],
+                success: (odata) => {
+
+
+                    var esetguid = odata.results[0].SAP_UUID;
+
+                    var editpayload = {
+                        Status: "01",
+                        ID: "1",
+                        ProjectID: this.byId("editrightprojectid").getValue(),
+                        Quantity: this.getView().byId("editrightunbilamnt").getValue(),
+                        WBS: this.getView().byId("editrightwpkg").getValue(),
+                        Notes: this.getView().byId("editrightnotes").getValue(),
+                        ActivityType: this.getView().byId("editrightacttype").getValue(),
+                       // ServicesRenderedDate: this.formatter.dateTimebackendwithtime(this.getView().byId("editrightservdate").getValue())
+                    };
+
+                    var editapi = this.getOwnerComponent().getModel("wipeditsMDL");
+
+                    var esetwithguid = "/YY1_WIPEDITS(guid'" + esetguid + "')";
+                    editapi.update(esetwithguid, editpayload, {
+                        success: (odata) => {
+                            MessageToast.show("Updated!");
+                            this._getwipprojectdata();
+                            this.pDialog.close();
+
+                        },
+                        error: (err) => {
+                            MessageToast.show(err);
+                            this.pDialog.close();
+                            this.byId("wiptable").removeSelections();
+                            
+
+                        }
+                    });
+
+
+                },
+                error: (err) => {}
+
+
+            });
+        },
+
         _editjerecord: function () {
+
+                        if(this.editflag){
+                            MessageToast.show("Multi Edit");
+                            for(var i=0;i<this.multistatus.length;i++){
+                                if(this.multistatus[i]==='Updated'){
+                                    debugger;
+                                    this._multiEditUpdated(this.multiaccdoc[i]);
+                                }
+                                if(this.multistatus[i]==='Original'){
+                                    this._multiEditOriginal(this.multiaccdoc[i]);
+                                }
+                                if(this.multistatus[i]==='New'){
+                                    this._multiEditNew(this.multiaccdoc[i]);
+                                }
+                            }
+                        }
+                        else {
 
             if (this.statustext === 'Original') {
 
@@ -462,7 +627,7 @@ sap.ui.define([
                             WBS: this.getView().byId("editrightwpkg").getValue(),
                             Notes: this.getView().byId("editrightnotes").getValue(),
                             ActivityType: this.getView().byId("editrightacttype").getValue(),
-                            ServicesRenderedDate: this.formatter.dateTimebackendwithtime(this.getView().byId("editrightservdate").getValue())
+                           // ServicesRenderedDate: this.formatter.dateTimebackendwithtime(this.getView().byId("editrightservdate").getValue())
                         };
 
                         var editapi = this.getOwnerComponent().getModel("wipeditsMDL");
@@ -491,14 +656,16 @@ sap.ui.define([
 
                 });
 
-
+            }
             }
         },
              /****
          * Method to Finalize the record
          */             
         _finalizeRecord: function(oevent){
-            
+            if(this.statustext === "Original") {
+                MessageToast.show("Original cant be Finalized");
+            }
             if(this.statustext === "Updated") { 
                 var sttext = 'U';
                 var sttimsesheetid = this.timesheetrecordref.padStart(12,'0');
@@ -544,8 +711,9 @@ sap.ui.define([
                 success: (odata) => {              
                    
                     
-                    MessageToast.show("Record posted");                  
-                   this._newAfterFinalized();                 
+                    MessageToast.show("Record posted");      
+                 //   this._getwipprojectdata();            
+                  this._newAfterFinalized();                 
 
                 },
                 error: (err) => {
@@ -586,7 +754,7 @@ sap.ui.define([
                     var esetguid = odata.results[0].SAP_UUID;
 
                     var editpayload = {
-                        Status: "13"
+                        Status: "14"
                      
                     };
 
@@ -617,30 +785,68 @@ sap.ui.define([
         },
 
         _wiptableselchange: function (oevent) {
-
+            // var statustextall=[];
+            // var jsonarray = [];
 
             if (oevent.getParameter("selected")) {
                 this.selflag ++;
+                this.statustext = oevent.getParameter("listItems")[0].mAggregations.cells[1].mProperties.text;
+                this.accdocjeid = oevent.getParameter("listItems")[0].mAggregations.cells[2].mProperties.text;
 
-                this.statustext = oevent.mParameters.listItem.mAggregations.cells[1].getText();
-                this.accdocjeid = oevent.getSource().getModel("wipentry").getData()[oevent.getSource().getSelectedContextPaths()[0].split('/')[1]].AccountingDocument;
-                this.glaccnt = oevent.getSource().getModel("wipentry").getData()[oevent.getSource().getSelectedContextPaths()[0].split('/')[1]].GLAccount;
-                this.timesheetrecordref = oevent.getSource().getModel("wipentry").getData()[oevent.getSource().getSelectedContextPaths()[0].split('/')[1]].ReferenceDocument;
-                this.customer=oevent.getSource().getModel("wipentry").getData()[oevent.getSource().getSelectedContextPaths()[0].split('/')[1]].Customer;
-                this.project=oevent.getSource().getModel("wipentry").getData()[oevent.getSource().getSelectedContextPaths()[0].split('/')[1]].Project;
-                this.qty = oevent.getSource().getModel("wipentry").getData()[oevent.getSource().getSelectedContextPaths()[0].split('/')[1]].Quantity;
-                this.wrkpkg = oevent.getSource().getModel("wipentry").getData()[oevent.getSource().getSelectedContextPaths()[0].split('/')[1]].WBSElement;
-                this.amnt=oevent.getSource().getModel("wipentry").getData()[oevent.getSource().getSelectedContextPaths()[0].split('/')[1]].AmountInGlobalCurrency;
-                this.acttype = oevent.getSource().getModel("wipentry").getData()[oevent.getSource().getSelectedContextPaths()[0].split('/')[1]].ActivityType;               
-                this.prnr= this.acttype = oevent.getSource().getModel("wipentry").getData()[oevent.getSource().getSelectedContextPaths()[0].split('/')[1]].PersonnelNumber;
-                this.timesheetdate = oevent.getSource().getModel("wipentry").getData()[oevent.getSource().getSelectedContextPaths()[0].split('/')[1]].ServicesRenderedDate;
-                this.notes = oevent.getSource().getModel("wipentry").getData()[oevent.getSource().getSelectedContextPaths()[0].split('/')[1]].DocumentItemText;
+                this.glaccnt = oevent.getParameter("listItems")[0].mAggregations.cells[3].mProperties.text;
+                this.timesheetrecordref = oevent.getParameter("listItems")[0].mAggregations.cells[4].mProperties.text;
+                this.customer = oevent.getParameter("listItems")[0].mAggregations.cells[5].mProperties.text;
+                this.project = oevent.getParameter("listItems")[0].mAggregations.cells[6].mProperties.text;
+                this.qty = oevent.getParameter("listItems")[0].mAggregations.cells[7].mProperties.text;
+                this.wrkpkg = oevent.getParameter("listItems")[0].mAggregations.cells[9].mProperties.text;
+                this.amnt = oevent.getParameter("listItems")[0].mAggregations.cells[10].mProperties.text;
+                this.acttype = oevent.getParameter("listItems")[0].mAggregations.cells[11].mProperties.text;
+                this.prnr = oevent.getParameter("listItems")[0].mAggregations.cells[12].mProperties.text;
+                this.timesheetdate = oevent.getParameter("listItems")[0].mAggregations.cells[13].mProperties.text;
+               this.notes = oevent.getParameter("listItems")[0].mAggregations.cells[14].mProperties.text;
+
+                var tablepayload = {
+                    "Status"	: this.statustext,
+                    "AccountingDocument" :	this.accdocjeid,
+                    "GLAccount" :	this.glaccnt,
+                    "ReferenceDocument" :	this.timesheetrecordref,
+                    "Customer" :	this.customer,
+                    "Project" :	this.project,
+                    "Quantity" :	this.qty,
+                    "WBSElement" :	this.wrkpkg ,
+                    "AmountInGlobalCurrency" :	 this.amnt,
+                    "CostCtrActivityType" :	this.acttype,
+                    "PersonnelNumber" :	this.prnr,
+                    "ServicesRenderedDate" : this.timesheetdate,
+                    "DocumentItemText" :	 this.notes             
 
 
-                this.rechrs = oevent.getSource().getModel("wipentry").getData()[oevent.getSource().getSelectedContextPaths()[0].split('/')[1]].Quantity;
-                this.recqty = oevent.getSource().getModel("wipentry").getData()[oevent.getSource().getSelectedContextPaths()[0].split('/')[1]].Quantity;
-                
-                
+                };      
+
+              
+
+
+            
+              var status,accdoc,projid,qty,wbs,notes,acttype,servdate;
+               status =  tablepayload.Status;
+               accdoc = tablepayload.AccountingDocument;
+               projid = tablepayload.Project ;
+               qty = tablepayload.Quantity ;
+               wbs = tablepayload.WBSElement ;
+               notes = tablepayload.DocumentItemText ;
+               acttype = tablepayload.CostCtrActivityType ;
+               servdate = tablepayload.ServicesRenderedDate ;
+
+               this.multistatus.push(status);
+               this.multiaccdoc.push(accdoc);
+               this.multiprojid.push(projid);
+               this.multiqty.push(qty);
+               this.multiwbs.push(wbs);
+               this.multinotes.push(notes);
+               this.multiacttype.push(acttype);
+               this.multiservdate.push(servdate);
+           
+                    
               
 
 
@@ -648,6 +854,7 @@ sap.ui.define([
                 this.selflag --;
 
             }
+           
 
             if ((oevent.getParameter("selected")) & (oevent.getParameter("selectAll"))) {
                 this.selflag = 2;
@@ -691,9 +898,9 @@ sap.ui.define([
                 if (this.getView().byId("editrightnotes").getValue() !== '') {
                     this.getView().byId("editrightnotes").setValue();
                 }
-                if (this.getView().byId("editrightacttype").getValue() !== '') {
-                    this.getView().byId("editrightacttype").setValue();
-                }
+                // if (this.getView().byId("editrightacttype").getValue() !== '') {
+                //     this.getView().byId("editrightacttype").setValue();
+                // }
                 if (this.getView().byId("editrightservdate").getValue() !== '') {
                     this.getView().byId("editrightservdate").setValue();
                 }
@@ -702,14 +909,14 @@ sap.ui.define([
                 this.getView().byId("editrightunbilamnt").setValue(this.qty);
                 this.getView().byId("editrightwpkg").setValue(this.wrkpkg);
                 this.getView().byId("editrightnotes").setValue(this.notes);
-                this.getView().byId("editrightacttype").setValue(this.acttype);
+                this.getView().byId("editrightacttype").setValue("T001");
                 this.getView().byId("editrightservdate").setValue(this.formatter.dateTime(this.timesheetdate));
 
                 this.selflag = 0;
                 this.pDialog.open();
             }
             if (this.selflag > 1) {
-
+                this.editflag = true;
 
                 this.getView().byId("editleftunbilamnt").setText("<Multiple Values>");
                 this.getView().byId("editleftwpkg").setText("<Multiple Values>");
@@ -728,9 +935,10 @@ sap.ui.define([
                 if (this.getView().byId("editrightnotes").getValue() !== '') {
                     this.getView().byId("editrightnotes").setValue();
                 }
-                if (this.getView().byId("editrightacttype").getValue() !== '') {
-                    this.getView().byId("editrightacttype").setValue();
-                }
+                this.getView().byId("editrightacttype").setValue("T001");
+                // if (this.getView().byId("editrightacttype").getValue() !== '') {
+                //     this.getView().byId("editrightacttype").setValue();
+                // }
                 if (this.getView().byId("editrightservdate").getValue() !== '') {
                     this.getView().byId("editrightservdate").setValue();
                 }
@@ -896,7 +1104,7 @@ sap.ui.define([
          */
         _onObjectMatched: function (oEvent) {
             var sObjectId = oEvent.getParameter("arguments").objectId;
-            this._bindView("/YY1_WIPProjectListAPI1" + sObjectId);
+            this._bindView("/ProjectSet" + sObjectId);
         },
 
         /**
@@ -936,7 +1144,7 @@ sap.ui.define([
             var oResourceBundle = this.getResourceBundle(),
                 oObject = oView.getBindingContext().getObject(),
                 sObjectId = oObject.CompanyCode,
-                sObjectName = oObject.YY1_WIPProjectListAPI1;
+                sObjectName = oObject.ProjectSet;
 
             oViewModel.setProperty("/busy", false);
             oViewModel.setProperty("/shareSendEmailSubject", oResourceBundle.getText("shareSendEmailObjectSubject", [sObjectId]));

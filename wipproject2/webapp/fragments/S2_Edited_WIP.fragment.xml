@@ -27,7 +27,7 @@
                                                         <Label text="Project" design="Standard" width="231.40625px" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                                     </form:label>
                                                     <form:fields>
-                                                        <ObjectStatus state="Information" text="{prjlst>/EngagementProject}"/>
+                                                        <ObjectStatus state="Information" text="{prjlst>/ProjectID}"/>
                                                     </form:fields>
                                                 </form:FormElement>
                                                 <form:FormElement visible="true">
@@ -107,7 +107,7 @@
                                                         <Label text="Project" design="Standard" width="231.40625px" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                                     </form:label>
                                                     <form:fields>
-                                                        <Input enabled="false" value="{prjlst>/EngagementProject}" id="editrightprojectid"/>
+                                                        <Input enabled="false" value="{prjlst>/ProjectID}" id="editrightprojectid"/>
                                                     </form:fields>
                                                 </form:FormElement>
                                                 <form:FormElement visible="true">
