@@ -21,17 +21,17 @@
                 <Label text="Customer Id" />
                 <Input  width="auto" id="newcustomerid2"  editable = "false"/>                
 				<Label text="Project ID" />
-                <Input  width="auto" id="newprojectid" value="{prjlst>/EngagementProject}" editable = "false"/>                
+                <Input  width="auto" id="newprojectid" value="{prjlst>/ProjectID}" editable = "false"/>                
 				<Label text="Journal Entry ID" />
                 <Input  width="auto" id="newjournalid" value="" editable = "false"/>                
 				<Label text="Unbilled Qty" />
 				<Input  width="auto" id="newunbilled"/>
 				<Label text="Workpackage" />
-				<Input width="auto" id="newworkpackage" value="{prjlst>/EngagementProject}.1.1"/>
+				<Input width="auto" id="newworkpackage" value="{prjlst>/ProjectID}.1.1"/>
                 <Label text="Notes" />
 				<TextArea rows="4" width="auto" id="newnotes" />
 				<Label text="Activity Type" />
-				<Input width="auto" id="newacttype"/>
+				<Input width="auto" id="newacttype" value="T001"/>
                 <Label text="Service Date" />
 				<DatePicker width="auto" id="newservicedate"/>
 <!--                 

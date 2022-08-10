@@ -81,8 +81,9 @@ sap.ui.define([
            this.oRouter.navTo("object",{
             from : "worklist",
             to : "object",
-            pid : oEvent.getSource().getBindingContext().getProperty("EngagementProject"),
-            custid : oEvent.getSource().getBindingContext().getProperty("Customer")
+            pid : oEvent.getSource().getBindingContext().getProperty("ProjectID"),
+            custid : oEvent.getSource().getBindingContext().getProperty("Customer"),
+            orgid : oEvent.getSource().getBindingContext().getProperty("OrgID"),
            },true);
         },
 
@@ -137,7 +138,7 @@ sap.ui.define([
          */
         _showObject : function (oItem) {
             this.getRouter().navTo("object", {
-                objectId: oItem.getBindingContext().getPath().substring("/YY1_WIPProjectListAPI1".length)
+                objectId: oItem.getBindingContext().getPath().substring("/ProjectSet".length)
             });
         },
 
