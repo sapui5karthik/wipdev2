@@ -847,7 +847,11 @@ debugger;
                this.multiservdate.push(servdate);
            
                     
-              
+              if(this.selflag > 1){
+                  this.editflag = true;
+              }else{
+                  this.editflag = false;
+              }
 
 
             } else {
@@ -953,8 +957,129 @@ debugger;
             this.byId("wiptable").removeSelections();
 
         },
+        _multiDeleteUpdated : function(multiaccdoc){
+            var delapi = this.getOwnerComponent().getModel("wipeditsMDL");
+            var filterjeid = new Filter("JEID", FilterOperator.EQ, multiaccdoc)
+            delapi.read("/YY1_WIPEDITS", {
+                filters: [filterjeid],
+                success: (odata) => {
+
+
+                    var esetguid = odata.results[0].SAP_UUID;
+
+                    var editpayload = {
+                        ID: "1",
+                        Status: "12"
+                       
+                    };                    
+
+                    var esetwithguid = "/YY1_WIPEDITS(guid'" + esetguid + "')";
+                    delapi.update(esetwithguid, editpayload, {
+                        success: (odata) => {                                
+                            this._getwipprojectdata();                             
+
+                        },
+                        error: (err) => {
+                            MessageToast.show(err);                             
+                            this.byId("wiptable").removeSelections();
+                        }
+                    });
+                },
+                error: (err) => {
+                    this.byId("wiptable").removeSelections();
+                }
+
+
+            });
+
+        },
+        _multiDeleteOriginal : function(multiaccdoc){
+            var delapi = this.getOwnerComponent().getModel("wipeditsMDL");
+            var editpayload = {
+                JEID: multiaccdoc,
+                ID: "1",
+                Status: "11",
+                ProjectID : this.project,
+                Quantity:this.qty,
+                WBS: this.wrkpkg,
+                Notes: this.notes,
+                ActivityType:this.acttype,
+                ServiceDate:this.formatter.dateTimebackendwithtime(this.timesheetdate)
+              
+            };
+
+           
+            delapi.create("/YY1_WIPEDITS", editpayload, {
+                success: (odata) => {
+                   
+                    this._getwipprojectdata();
+
+                },
+                error: (err) => {
+                    MessageToast.show(err);
+                    this.byId("wiptable").removeSelections();
+
+                }
+            });
+
+        },
+        _multiDeleteNew : function(multiaccdoc){
+            var delapi = this.getOwnerComponent().getModel("wipeditsMDL");
+            var filterjeid = new Filter("JEID", FilterOperator.EQ, multiaccdoc);
+            delapi.read("/YY1_WIPEDITS", {
+                filters: [filterjeid],
+                success: (odata) => {
+
+
+                    var esetguid = odata.results[0].SAP_UUID;
+
+                    var editpayload = {
+                        ID: "1",
+                        Status: "13"
+                       
+                    };                    
+
+                    var esetwithguid = "/YY1_WIPEDITS(guid'" + esetguid + "')";
+                    delapi.update(esetwithguid, editpayload, {
+                        success: (odata) => {                                
+                            this._getwipprojectdata();                             
+
+                        },
+                        error: (err) => {
+                            MessageToast.show(err);                             
+                            this.byId("wiptable").removeSelections();
+                        }
+                    });
+                },
+                error: (err) => {
+                    this.byId("wiptable").removeSelections();
+                }
+
+
+            });
+
+
+        },
         _deleteRecord : function(){
-            
+            debugger;
+            if(this.editflag){
+                MessageToast.show("Multi Delete");
+                for(var i=0;i<this.multistatus.length;i++){
+                    if(this.multistatus[i]==='Updated'){
+                        debugger;
+                        this._multiDeleteUpdated(this.multiaccdoc[i]);
+                    }
+                    if(this.multistatus[i]==='Original'){
+                        this._multiDeleteOriginal(this.multiaccdoc[i]);
+                    }
+                    if(this.multistatus[i]==='New'){
+                        this._multiDeleteNew(this.multiaccdoc[i]);
+                    }
+                }
+            }
+            else {
+
+
             var delapi = this.getOwnerComponent().getModel("wipeditsMDL");
             if (this.statustext === 'Original') {
 
@@ -1057,6 +1182,7 @@ debugger;
 
                 });
             }
+        }
 
         },
 
