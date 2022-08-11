@@ -57,7 +57,12 @@ sap.ui.define([
             jrnlentrymdl.read("/YY1_JournalEntryItem", {
                 filters: [projectfilter,compcodefilter],
                 success: function (odata) {
-debugger;
+
+                if(odata.results[0] !== undefined){
+                   
+                        this.personalnumber = odata.results[0].PersonnelNumber;
+                    }
+                   
                     var jsonmodelmainjrnlentry = new JSONModel();
                     jsonmodelmainjrnlentry.setData(odata.results);
       
@@ -90,27 +95,13 @@ debugger;
                                             odata.results[i].WBSElement = jsonmodelwipedit.oData[j].WBS;
                                             odata.results[i].DocumentItemText = jsonmodelwipedit.oData[j].Notes;
                                             odata.results[i].CostCtrActivityType = jsonmodelwipedit.oData[j].ActivityType;
+                                            odata.results[i].ServicesRenderedDate = jsonmodelwipedit.oData[j].ServiceDate;
                                         }
                                     }
 
                                     }
                                 }
-                                // for (var i = 0; i < odata.results.length; i++) {
-                                //     for (var j = 0; j < odata2.results.length; j++) {
-                                //         debugger;
-                                //         odata.results[i].Status = "Original";
-                                //         odata.results[i].StatusObject = "Success";
-                                //         odata.results[i].StatusIcon = 'sap-icon://Accept';
-
-                                //         odata.results[i].AccountingDocument = jsonmodelwipedit.oData[j].JEID;                      
-
-
-                                //         odata.results[i].Quantity = jsonmodelwipedit.oData[j].Quantity;
-                                //         odata.results[i].WBSElement = jsonmodelwipedit.oData[j].WBS;
-                                //         odata.results[i].DocumentItemText = jsonmodelwipedit.oData[j].Notes;
-                                //         odata.results[i].CostCtrActivityType = jsonmodelwipedit.oData[j].ActivityType;
-                                //     }
-                                // }
+                               
 
                             for (var i = 0; i < odata.results.length; i++) {
                                 for (var j = 0; j < odata2.results.length; j++) {
@@ -126,6 +117,8 @@ debugger;
                                         odata.results[i].WBSElement = jsonmodelwipedit.oData[j].WBS;
                                         odata.results[i].DocumentItemText = jsonmodelwipedit.oData[j].Notes;
                                         odata.results[i].CostCtrActivityType = jsonmodelwipedit.oData[j].ActivityType;
+                                        odata.results[i].ServicesRenderedDate = jsonmodelwipedit.oData[j].ServiceDate;
+                                        
 
                                         // ActivityType
                                         changedflag++;
@@ -143,6 +136,7 @@ debugger;
                                         odata.results[i].WBSElement = jsonmodelwipedit.oData[j].WBS;
                                         odata.results[i].DocumentItemText = jsonmodelwipedit.oData[j].Notes;
                                         odata.results[i].CostCtrActivityType = jsonmodelwipedit.oData[j].ActivityType;
+                                        odata.results[i].ServicesRenderedDate = jsonmodelwipedit.oData[j].ServiceDate;
 
                                     }
                                     }
@@ -162,6 +156,8 @@ debugger;
                                     odata.results[odata.results.length - 1].WBSElement = jsonmodelwipedit.oData[j].WBS;
                                     odata.results[odata.results.length - 1].Quantity = jsonmodelwipedit.oData[j].Quantity;
                                     odata.results[odata.results.length - 1].CostCtrActivityType = jsonmodelwipedit.oData[j].ActivityType;
+                                    odata.results[odata.results.length - 1].ServicesRenderedDate = jsonmodelwipedit.oData[j].ServiceDate;
+                                    odata.results[odata.results.length - 1].PersonnelNumber =this.personalnumber;
                                     odata.results[odata.results.length - 1].GLAccount = "<New>";
                                     odata.results[odata.results.length - 1].ReferenceDocument = "<New>";
                                     odata.results[odata.results.length - 1].AmountInGlobalCurrency = "<New>";
@@ -178,6 +174,8 @@ debugger;
                                     odata.results[odata.results.length - 1].WBSElement = jsonmodelwipedit.oData[j].WBS;
                                     odata.results[odata.results.length - 1].Quantity = jsonmodelwipedit.oData[j].Quantity;
                                     odata.results[odata.results.length - 1].CostCtrActivityType = jsonmodelwipedit.oData[j].ActivityType;
+                                    odata.results[odata.results.length - 1].ServicesRenderedDate = jsonmodelwipedit.oData[j].ServiceDate;
+                                    odata.results[odata.results.length - 1].PersonnelNumber = this.personalnumber;
                                     odata.results[odata.results.length - 1].GLAccount = "<New>";
                                     odata.results[odata.results.length - 1].ReferenceDocument = "<New>";
                                     odata.results[odata.results.length - 1].AmountInGlobalCurrency = "<New>";
@@ -256,6 +254,7 @@ debugger;
                 this.pid = oevent.getParameter("arguments").pid;
                 this.custid = oevent.getParameter("arguments").custid;
                 this.compcode = oevent.getParameter("arguments").orgid;
+               // this.personalnumber = oevent.getParameter("arguments").prnr;
             }
             this._tableDataReusable();
 
@@ -327,11 +326,14 @@ debugger;
             if (notes !== "") {
                 this.byId("newnotes").setValue();
             }
-            // if (acttype !== "") {
-            //     this.byId("newacttype").setValue();
-            // }
+         
         },
+        _closenewrecord: function () {
 
+            this.nDialog.close();
+            this.byId("wiptable").removeSelections();
+            this.selflag = 0;
+        },
         _savenewrecord: function () {
             var wipeditsmdl = this.getOwnerComponent().getModel("wipeditsMDL");
             wipeditsmdl.read("/YY1_WIPEDITS", {
@@ -376,7 +378,9 @@ debugger;
 
 
                 },
-                error: (err) => {}
+                error: (err) => {
+                    MessageToast.show(err);
+                }
             });
 
 
@@ -400,8 +404,8 @@ debugger;
                             Quantity: this.getView().byId("editrightunbilamnt").getValue(),
                             WBS: this.getView().byId("editrightwpkg").getValue(),
                             Notes: this.getView().byId("editrightnotes").getValue(),
-                            ActivityType: this.getView().byId("editrightacttype").getValue()
-                           // ServicesRenderedDate: this.formatter.dateTimebackendwithtime(this.getView().byId("editrightservdate").getValue())
+                            ActivityType: this.getView().byId("editrightacttype").getValue(),
+                            ServiceDate: this.formatter.dateTimebackendwithtime(this.getView().byId("editrightservdate").getValue())
                         };
 
                         var editapi = this.getOwnerComponent().getModel("wipeditsMDL");
@@ -424,7 +428,9 @@ debugger;
 
 
                     },
-                    error: (err) => {}
+                    error: (err) => {
+                        this.byId("wiptable").removeSelections();
+                    }
 
 
                 });
@@ -439,8 +445,8 @@ debugger;
                 Quantity: this.getView().byId("editrightunbilamnt").getValue(),
                 WBS: this.getView().byId("editrightwpkg").getValue(),
                 Notes: this.getView().byId("editrightnotes").getValue(),
-                ActivityType: this.getView().byId("editrightacttype").getValue()
-               // ServicesRenderedDate: this.formatter.dateTimebackendwithtime(this.getView().byId("editrightservdate").getValue())
+                ActivityType: this.getView().byId("editrightacttype").getValue(),
+                ServiceDate: this.formatter.dateTimebackendwithtime(this.getView().byId("editrightservdate").getValue())
             };
 
             var saveeditapi = this.getOwnerComponent().getModel("wipeditsMDL");
@@ -478,7 +484,7 @@ debugger;
                         WBS: this.getView().byId("editrightwpkg").getValue(),
                         Notes: this.getView().byId("editrightnotes").getValue(),
                         ActivityType: this.getView().byId("editrightacttype").getValue(),
-                       // ServicesRenderedDate: this.formatter.dateTimebackendwithtime(this.getView().byId("editrightservdate").getValue())
+                        ServiceDate: this.formatter.dateTimebackendwithtime(this.getView().byId("editrightservdate").getValue())
                     };
 
                     var editapi = this.getOwnerComponent().getModel("wipeditsMDL");
@@ -502,7 +508,9 @@ debugger;
 
 
                 },
-                error: (err) => {}
+                error: (err) => {
+                    this.byId("wiptable").removeSelections();
+                }
 
 
             });
@@ -537,8 +545,8 @@ debugger;
                     Quantity: this.getView().byId("editrightunbilamnt").getValue(),
                     WBS: this.getView().byId("editrightwpkg").getValue(),
                     Notes: this.getView().byId("editrightnotes").getValue(),
-                    ActivityType: this.getView().byId("editrightacttype").getValue()
-                   // ServicesRenderedDate: this.formatter.dateTimebackendwithtime(this.getView().byId("editrightservdate").getValue())
+                    ActivityType: this.getView().byId("editrightacttype").getValue(),
+                   ServiceDate: this.formatter.dateTimebackendwithtime(this.getView().byId("editrightservdate").getValue())
                 };
 
                 var saveeditapi = this.getOwnerComponent().getModel("wipeditsMDL");
@@ -577,8 +585,9 @@ debugger;
                             Quantity: this.getView().byId("editrightunbilamnt").getValue(),
                             WBS: this.getView().byId("editrightwpkg").getValue(),
                             Notes: this.getView().byId("editrightnotes").getValue(),
-                            ActivityType: this.getView().byId("editrightacttype").getValue()
-                           // ServicesRenderedDate: this.formatter.dateTimebackendwithtime(this.getView().byId("editrightservdate").getValue())
+                            ActivityType: this.getView().byId("editrightacttype").getValue(),
+                           ServiceDate: this.formatter.dateTimebackendwithtime(this.getView().byId("editrightservdate").getValue())
+                        //    ServiceDate: "2022-01-01T00:00:00"
                         };
 
                         var editapi = this.getOwnerComponent().getModel("wipeditsMDL");
@@ -601,7 +610,9 @@ debugger;
 
 
                     },
-                    error: (err) => {}
+                    error: (err) => {
+                        this.byId("wiptable").removeSelections();
+                    }
 
 
                 });
@@ -627,7 +638,7 @@ debugger;
                             WBS: this.getView().byId("editrightwpkg").getValue(),
                             Notes: this.getView().byId("editrightnotes").getValue(),
                             ActivityType: this.getView().byId("editrightacttype").getValue(),
-                           // ServicesRenderedDate: this.formatter.dateTimebackendwithtime(this.getView().byId("editrightservdate").getValue())
+                            ServiceDate: this.formatter.dateTimebackendwithtime(this.getView().byId("editrightservdate").getValue())
                         };
 
                         var editapi = this.getOwnerComponent().getModel("wipeditsMDL");
@@ -651,7 +662,9 @@ debugger;
 
 
                     },
-                    error: (err) => {}
+                    error: (err) => {
+                        this.byId("wiptable").removeSelections();
+                    }
 
 
                 });
@@ -868,10 +881,7 @@ debugger;
 
         },
 
-        _closenewrecord: function () {
-
-            this.nDialog.close();
-        },
+      
         _updatejeRecord: function (oevent) {
 
 
@@ -955,6 +965,7 @@ debugger;
         _closechangerecord: function () {
             this.pDialog.close();
             this.byId("wiptable").removeSelections();
+            this.selflag = 0;
 
         },
         _multiDeleteUpdated : function(multiaccdoc){
@@ -977,16 +988,19 @@ debugger;
                     delapi.update(esetwithguid, editpayload, {
                         success: (odata) => {                                
                             this._getwipprojectdata();                             
-
+                            this.byId("wiptable").removeSelections();                         
+                            this.selflag = 0;
                         },
                         error: (err) => {
                             MessageToast.show(err);                             
-                            this.byId("wiptable").removeSelections();
+                            this.byId("wiptable").removeSelections();                         
+                            this.selflag = 0;
                         }
                     });
                 },
                 error: (err) => {
-                    this.byId("wiptable").removeSelections();
+                    this.byId("wiptable").removeSelections();                         
+                    this.selflag = 0;
                 }
 
 
@@ -1013,11 +1027,14 @@ debugger;
                 success: (odata) => {
                    
                     this._getwipprojectdata();
-
+                    this.byId("wiptable").removeSelections();                         
+                    this.selflag = 0;
+                
                 },
                 error: (err) => {
                     MessageToast.show(err);
                     this.byId("wiptable").removeSelections();
+                    this.selflag = 0;
 
                 }
             });
@@ -1042,17 +1059,22 @@ debugger;
                     var esetwithguid = "/YY1_WIPEDITS(guid'" + esetguid + "')";
                     delapi.update(esetwithguid, editpayload, {
                         success: (odata) => {                                
-                            this._getwipprojectdata();                             
-
+                            this._getwipprojectdata();    
+                            this.byId("wiptable").removeSelections();                         
+                            this.selflag = 0;
                         },
                         error: (err) => {
                             MessageToast.show(err);                             
-                            this.byId("wiptable").removeSelections();
+                            this.byId("wiptable").removeSelections();                         
+                            this.selflag = 0;
+                        
                         }
                     });
                 },
                 error: (err) => {
-                    this.byId("wiptable").removeSelections();
+                    this.byId("wiptable").removeSelections();                         
+                    this.selflag = 0;
+                
                 }
 
 
@@ -1101,11 +1123,14 @@ debugger;
                     success: (odata) => {
                        
                         this._getwipprojectdata();
+                        this.byId("wiptable").removeSelections();
+                        this.selflag = 0;
 
                     },
                     error: (err) => {
                         MessageToast.show(err);
                         this.byId("wiptable").removeSelections();
+                        this.selflag = 0;
 
                     }
                 });
@@ -1131,16 +1156,18 @@ debugger;
                         delapi.update(esetwithguid, editpayload, {
                             success: (odata) => {                                
                                 this._getwipprojectdata();                             
-
+                                this.selflag = 0;
                             },
                             error: (err) => {
                                 MessageToast.show(err);                             
                                 this.byId("wiptable").removeSelections();
+                                this.selflag = 0;
                             }
                         });
                     },
                     error: (err) => {
                         this.byId("wiptable").removeSelections();
+                        this.selflag = 0;
                     }
 
 
@@ -1166,17 +1193,20 @@ debugger;
                         var esetwithguid = "/YY1_WIPEDITS(guid'" + esetguid + "')";
                         delapi.update(esetwithguid, editpayload, {
                             success: (odata) => {                                
-                                this._getwipprojectdata();                             
+                                this._getwipprojectdata();   
+                                this.selflag = 0;                          
 
                             },
                             error: (err) => {
                                 MessageToast.show(err);                             
                                 this.byId("wiptable").removeSelections();
+                                this.selflag = 0;
                             }
                         });
                     },
                     error: (err) => {
                         this.byId("wiptable").removeSelections();
+                        this.selflag = 0;
                     }
 
 

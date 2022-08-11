@@ -27,13 +27,13 @@
 				<Label text="Unbilled Qty" />
 				<Input  width="auto" id="newunbilled"/>
 				<Label text="Workpackage" />
-				<Input width="auto" id="newworkpackage" value="{prjlst>/ProjectID}.1.1"/>
-                <Label text="Notes" />
-				<TextArea rows="4" width="auto" id="newnotes" />
+				<Input width="auto" id="newworkpackage" value="{prjlst>/ProjectID}.1.1"/>               
 				<Label text="Activity Type" />
 				<Input width="auto" id="newacttype" value="T001"/>
                 <Label text="Service Date" />
 				<DatePicker width="auto" id="newservicedate"/>
+                 <Label text="Notes" />
+				<TextArea rows="4" width="auto" id="newnotes" />
 <!--                 
                  <Button text="Save" type="Accept"/>
                 <Button text="Close" type="Reject" press="_closenewrecord"/> -->
