@@ -684,7 +684,7 @@ sap.ui.define([
                 var sttimsesheetid = this.timesheetrecordref.padStart(12,'0');
                 //(HARD CODED THIS.  Should be replaced by the DATE from the screen)
                 var sttimesheetdate = this.formatter.dateTimebackendwithtime(this.timesheetdate);//"2022-02-23T00:00:00";
-                var personalnum = "50000147";
+                var personalnum = this.personalnumber;
                 var personalextid = "99999737";
                 var timesheetstatus = "";
             }
@@ -692,8 +692,8 @@ sap.ui.define([
                 var sttext = 'C';
                 var sttimsesheetid = ""; 
                 //(HARD CODED THIS.  Should be replaced by the DATE from the screen)                
-                var sttimesheetdate = "2022-08-06T00:00:00";
-                var personalnum = "50000147";
+                var sttimesheetdate = this.formatter.dateTimebackendwithtime(this.timesheetdate);;
+                var personalnum = this.personalnumber;
                 var personalextid = "";
                 var timesheetstatus = "30";
             }
@@ -701,10 +701,10 @@ sap.ui.define([
                 "TimeSheetDataFields": {
                     "ControllingArea": "A000", // (Hard Code)
                     //"SenderCostCenter": "1720P001", // (Hard code)
-                    "ActivityType": "T001", //this.acttype, // (From the record – “Activity Type”)
+                    "ActivityType": this.acttype,//"T001", //this.acttype, // (From the record – “Activity Type”)
                     "WBSElement": this.wrkpkg, // (From the record – “WBS Element”)
-                    "RecordedHours": this.recqty, // (From the record – “Unbilled Quantity”)
-                    "RecordedQuantity": this.recqty, // (From the record – “Unbilled Quantity”)
+                    "RecordedHours": this.qty, // (From the record – “Unbilled Quantity”)
+                    "RecordedQuantity": this.qty, // (From the record – “Unbilled Quantity”)
                     "HoursUnitOfMeasure": "H", // (Hard Code)
                     "TimeSheetNote": this.notes
                 },
@@ -717,6 +717,7 @@ sap.ui.define([
                 //"TimeSheetStatus": timesheetstatus, // (Hard Code)
                 "TimeSheetOperation": sttext // (Use “C” for new, “U” for Edited and “D” for deleted)
             };
+            debugger;
             if(this.statustext === 'New'){
             var wipsaves = this.getOwnerComponent().getModel("wipsavesMDL");
           
