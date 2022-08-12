@@ -13,9 +13,9 @@
 
                         <ObjectStatus state="Error" text="Project ID: {prjlst>/ProjectID}" width="100%" id="label0" design="Bold"/>
                         <ToolbarSpacer />
-                        <Label design="Bold" text="WIP Time" /><Switch type="AcceptReject" state="true" />
-                        <Label design="Bold" text="WIP Expense" /><Switch type="AcceptReject" state="false" />
-                        <Label design="Bold" text="WIP Unit Based" /><Switch type="AcceptReject" state="false" />
+                        <Label design="Bold" text="Time" /><Switch type="AcceptReject" state="true" />
+                        <Label design="Bold" text="Expense" /><Switch type="AcceptReject" state="false" />
+                        <Label design="Bold" text="Unit Based" /><Switch type="AcceptReject" state="false" />
                     </Toolbar>
                 </items>
             </FlexBox>
