@@ -467,7 +467,7 @@ sap.ui.define([
                 }
             });
         },
-        _multiEditNew : function(multiaccdoc){
+        _multiEditNew : function(multiaccdoc,multiqty,multiwbs,multiservdate,multinotes){
             var editapi = this.getOwnerComponent().getModel("wipeditsMDL");
             var filterjeid = new Filter("JEID", FilterOperator.EQ, multiaccdoc)
             editapi.read("/YY1_WIPEDITS", {
@@ -477,15 +477,17 @@ sap.ui.define([
 
                     var esetguid = odata.results[0].SAP_UUID;
 
+
+                
                     var editpayload = {
                         Status: "01",
                         ID: "1",
                         ProjectID: this.byId("editrightprojectid").getValue(),
-                        Quantity: this.getView().byId("editrightunbilamnt").getValue(),
-                        WBS: this.getView().byId("editrightwpkg").getValue(),
-                        Notes: this.getView().byId("editrightnotes").getValue(),
+                        Quantity: multiqty,
+                        WBS: multiwbs,
+                        Notes: multinotes,
                         ActivityType: this.getView().byId("editrightacttype").getValue(),
-                        ServiceDate: this.formatter.dateTimebackendwithtime(this.getView().byId("editrightservdate").getValue())
+                        ServiceDate: this.formatter.dateTimebackendwithtime(multiservdate)
                     };
 
                     var editapi = this.getOwnerComponent().getModel("wipeditsMDL");
@@ -530,7 +532,7 @@ sap.ui.define([
                                     this._multiEditOriginal(this.multiaccdoc[i]);
                                 }
                                 if(this.multistatus[i]==='New'){
-                                    this._multiEditNew(this.multiaccdoc[i]);
+                                    this._multiEditNew(this.multiaccdoc[i],this.multiqty[i],this.multiwbs[i],this.multiservdate[i],this.multinotes[i]);
                                 }
                             }
                         }
