@@ -10,7 +10,12 @@
             <FlexBox width="100%" id="box0" direction="Column">
                 <items>
                     <Toolbar width="100%" id="toolbar1">
+
                         <ObjectStatus state="Error" text="Project ID: {prjlst>/ProjectID}" width="100%" id="label0" design="Bold"/>
+                        <ToolbarSpacer />
+                        <Label design="Bold" text="WIP Time" /><Switch type="AcceptReject" state="true" />
+                        <Label design="Bold" text="WIP Expense" /><Switch type="AcceptReject" state="false" />
+                        <Label design="Bold" text="WIP Unit Based" /><Switch type="AcceptReject" state="false" />
                     </Toolbar>
                 </items>
             </FlexBox>
@@ -23,7 +28,7 @@
                     <f:content>
                         <Label text="Project Name"/><ObjectStatus state="Information" text="{prjlst>/ProjectName}" width="200px"/>
                         <Label text="Customer Name"/><ObjectStatus state="Information" text="{prjlst>/CustomerName}" width="200px"/>
-                        <Label text="Revenue Accountant"/><ObjectStatus state="Information" text="Suman" width="200px"/>
+                        <Label text="Project Controller"/><ObjectStatus state="Information" text="{prjlst>/ProjControllerName}" width="200px"/>
                     </f:content>
                 </f:SimpleForm>
 
@@ -31,7 +36,7 @@
                 <f:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanXL="4" labelSpanL="3" labelSpanM="4" labelSpanS="12" adjustLabelSpan="false" emptySpanXL="0" emptySpanL="4" emptySpanM="0" emptySpanS="0" columnsXL="2" columnsL="1" columnsM="1" singleContainerFullSize="false" breakpointL="0" breakpointM="0" breakpointXL="0">
                     <f:content>
                         <Label text="Project Manager"/><ObjectStatus state="Information" text="{prjlst>/ProjManagerName}"/>
-                        <Label text="Billing Analyst"/><ObjectStatus state="Information" text="Ram"/>
+                        <Label text="Project Partner"/><ObjectStatus state="Information" text="{prjlst>/ProjPartnerName}"/>
                     </f:content>
                 </f:SimpleForm>
             </Toolbar>
@@ -51,7 +56,7 @@
                                             <ObjectStatus state="Error" text="Changed:{changedcount>/}"/>
                                             <ObjectStatus state="Information" text="New: {newcount>/}"/>
                                             <ToolbarSpacer/>
-                                            <Input id="suggestionhelpbox" placeholder="Search by typing any of the following fields.." visible="true" width="500px"
+                                            <Input id="suggestionhelpbox" placeholder="Search by typing any of the following fields.." visible="true" width="400px"
 								showSuggestion="true" showTableSuggestionValueHelp="false" suggestionRows="{wipentry>/}"
 								suggestionItemSelected="onSuggestionItemSelected">
 								<suggestionColumns>
@@ -102,10 +107,11 @@
                                             <Button text="Delete" width="auto" press="_deleteRecord"/>
                                             <Button text="Transfer" width="auto" visible="false"/>
                                             <Button text="Combine" width="auto"/>
-                                            <Button text="Split" width="auto"/>
+                                            
                                             <Button
-                                            text="Finalize" width="auto" press="_finalizeRecord"/>
+                                            text="Post/Submit" width="auto" press="_finalizeRecord"/>
                                             <!-- <CheckBox text="Fixed Layout" selected="true" select="onCheckBoxSelect"/> -->
+                                            <Button text="Ready To Bill" width="auto"/>
                                             <Button icon="sap-icon://action-settings" press="onPersoButtonPressed">
                                                 <!-- <layoutData>
                                                     <OverflowToolbarLayoutData priority="NeverOverflow"/>
@@ -193,18 +199,18 @@
                         </content>
                     </IconTabFilter>
                     <!--                                   <IconTabFilter icon="sap-icon://inventory" iconColor="Negative" count="{/ProductCollectionStats/Counts/Weight/Overweight}" text="Overweight" key="Overweight"/> -->
-                    <IconTabFilter icon="sap-icon://expense-report" iconColor="Critical" text="WIP Expenses" key="wipexpense" visible="true">
+                    <IconTabFilter icon="sap-icon://expense-report" iconColor="Critical" text="Ready To Bill" key="wipexpense" visible="true">
                         <content>
-                          <Text text="WIP EXPENSES" />
+                          <Text text="Ready To Bill" />
                         </content>
 
                     </IconTabFilter>
-                    <IconTabFilter icon="sap-icon://tools-opportunity" iconColor="Negative" text="WIP Unit Based" key="wipunitbased" visible="true">
+                    <!-- <IconTabFilter icon="sap-icon://tools-opportunity" iconColor="Negative" text="WIP Unit Based" key="wipunitbased" visible="true">
                         <content>
                             <Text text="WIP Unit Based" />
                         </content>
 
-                    </IconTabFilter>
+                    </IconTabFilter> -->
                 </items>
 
             </IconTabBar>

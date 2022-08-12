@@ -83,7 +83,8 @@ sap.ui.define([
             to : "object",
             pid : oEvent.getSource().getBindingContext().getProperty("ProjectID"),
             custid : oEvent.getSource().getBindingContext().getProperty("Customer"),
-            orgid : oEvent.getSource().getBindingContext().getProperty("OrgID"),
+            orgid : oEvent.getSource().getBindingContext().getProperty("OrgID")
+            
            },true);
         },
 
