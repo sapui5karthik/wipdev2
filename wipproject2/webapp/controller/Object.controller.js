@@ -318,6 +318,7 @@ sap.ui.define([
             var unbilled = this.byId("newunbilled").getValue();
             var notes = this.byId("newnotes").getValue();
             var acttype = this.byId("newacttype").getValue();
+            this.byId("newprnr").setValue(this.prnr);
             this.getView().byId("newservicedate").setValue(this.formatter.dateTime(new Date()));
             this.byId("newcustomerid2").setValue(this.custid);
             if (unbilled !== "") {
@@ -902,6 +903,9 @@ sap.ui.define([
                 this.getView().byId("editleftwpkg").setText(this.wrkpkg);
                 this.getView().byId("editleftnotes").setText(this.notes);
                 this.getView().byId("editleftacttype").setText(this.acttype);
+                this.byId("editleftprnr").setText(this.prnr);
+                this.byId("editrightprnr").setValue(this.prnr);
+
                 this.getView().byId("editleftservdate").setText(this.formatter.dateTime(this.timesheetdate));
 
                 if (this.getView().byId("editrightunbilamnt").getValue() !== '') {

@@ -5,7 +5,7 @@
 >
    <Dialog
       id="newdialog" draggable="true" resizable="true"
-      title="Create New Record" contentHeight="390px" contentWidth="630px">
+      title="Create New Record" contentHeight="430px" contentWidth="630px">
 <f:SimpleForm id="newform"
 			editable="true"
 			layout="ResponsiveGridLayout"		
@@ -30,6 +30,8 @@
 				<Input width="auto" id="newworkpackage" value="{prjlst>/ProjectID}.1.1"/>               
 				<Label text="Activity Type" />
 				<Input width="auto" id="newacttype" value="T001"/>
+                <Label text="Personnel Number" />
+				<Input width="auto" id="newprnr"/>
                 <Label text="Service Date" />
 				<DatePicker width="auto" id="newservicedate"/>
                  <Label text="Notes" />
