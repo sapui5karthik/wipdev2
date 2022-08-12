@@ -1,5 +1,5 @@
 <core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:layout="sap.ui.layout" xmlns:form="sap.ui.layout.form">
-    <Dialog id="changedialog" draggable="true" resizable="false" title="Change Record" contentHeight="590px" contentWidth="680px">
+    <Dialog id="changedialog" draggable="true" resizable="false" title="Change Record" contentHeight="640px" contentWidth="720px">
 
         <layout:BlockLayout background="Default" visible="true">
             <layout:content>
@@ -52,6 +52,14 @@
                                                     </form:label>
                                                     <form:fields>
                                                         <ObjectStatus state="Information" id="editleftacttype"/>
+                                                    </form:fields>
+                                                </form:FormElement>
+                                                  <form:FormElement visible="true">
+                                                    <form:label>
+                                                        <Label text="Personnel Number" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                                    </form:label>
+                                                    <form:fields>
+                                                        <ObjectStatus state="Information" id="editleftprnr"/>
                                                     </form:fields>
                                                 </form:FormElement>
                                                 <form:FormElement visible="true">
@@ -132,6 +140,14 @@
                                                     </form:label>
                                                     <form:fields>
                                                         <Input id="editrightacttype"/>
+                                                    </form:fields>
+                                                </form:FormElement>
+                                                  <form:FormElement visible="true">
+                                                    <form:label>
+                                                        <Label text="Personnel Number" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                                    </form:label>
+                                                    <form:fields>
+                                                        <Input id="editrightprnr"/>
                                                     </form:fields>
                                                 </form:FormElement>
                                                 <form:FormElement visible="true">
