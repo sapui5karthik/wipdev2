@@ -13,9 +13,7 @@ sap.ui.define([
     "use strict";
 
     return BaseController.extend("com.chappota.wippoc2.wipproject2.controller.Object", {
-
         formatter: formatter,
-      
         /* =========================================================== */
         /* lifecycle methods                                           */
         /* =========================================================== */
@@ -26,8 +24,6 @@ sap.ui.define([
             
             this.oRouter = sap.ui.core.UIComponent.getRouterFor(this);
             this.oRouter.getRoute("object").attachPatternMatched(this._getwipprojectdata, this);
-
-
         },
         _tableDataReusable() {
             var oTable = this.byId("wiptable");
@@ -94,8 +90,9 @@ sap.ui.define([
                                             odata.results[i].Quantity = jsonmodelwipedit.oData[j].Quantity;
                                             odata.results[i].WBSElement = jsonmodelwipedit.oData[j].WBS;
                                             odata.results[i].DocumentItemText = jsonmodelwipedit.oData[j].Notes;
-                                            odata.results[i].CostCtrActivityType = jsonmodelwipedit.oData[j].ActivityType;
+                                            odata.results[i].OriginCostCtrActivityType = jsonmodelwipedit.oData[j].ActivityType;
                                             odata.results[i].ServicesRenderedDate = jsonmodelwipedit.oData[j].ServiceDate;
+                                            odata.results[i].PersonnelNumber = jsonmodelwipedit.oData[j].EmployeeID;
                                         }
                                     }
 
@@ -116,7 +113,8 @@ sap.ui.define([
                                         odata.results[i].Quantity = jsonmodelwipedit.oData[j].Quantity;
                                         odata.results[i].WBSElement = jsonmodelwipedit.oData[j].WBS;
                                         odata.results[i].DocumentItemText = jsonmodelwipedit.oData[j].Notes;
-                                        odata.results[i].CostCtrActivityType = jsonmodelwipedit.oData[j].ActivityType;
+                                        odata.results[i].OriginCostCtrActivityType = jsonmodelwipedit.oData[j].ActivityType;
+                                        odata.results[i].PersonnelNumber = jsonmodelwipedit.oData[j].EmployeeID;
                                         odata.results[i].ServicesRenderedDate = jsonmodelwipedit.oData[j].ServiceDate;
                                         
 
@@ -135,8 +133,9 @@ sap.ui.define([
                                         odata.results[i].Quantity = jsonmodelwipedit.oData[j].Quantity;
                                         odata.results[i].WBSElement = jsonmodelwipedit.oData[j].WBS;
                                         odata.results[i].DocumentItemText = jsonmodelwipedit.oData[j].Notes;
-                                        odata.results[i].CostCtrActivityType = jsonmodelwipedit.oData[j].ActivityType;
+                                        odata.results[i].OriginCostCtrActivityType = jsonmodelwipedit.oData[j].ActivityType;
                                         odata.results[i].ServicesRenderedDate = jsonmodelwipedit.oData[j].ServiceDate;
+                                        odata.results[i].PersonnelNumber = jsonmodelwipedit.oData[j].EmployeeID;
 
                                     }
                                     }
@@ -145,7 +144,6 @@ sap.ui.define([
                                 }
 
                             }
-
                             for (var j = 0; j < odata2.results.length; j++) {
                               //  if ((jsonmodelwipedit.oData[j].Status === "01" & odata.results[0].Project === jsonmodelwipedit.oData[j].ProjectID)) {
                                 if ((jsonmodelwipedit.oData[j].Status === "01")) {
@@ -155,9 +153,9 @@ sap.ui.define([
                                     odata.results[odata.results.length - 1].DocumentItemText = jsonmodelwipedit.oData[j].Notes;
                                     odata.results[odata.results.length - 1].WBSElement = jsonmodelwipedit.oData[j].WBS;
                                     odata.results[odata.results.length - 1].Quantity = jsonmodelwipedit.oData[j].Quantity;
-                                    odata.results[odata.results.length - 1].CostCtrActivityType = jsonmodelwipedit.oData[j].ActivityType;
+                                    odata.results[odata.results.length - 1].OriginCostCtrActivityType = jsonmodelwipedit.oData[j].ActivityType;
                                     odata.results[odata.results.length - 1].ServicesRenderedDate = jsonmodelwipedit.oData[j].ServiceDate;
-                                    odata.results[odata.results.length - 1].PersonnelNumber =this.personalnumber;
+                                    odata.results[odata.results.length - 1].PersonnelNumber = jsonmodelwipedit.oData[j].EmployeeID; //this.personalnumber;
                                     odata.results[odata.results.length - 1].GLAccount = "<New>";
                                     odata.results[odata.results.length - 1].ReferenceDocument = "<New>";
                                     odata.results[odata.results.length - 1].AmountInGlobalCurrency = "<New>";
@@ -173,9 +171,9 @@ sap.ui.define([
                                     odata.results[odata.results.length - 1].DocumentItemText = jsonmodelwipedit.oData[j].Notes;
                                     odata.results[odata.results.length - 1].WBSElement = jsonmodelwipedit.oData[j].WBS;
                                     odata.results[odata.results.length - 1].Quantity = jsonmodelwipedit.oData[j].Quantity;
-                                    odata.results[odata.results.length - 1].CostCtrActivityType = jsonmodelwipedit.oData[j].ActivityType;
+                                    odata.results[odata.results.length - 1].OriginCostCtrActivityType = jsonmodelwipedit.oData[j].ActivityType;
                                     odata.results[odata.results.length - 1].ServicesRenderedDate = jsonmodelwipedit.oData[j].ServiceDate;
-                                    odata.results[odata.results.length - 1].PersonnelNumber = this.personalnumber;
+                                    odata.results[odata.results.length - 1].PersonnelNumber = jsonmodelwipedit.oData[j].EmployeeID; //this.personalnumber;
                                     odata.results[odata.results.length - 1].GLAccount = "<New>";
                                     odata.results[odata.results.length - 1].ReferenceDocument = "<New>";
                                     odata.results[odata.results.length - 1].AmountInGlobalCurrency = "<New>";
@@ -358,6 +356,7 @@ sap.ui.define([
                         Quantity: this.getView().byId("newunbilled").getValue(),
                         WBS: this.getView().byId("newworkpackage").getValue(),
                         Notes: this.getView().byId("newnotes").getValue(),
+                        EmployeeID: this.getView().byId("newprnr").getValue(),
                         ActivityType: this.getView().byId("newacttype").getValue(),
                         ServiceDate: this.formatter.dateTimebackendwithtime(this.getView().byId("newservicedate").getValue())
                     };
@@ -405,6 +404,7 @@ sap.ui.define([
                             Quantity: this.getView().byId("editrightunbilamnt").getValue(),
                             WBS: this.getView().byId("editrightwpkg").getValue(),
                             Notes: this.getView().byId("editrightnotes").getValue(),
+                            EmployeeID: this.getView().byId("editprnr").getValue(),
                             ActivityType: this.getView().byId("editrightacttype").getValue(),
                             ServiceDate: this.formatter.dateTimebackendwithtime(this.getView().byId("editrightservdate").getValue())
                         };
@@ -888,7 +888,7 @@ sap.ui.define([
       
         _updatejeRecord: function (oevent) {
 
-
+            debugger;
             if (!this.pDialog) {
                 this.pDialog = sap.ui.xmlfragment(this.getView().getId(), "com.chappota.wippoc2.wipproject2.fragments.S2_Edited_WIP", this);
                 this.getView().addDependent(this.pDialog);

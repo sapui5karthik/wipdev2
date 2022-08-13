@@ -186,7 +186,7 @@
                                             <ObjectStatus state="{= ${wipentry>StatusObject} === undefined ? 'Success' : ${wipentry>StatusObject}}" text="{wipentry>WorkItem}"/>
                                             <ObjectStatus state="{= ${wipentry>StatusObject} === undefined ? 'Success' : ${wipentry>StatusObject}}" text="{wipentry>WBSElement}"/>
                                             <ObjectStatus state="{= ${wipentry>StatusObject} === undefined ? 'Success' : ${wipentry>StatusObject}}" text="{wipentry>AmountInGlobalCurrency}"/>
-                                            <ObjectStatus state="{= ${wipentry>StatusObject} === undefined ? 'Success' : ${wipentry>StatusObject}}" text="{wipentry>CostCtrActivityType}"/>                                          
+                                            <ObjectStatus state="{= ${wipentry>StatusObject} === undefined ? 'Success' : ${wipentry>StatusObject}}" text="{wipentry>OriginCostCtrActivityType}"/>                                          
                                             <ObjectStatus state="{= ${wipentry>StatusObject} === undefined ? 'Success' : ${wipentry>StatusObject}}" text="{wipentry>PersonnelNumber}"/>
                                             <ObjectStatus state="{= ${wipentry>StatusObject} === undefined ? 'Success' : ${wipentry>StatusObject}}" text="{path : 'wipentry>ServicesRenderedDate',formatter:'.formatter.dateTime'}"/>
                                               <Link  text="{wipentry>DocumentItemText}" width="80px" press="_notespopover" wrapping="false"/>
