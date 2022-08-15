@@ -102,7 +102,7 @@
 							</Input>
                                             <Input width="auto" placeholder="Accouting Document..." submit="_searchaccdoc" id="_search" visible="false"/>
                                             <Button icon="sap-icon://refresh" press="_refreshWipTable"/>
-                                            <Button text="New" width="auto" press="_newjecreation"/>
+                                            <Button text="New" width="auto" press="_createjeRecord"/>
                                             <Button text="Edit" width="auto" press="_updatejeRecord"/>
                                             <Button text="Delete" width="auto" press="_deleteRecord"/>
                                             <Button text="Transfer" width="auto" visible="false"/>
@@ -150,9 +150,6 @@
                                         <Text text="{i18n>txt_unbqty}"/>
                                     </Column>
                                     <Column >
-                                        <Text text="{i18n>txt_wrkitem}"/>
-                                    </Column>
-                                    <Column >
                                         <Text text="{i18n>txt_wrkpckg}"/>
                                     </Column>
                                     <Column >
@@ -170,7 +167,10 @@
                                     </Column>
                                      <Column >
                                         <Text text="{i18n>txt_notes}"/>
-                                    </Column>                                                                        
+                                    </Column>   
+                                    <Column >
+                                        <Text text="{i18n>txt_wrkitem}"/>
+                                    </Column>                                                                                                         
                                 </columns>
                                 <items>
                                     <ColumnListItem>
@@ -183,13 +183,13 @@
                                             <ObjectStatus state="{= ${wipentry>StatusObject} === undefined ? 'Success' : ${wipentry>StatusObject}}" text="{wipentry>Customer}"/>
                                             <ObjectStatus state="{= ${wipentry>StatusObject} === undefined ? 'Success' : ${wipentry>StatusObject}}" text="{wipentry>Project}"/>
                                             <ObjectStatus state="{= ${wipentry>StatusObject} === undefined ? 'Success' : ${wipentry>StatusObject}}" text="{wipentry>Quantity}"/>
-                                            <ObjectStatus state="{= ${wipentry>StatusObject} === undefined ? 'Success' : ${wipentry>StatusObject}}" text="{wipentry>WorkItem}"/>
                                             <ObjectStatus state="{= ${wipentry>StatusObject} === undefined ? 'Success' : ${wipentry>StatusObject}}" text="{wipentry>WBSElement}"/>
                                             <ObjectStatus state="{= ${wipentry>StatusObject} === undefined ? 'Success' : ${wipentry>StatusObject}}" text="{wipentry>AmountInGlobalCurrency}"/>
                                             <ObjectStatus state="{= ${wipentry>StatusObject} === undefined ? 'Success' : ${wipentry>StatusObject}}" text="{wipentry>OriginCostCtrActivityType}"/>                                          
                                             <ObjectStatus state="{= ${wipentry>StatusObject} === undefined ? 'Success' : ${wipentry>StatusObject}}" text="{wipentry>PersonnelNumber}"/>
-                                            <ObjectStatus state="{= ${wipentry>StatusObject} === undefined ? 'Success' : ${wipentry>StatusObject}}" text="{path : 'wipentry>ServicesRenderedDate',formatter:'.formatter.dateTime'}"/>
+                                            <ObjectStatus state="{= ${wipentry>StatusObject} === undefined ? 'Success' : ${wipentry>StatusObject}}" text="{path : 'wipentry>ServicesRenderedDate' , type:'sap.ui.model.type.Date', formatOptions: {UTC: true, TimeZone: 'UTC'}}"/>
                                               <Link  text="{wipentry>DocumentItemText}" width="80px" press="_notespopover" wrapping="false"/>
+                                            <ObjectStatus state="{= ${wipentry>StatusObject} === undefined ? 'Success' : ${wipentry>StatusObject}}" text="{wipentry>WorkItem}"/>
                                             <!-- <Button  icon="sap-icon://list" press="_notespopover" type="Transparent"/> -->
                                         </cells>
 

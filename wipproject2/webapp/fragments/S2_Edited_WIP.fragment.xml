@@ -1,5 +1,5 @@
 <core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:layout="sap.ui.layout" xmlns:form="sap.ui.layout.form">
-    <Dialog id="changedialog" draggable="true" resizable="false" title="Change Record" contentHeight="640px" contentWidth="720px">
+    <Dialog id="changedialog" draggable="true" resizable="false" title="Change Record" contentHeight="660px" contentWidth="720px">
 
         <layout:BlockLayout background="Default" visible="true">
             <layout:content>
@@ -147,7 +147,7 @@
                                                         <Label text="Personnel Number" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                                     </form:label>
                                                     <form:fields>
-                                                        <Input id="editrightprnr"/>
+                                                        <Input enabled="true" id="editrightprnr"/>
                                                     </form:fields>
                                                 </form:FormElement>
                                                 <form:FormElement visible="true">
@@ -155,7 +155,7 @@
                                                         <Label text="Service Date" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                                     </form:label>
                                                     <form:fields>
-                                                        <DatePicker id="editrightservdate"/>
+                                                        <DatePicker enabled="true" id="editrightservdate" required="true"/>
                                                     </form:fields>
                                                 </form:FormElement>
                                                 <form:FormElement visible="true">
@@ -171,7 +171,7 @@
                                                         <Label visible="false" text="Note*" design="Standard" width="231.40625px" required="false" textAlign="Begin" textDirection="Inherit"/>
                                                     </form:label>
                                                     <form:fields>
-                                                        <ObjectStatus state="Error" text="*(if no changes, leave the field blank)"/>
+                                                        <ObjectStatus state="Error" bold="true" text="(For multi edit, leave the field value blank, if the value value should remain unchanged from the original)"/>
                                                     </form:fields>
                                                 </form:FormElement>
                                             </form:formElements>
@@ -191,8 +191,9 @@
         </layout:BlockLayout>
 
         <buttons>
-            <Button text="Save" type="Accept" press="_editjerecord"/>
+            <Button text="Save" type="Accept" press="_saveeditjerecord"/>
             <Button text="Close" type="Reject" press="_closechangerecord"/>
+            <Button text="Reset to Original" type="Reject" press="_resettooriginal"/>
         </buttons>
 
 
