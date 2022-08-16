@@ -17,10 +17,6 @@ sap.ui.define([
         /* lifecycle methods     - On Init                             */
         /* =========================================================== */
         onInit: function () {
-            //this.selflag = 0;
-            //this.editflag = false;
-            //this.multistatus = [], this.multiaccdoc = [], this.multiprojid = [], this.multiqty = [], this.multiwbs = [], this.multinotes = [], this.multiacttype = [], this.multiservdate = [], this.multiprnr = [];
-            //this.editedObjects = [];
             this.oRouter = sap.ui.core.UIComponent.getRouterFor(this);
             this.oRouter.getRoute("object").attachPatternMatched(this._getwipprojectdata, this);
             this.multilabel = "<Multiple Values>";
@@ -60,7 +56,7 @@ sap.ui.define([
                 success: function (odata) {
                     //Questionable?
                     if (odata.results[0] !== undefined) {
-                         this.personalnumber = odata.results[0].PersonnelNumber;
+                        this.personalnumber = odata.results[0].PersonnelNumber;
                     }
                     //set the data received from the read from S/4 to jsonmodel
                     var jsonmodelmainjrnlentry = new JSONModel();
@@ -79,59 +75,58 @@ sap.ui.define([
                             var changedflag = 0,
                                 newFlag = 0,
                                 updateflag = 0;
-                                //Compare and populate from Journal Entry Table and WIP Edit
-                                for (var i = 0; i < odata.results.length; i++) {
-                                    for (var j = 0; j < odata2.results.length; j++) {
-                                        if (odata.results[i].AccountingDocument === jsonmodelwipedit.oData[j].JEID) {
-                                            if (jsonmodelwipedit.oData[j].Status === "02") {
-                                                odata.results[i].Status = "Updated";
-                                                odata.results[i].StatusObject = "Error";
-                                                odata.results[i].StatusIcon = 'sap-icon://edit';
-                                            } else if (jsonmodelwipedit.oData[j].Status === "03") {
-                                                odata.results[i].Status = "Deleted";
-                                                odata.results[i].StatusObject = "None";
-                                                odata.results[i].StatusIcon = 'sap-icon://delete';                                                
-                                            } else {
-                                                odata.results[i].Status = "Original";
-                                                odata.results[i].StatusObject = "None";
-                                                odata.results[i].StatusIcon = 'sap-icon://edit';                                                
-                                            }                                         
-                                            odata.results[i].AccountingDocument = jsonmodelwipedit.oData[j].JEID;
-                                            odata.results[i].Quantity = jsonmodelwipedit.oData[j].Quantity;
-                                            odata.results[i].WBSElement = jsonmodelwipedit.oData[j].WBS;
-                                            odata.results[i].DocumentItemText = jsonmodelwipedit.oData[j].Notes;
-                                            odata.results[i].OriginCostCtrActivityType = jsonmodelwipedit.oData[j].ActivityType;
-                                            odata.results[i].ServicesRenderedDate = jsonmodelwipedit.oData[j].ServiceDate;
-                                            odata.results[i].PersonnelNumber = jsonmodelwipedit.oData[j].EmployeeID;
-                                            changedflag++;
-                                        }
-    
-                                    }
-                                }
-                                //Populate the new records
+                            //Compare and populate from Journal Entry Table and WIP Edit
+                            for (var i = 0; i < odata.results.length; i++) {
                                 for (var j = 0; j < odata2.results.length; j++) {
-                                    //  if ((jsonmodelwipedit.oData[j].Status === "01" & odata.results[0].Project === jsonmodelwipedit.oData[j].ProjectID)) {
-                                    if ((jsonmodelwipedit.oData[j].Status === "01")) {
-                                        odata.results[odata.results.length] = {}
-                                        odata.results[odata.results.length - 1].AccountingDocument = jsonmodelwipedit.oData[j].JEID;
-                                        odata.results[odata.results.length - 1].Project = jsonmodelwipedit.oData[j].ProjectID;
-                                        odata.results[odata.results.length - 1].DocumentItemText = jsonmodelwipedit.oData[j].Notes;
-                                        odata.results[odata.results.length - 1].WBSElement = jsonmodelwipedit.oData[j].WBS;
-                                        odata.results[odata.results.length - 1].Quantity = jsonmodelwipedit.oData[j].Quantity;
-                                        odata.results[odata.results.length - 1].OriginCostCtrActivityType = jsonmodelwipedit.oData[j].ActivityType;
-                                        odata.results[odata.results.length - 1].ServicesRenderedDate = jsonmodelwipedit.oData[j].ServiceDate;
-                                        odata.results[odata.results.length - 1].PersonnelNumber = jsonmodelwipedit.oData[j].EmployeeID; //this.personalnumber;
-                                        odata.results[odata.results.length - 1].GLAccount = "<New>";
-                                        odata.results[odata.results.length - 1].ReferenceDocument = "<New>";
-                                        odata.results[odata.results.length - 1].AmountInGlobalCurrency = "<New>";
-                                        odata.results[odata.results.length - 1].Status = "New";
-                                        odata.results[odata.results.length - 1].StatusObject = "Information";
-                                        odata.results[odata.results.length - 1].StatusIcon = 'sap-icon://notes';
-                                        odata.results[odata.results.length - 1].Customer = this.custid;
-                                        newFlag++;
+                                    if (odata.results[i].AccountingDocument === jsonmodelwipedit.oData[j].JEID) {
+                                        if (jsonmodelwipedit.oData[j].Status === "02") {
+                                            odata.results[i].Status = "Updated";
+                                            odata.results[i].StatusObject = "Error";
+                                            odata.results[i].StatusIcon = 'sap-icon://edit';
+                                        } else if (jsonmodelwipedit.oData[j].Status === "03") {
+                                            odata.results[i].Status = "Deleted";
+                                            odata.results[i].StatusObject = "None";
+                                            odata.results[i].StatusIcon = 'sap-icon://delete';
+                                        } else {
+                                            odata.results[i].Status = "Original";
+                                            odata.results[i].StatusObject = "None";
+                                            odata.results[i].StatusIcon = 'sap-icon://edit';
+                                        }
+                                        odata.results[i].AccountingDocument = jsonmodelwipedit.oData[j].JEID;
+                                        odata.results[i].Quantity = jsonmodelwipedit.oData[j].Quantity;
+                                        odata.results[i].WBSElement = jsonmodelwipedit.oData[j].WBS;
+                                        odata.results[i].DocumentItemText = jsonmodelwipedit.oData[j].Notes;
+                                        odata.results[i].OriginCostCtrActivityType = jsonmodelwipedit.oData[j].ActivityType;
+                                        odata.results[i].ServicesRenderedDate = jsonmodelwipedit.oData[j].ServiceDate;
+                                        odata.results[i].PersonnelNumber = jsonmodelwipedit.oData[j].EmployeeID;
+                                        changedflag++;
                                     }
                                 }
- 
+                            }
+                            //Populate the new records
+                            for (var j = 0; j < odata2.results.length; j++) {
+                                //  if ((jsonmodelwipedit.oData[j].Status === "01" & odata.results[0].Project === jsonmodelwipedit.oData[j].ProjectID)) {
+                                if ((jsonmodelwipedit.oData[j].Status === "01")) {
+                                    odata.results[odata.results.length] = {}
+                                    odata.results[odata.results.length - 1].AccountingDocument = jsonmodelwipedit.oData[j].JEID;
+                                    odata.results[odata.results.length - 1].Project = jsonmodelwipedit.oData[j].ProjectID;
+                                    odata.results[odata.results.length - 1].DocumentItemText = jsonmodelwipedit.oData[j].Notes;
+                                    odata.results[odata.results.length - 1].WBSElement = jsonmodelwipedit.oData[j].WBS;
+                                    odata.results[odata.results.length - 1].Quantity = jsonmodelwipedit.oData[j].Quantity;
+                                    odata.results[odata.results.length - 1].OriginCostCtrActivityType = jsonmodelwipedit.oData[j].ActivityType;
+                                    odata.results[odata.results.length - 1].ServicesRenderedDate = jsonmodelwipedit.oData[j].ServiceDate;
+                                    odata.results[odata.results.length - 1].PersonnelNumber = jsonmodelwipedit.oData[j].EmployeeID; //this.personalnumber;
+                                    odata.results[odata.results.length - 1].GLAccount = "<New>";
+                                    odata.results[odata.results.length - 1].ReferenceDocument = "<New>";
+                                    odata.results[odata.results.length - 1].AmountInGlobalCurrency = "<New>";
+                                    odata.results[odata.results.length - 1].Status = "New";
+                                    odata.results[odata.results.length - 1].StatusObject = "Information";
+                                    odata.results[odata.results.length - 1].StatusIcon = 'sap-icon://notes';
+                                    odata.results[odata.results.length - 1].Customer = this.custid;
+                                    newFlag++;
+                                }
+                            }
+
                             var changedjson = new JSONModel();
                             changedjson.setData(changedflag);
                             this.getView().setModel(changedjson, "changedcount");
@@ -166,7 +161,7 @@ sap.ui.define([
         },
         /* =========================================================== */
         /* Method to show the notes popover                            */
-        /* =========================================================== */       
+        /* =========================================================== */
         _notespopover: function (oEvent) {
             var oButton = oEvent.getSource(),
                 notes = oEvent.getSource().getBindingContext("wipentry").getProperty("DocumentItemText"),
@@ -190,7 +185,7 @@ sap.ui.define([
         },
         /* =========================================================== */
         /* Method:                                                     */
-        /* =========================================================== */        
+        /* =========================================================== */
         _getwipprojectdata: function (oevent) {
             if (oevent !== undefined) {
                 this.pid = oevent.getParameter("arguments").pid;
@@ -227,7 +222,7 @@ sap.ui.define([
         },
         /* =========================================================== */
         /* Method:        */
-        /* =========================================================== */        
+        /* =========================================================== */
         _searchaccdoc: function (oevent) {
             var xfilter = [];
             var filterproj = new Filter("Project", FilterOperator.EQ, this.pid);
@@ -240,7 +235,7 @@ sap.ui.define([
         },
         /* =========================================================== */
         /* Method Trigggerd when the "New" button is clicked.          */
-        /* =========================================================== */        
+        /* =========================================================== */
         _createjeRecord: function (oevent) {
             if (!this.nDialog) {
                 this.nDialog = sap.ui.xmlfragment(this.getView().getId(), "com.chappota.wippoc2.wipproject2.fragments.S2_New_WIP", this);
@@ -263,21 +258,18 @@ sap.ui.define([
         _closenewrecord: function () {
             this.nDialog.close();
             this.byId("wiptable").removeSelections();
-            this.selflag = 0;
         },
-         /* =========================================================== */
+        /* =========================================================== */
         /* Method to Save new record - when hitting "Save" in the new popup box*/
-        /* =========================================================== */       
+        /* =========================================================== */
         _savenewrecord: function () {
             var wipeditsmdl = this.getOwnerComponent().getModel("wipeditsMDL");
             debugger;
             console.log("in save");
 
-
             var d = new Date(this.getView().byId("newservicedate").getValue());
-            var formateddate = d.toJSON().substring(0,19);
+            var formateddate = d.toJSON().substring(0, 19);
 
-//            var ad = d.toJSON();
             //Read the top record ID
             wipeditsmdl.read("/YY1_WIPEDITS", {
                 urlParameters: {
@@ -320,36 +312,24 @@ sap.ui.define([
                 }
             });
         },
-         /* =========================================================== */
-        /* Method Mult Edit Update                                      */
-        /* =========================================================== */       
-        _multiEditUpdated: function (multiaccdoc) {
-
-        },
-        _multiEditOriginal: function (multiaccdoc) {
-  
-        },
-        _multiEditNew: function (multiaccdoc, multiqty, multiwbs, multiservdate, multinotes) {
-    
-        },
         /* =========================================================== */
         /* Method called when Saving the edited records (for both Single and Multi select)        */
         /* =========================================================== */
         _saveeditjerecord: function () {
             debugger;
             console.log("Saveitjerecord called!!!");
-            var oTable =	this.getView().byId("wiptable");
+            var oTable = this.getView().byId("wiptable");
             //var nvalue =	oTable.getItems()[i].getCells()[i].getText();  
             var selectedItems = oTable._aSelectedPaths;
             var updatedcount = 0, originalcount = 0;
             var jemap = new Map();
             if (selectedItems.length > 1) jemap.set("Multi", true); else jemap.set("Multi", false);
-            for(var i = 0; i < selectedItems.length; i++) {
+            for (var i = 0; i < selectedItems.length; i++) {
                 var ind = selectedItems[i].slice(1);
                 var status = oTable.getItems()[ind].getCells()[1].getText();
                 var jeid = oTable.getItems()[ind].getCells()[2].getText();
                 //Perform an update, if it has already been updated or created
-                jemap.set(jeid,ind);
+                jemap.set(jeid, ind);
                 if ((status === 'Updated') || (status === 'New')) {
                     //if(status === 'Updated') amultistat = "02"; else amultistat = "01";
                     var editapi = this.getOwnerComponent().getModel("wipeditsMDL");
@@ -368,21 +348,27 @@ sap.ui.define([
                             var amultistat;
                             var jsondate;
                             var selectedItems = oTable._aSelectedPaths;
-                            if(lstatus === 'Updated') amultistat = "02"; else amultistat = "01";
+                            if (lstatus === 'Updated') amultistat = "02"; else amultistat = "01";
                             if (jemap.get("Multi")) {
                                 if (amultiqty === '') {
-                                    amultiqty = oTable.getItems()[index].getCells()[7].getText(); }
+                                    amultiqty = oTable.getItems()[index].getCells()[7].getText();
+                                }
                                 if (amultiwbs === '') {
-                                    amultiwbs = oTable.getItems()[index].getCells()[8].getText(); }
+                                    amultiwbs = oTable.getItems()[index].getCells()[8].getText();
+                                }
                                 if (amultinotes === '') {
-                                    amultinotes = oTable.getItems()[index].getCells()[13].getText(); }
+                                    amultinotes = oTable.getItems()[index].getCells()[13].getText();
+                                }
                                 if (amultiacttype === '') {
-                                    amultiacttype = oTable.getItems()[index].getCells()[10].getText(); }    
+                                    amultiacttype = oTable.getItems()[index].getCells()[10].getText();
+                                }
                                 if (amultiprnr === '') {
-                                    amultiprnr = oTable.getItems()[index].getCells()[11].getText(); }
+                                    amultiprnr = oTable.getItems()[index].getCells()[11].getText();
+                                }
                                 if (amultisrvdate === '') {
-                                    amultisrvdate = oTable.getItems()[index].getCells()[12].getText(); }                                                                           
-                            }               
+                                    amultisrvdate = oTable.getItems()[index].getCells()[12].getText();
+                                }
+                            }
                             //jsondate = amultisrvdate.toJSON();            
                             var esetguid = odata.results[0].SAP_UUID;
                             var editpayload = {
@@ -432,18 +418,24 @@ sap.ui.define([
 
                     if (jemap.get("Multi")) {
                         if (amultiqty === '') {
-                            amultiqty = oTable.getItems()[ind].getCells()[7].getText(); }
+                            amultiqty = oTable.getItems()[ind].getCells()[7].getText();
+                        }
                         if (amultiwbs === '') {
-                            amultiwbs = oTable.getItems()[ind].getCells()[8].getText(); }
+                            amultiwbs = oTable.getItems()[ind].getCells()[8].getText();
+                        }
                         if (amultinotes === '') {
-                            amultinotes = oTable.getItems()[ind].getCells()[13].getText(); }
+                            amultinotes = oTable.getItems()[ind].getCells()[13].getText();
+                        }
                         if (amultiacttype === '') {
-                            amultiacttype = oTable.getItems()[ind].getCells()[10].getText(); }    
+                            amultiacttype = oTable.getItems()[ind].getCells()[10].getText();
+                        }
                         if (amultiprnr === '') {
-                            amultiprnr = oTable.getItems()[ind].getCells()[11].getText(); }
+                            amultiprnr = oTable.getItems()[ind].getCells()[11].getText();
+                        }
                         if (amultisrvdate === '') {
-                            amultisrvdate = oTable.getItems()[ind].getCells()[12].getText(); }                                                                           
-                    }                    
+                            amultisrvdate = oTable.getItems()[ind].getCells()[12].getText();
+                        }
+                    }
                     var editpayload = {
                         JEID: jeid,
                         Status: "02",
@@ -479,20 +471,20 @@ sap.ui.define([
             debugger;
             //var totalupdated = updatedcount + originalcount;
             //MessageBox.alert("Total number of records updated : " + totalupdated);
-            this.pDialog.close();            
+            this.pDialog.close();
             this.byId("wiptable").removeSelections();
         },
         /****
-    * Method to Finalize the record
-    */
+        * Method to Finalize the record
+        */
         _finalizeRecord: function (oevent) {
             console.log("finalizerecord called!!!");
-            var oTable =	this.getView().byId("wiptable");
+            var oTable = this.getView().byId("wiptable");
             //var nvalue =	oTable.getItems()[i].getCells()[i].getText();  
             var selectedItems = oTable._aSelectedPaths;
             var updatedcount = 0, originalcount = 0;
             debugger;
-            for(var i = 0; i < selectedItems.length; i++) {
+            for (var i = 0; i < selectedItems.length; i++) {
                 var ind = selectedItems[i].slice(1);
                 var status = oTable.getItems()[ind].getCells()[1].getText();
                 var jeid = oTable.getItems()[ind].getCells()[2].getText();
@@ -500,14 +492,14 @@ sap.ui.define([
                 var timesheetstatus;
                 var mode;
                 if (status === "Updated" || status === "Deleted") {
-                    if (status === "Updated") mode = "U"; else mode = "D";      
+                    if (status === "Updated") mode = "U"; else mode = "D";
                     timesheetid = timesheetid.padStart(12, '0');
                     timesheetstatus = "30";
                 } else if (status === "New") {
                     mode = 'C';
                     timesheetid = "";
                     timesheetstatus = "30";
-                } 
+                }
                 //Create the required payload
                 var finalRecordPayload = {
                     "TimeSheetDataFields": {
@@ -534,6 +526,7 @@ sap.ui.define([
                     var wipsaves = this.getOwnerComponent().getModel("wipsavesMDL");
                     wipsaves.create("/TimeSheetEntryCollection", finalRecordPayload, {
                         success: (odata) => {
+                            this._deleteWIPEdit(jeid);
                             MessageToast.show("Record posted");
                             //   this._getwipprojectdata();            
                             this._newAfterFinalized();
@@ -549,6 +542,7 @@ sap.ui.define([
                     var wipwithaied = "/TimeSheetEntryCollection";
                     wipsaves.create(wipwithaied, finalRecordPayload, {
                         success: (odata) => {
+                            this._deleteWIPEdit(jeid);
                             MessageToast.show("Record posted");
                             this.byId("wiptable").removeSelections();
                             this._getwipprojectdata();
@@ -558,23 +552,16 @@ sap.ui.define([
                             this.byId("wiptable").removeSelections();
                         }
                     });
-                }               
+                }
             }
         },
-        _newAfterFinalized: function () {
 
-        },
-        /****************
-         *  Method called when selecting a record by choosing the checkbox
-         ****************/
-        _wiptableselchange: function (oevent) {
-        },
         /****************
          *  Method to update JE record - Triggered when clicking on "Edit" button 
          ****************/
         _updatejeRecord: function (oevent) {
             //debugger;
-            var oTable =	this.getView().byId("wiptable");
+            var oTable = this.getView().byId("wiptable");
             //var nvalue =	oTable.getItems()[i].getCells()[i].getText();  
             var selectedItems = oTable._aSelectedPaths;
 
@@ -616,56 +603,17 @@ sap.ui.define([
                 this.getView().byId("editrightprnr").setValue("");
                 this.getView().byId("editrightservdate").setValue("");
             }
-//            for (var i = 0; i < selectedItems.length; i++) {
-                //var str = item.getSelected();
-                //var str = item.getCells[0].getText();
-//            }
+            //            for (var i = 0; i < selectedItems.length; i++) {
+            //var str = item.getSelected();
+            //var str = item.getCells[0].getText();
+            //            }
             this.pDialog.open();
         },
         _closechangerecord: function () {
             this.pDialog.close();
             this.byId("wiptable").removeSelections();
-            this.selflag = 0;
         },
-        _multiDeleteUpdated: function (multiaccdoc) {
-            var delapi = this.getOwnerComponent().getModel("wipeditsMDL");
-            var filterjeid = new Filter("JEID", FilterOperator.EQ, multiaccdoc)
-            delapi.read("/YY1_WIPEDITS", {
-                filters: [filterjeid],
-                success: (odata) => {
 
-
-                    var esetguid = odata.results[0].SAP_UUID;
-
-                    var editpayload = {
-                        ID: "1",
-                        Status: "12"
-
-                    };
-
-                    var esetwithguid = "/YY1_WIPEDITS(guid'" + esetguid + "')";
-                    delapi.update(esetwithguid, editpayload, {
-                        success: (odata) => {
-                            this._getwipprojectdata();
-                            this.byId("wiptable").removeSelections();
-                            this.selflag = 0;
-                        },
-                        error: (err) => {
-                            MessageToast.show(err);
-                            this.byId("wiptable").removeSelections();
-                            this.selflag = 0;
-                        }
-                    });
-                },
-                error: (err) => {
-                    this.byId("wiptable").removeSelections();
-                    this.selflag = 0;
-                }
-
-
-            });
-
-        },
         _multiDeleteOriginal: function (multiaccdoc) {
             var delapi = this.getOwnerComponent().getModel("wipeditsMDL");
             var editpayload = {
@@ -686,191 +634,57 @@ sap.ui.define([
 
                     this._getwipprojectdata();
                     this.byId("wiptable").removeSelections();
-                    this.selflag = 0;
-
                 },
                 error: (err) => {
                     MessageToast.show(err);
                     this.byId("wiptable").removeSelections();
-                    this.selflag = 0;
-
                 }
             });
 
         },
-        _multiDeleteNew: function (multiaccdoc) {
+        _deleteWIPEdit: function (jeid) {
             var delapi = this.getOwnerComponent().getModel("wipeditsMDL");
-            var filterjeid = new Filter("JEID", FilterOperator.EQ, multiaccdoc);
+            var filterjeid = new Filter("JEID", FilterOperator.EQ, jeid);
+ 
             delapi.read("/YY1_WIPEDITS", {
                 filters: [filterjeid],
                 success: (odata) => {
-
-
                     var esetguid = odata.results[0].SAP_UUID;
-
                     var editpayload = {
-                        ID: "1",
-                        Status: "13"
-
                     };
-
                     var esetwithguid = "/YY1_WIPEDITS(guid'" + esetguid + "')";
-                    delapi.update(esetwithguid, editpayload, {
+                    delapi.remove(esetwithguid, editpayload, {
                         success: (odata) => {
+                            MessageToast.show(err);
                             this._getwipprojectdata();
                             this.byId("wiptable").removeSelections();
-                            this.selflag = 0;
                         },
                         error: (err) => {
                             MessageToast.show(err);
                             this.byId("wiptable").removeSelections();
-                            this.selflag = 0;
-
                         }
                     });
-                },
-                error: (err) => {
-                    this.byId("wiptable").removeSelections();
-                    this.selflag = 0;
-
                 }
-
-
             });
-
-
         },
-        _deleteRecord: function () {
+        _deletejeRecord: function (jeid) {
+            //debugger;
+            var oTable = this.getView().byId("wiptable");
+            //var nvalue =	oTable.getItems()[i].getCells()[i].getText();  
+            var selectedItems = oTable._aSelectedPaths;           
+            var ind = selectedItems[0].slice(1);
+
+            if (selectedItems.length < 1) {
+                MessageBox.alert("Please select atleast 1 row to edit");
+                return;
+            }            
             debugger;
-            if (this.editflag) {
-                MessageToast.show("Multi Delete");
-                for (var i = 0; i < this.multistatus.length; i++) {
-                    if (this.multistatus[i] === 'Updated') {
-                        debugger;
-                        this._multiDeleteUpdated(this.multiaccdoc[i]);
-                    }
-                    if (this.multistatus[i] === 'Original') {
-                        this._multiDeleteOriginal(this.multiaccdoc[i]);
-                    }
-                    if (this.multistatus[i] === 'New') {
-                        this._multiDeleteNew(this.multiaccdoc[i]);
-                    }
-                }
-            }
-            else {
-                var delapi = this.getOwnerComponent().getModel("wipeditsMDL");
-                if (this.statustext === 'Original') {
-
-                    var editpayload = {
-                        JEID: this.accdocjeid,
-                        ID: "1",
-                        Status: "11",
-                        ProjectID: this.project,
-                        Quantity: this.qty,
-                        WBS: this.wrkpkg,
-                        Notes: this.notes,
-                        ActivityType: this.acttype,
-                        ServiceDate: this.formatter.dateTimebackendwithtime(this.timesheetdate)
-
-                    };
-
-
-                    delapi.create("/YY1_WIPEDITS", editpayload, {
-                        success: (odata) => {
-
-                            this._getwipprojectdata();
-                            this.byId("wiptable").removeSelections();
-                            this.selflag = 0;
-
-                        },
-                        error: (err) => {
-                            MessageToast.show(err);
-                            this.byId("wiptable").removeSelections();
-                            this.selflag = 0;
-
-                        }
-                    });
-                }
-                if (this.statustext === 'Updated') {
-
-                    // var editapi = this.getOwnerComponent().getModel("wipeditsMDL");
-                    var filterjeid = new Filter("JEID", FilterOperator.EQ, this.accdocjeid)
-                    delapi.read("/YY1_WIPEDITS", {
-                        filters: [filterjeid],
-                        success: (odata) => {
-
-
-                            var esetguid = odata.results[0].SAP_UUID;
-
-                            var editpayload = {
-                                ID: "1",
-                                Status: "12"
-
-                            };
-
-                            var esetwithguid = "/YY1_WIPEDITS(guid'" + esetguid + "')";
-                            delapi.update(esetwithguid, editpayload, {
-                                success: (odata) => {
-                                    this._getwipprojectdata();
-                                    this.selflag = 0;
-                                },
-                                error: (err) => {
-                                    MessageToast.show(err);
-                                    this.byId("wiptable").removeSelections();
-                                    this.selflag = 0;
-                                }
-                            });
-                        },
-                        error: (err) => {
-                            this.byId("wiptable").removeSelections();
-                            this.selflag = 0;
-                        }
-
-
-                    });
-                }
-                if (this.statustext === 'New') {
-
-                    // var editapi = this.getOwnerComponent().getModel("wipeditsMDL");
-                    var filterjeid = new Filter("JEID", FilterOperator.EQ, this.accdocjeid)
-                    delapi.read("/YY1_WIPEDITS", {
-                        filters: [filterjeid],
-                        success: (odata) => {
-
-
-                            var esetguid = odata.results[0].SAP_UUID;
-
-                            var editpayload = {
-                                ID: "1",
-                                Status: "13"
-
-                            };
-
-                            var esetwithguid = "/YY1_WIPEDITS(guid'" + esetguid + "')";
-                            delapi.update(esetwithguid, editpayload, {
-                                success: (odata) => {
-                                    this._getwipprojectdata();
-                                    this.selflag = 0;
-
-                                },
-                                error: (err) => {
-                                    MessageToast.show(err);
-                                    this.byId("wiptable").removeSelections();
-                                    this.selflag = 0;
-                                }
-                            });
-                        },
-                        error: (err) => {
-                            this.byId("wiptable").removeSelections();
-                            this.selflag = 0;
-                        }
-
-
-                    });
-                }
+            for(var i = 0; i < selectedItems.length; i++) {
+                this._deleteWIPEdit (oTable.getItems()[ind].getCells()[2].getText());
             }
 
         },
+
 
         /**
          * Called when the worklist controller is instantiated.

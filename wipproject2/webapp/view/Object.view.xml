@@ -104,7 +104,7 @@
                                             <Button icon="sap-icon://refresh" press="_refreshWipTable"/>
                                             <Button text="New" width="auto" press="_createjeRecord"/>
                                             <Button text="Edit" width="auto" press="_updatejeRecord"/>
-                                            <Button text="Delete" width="auto" press="_deleteRecord"/>
+                                            <Button text="Delete" width="auto" press="_deletejeRecord"/>
                                             <Button text="Transfer" width="auto" visible="false"/>
                                             <Button text="Combine" width="auto"/>
                                             
