@@ -528,8 +528,6 @@ sap.ui.define([
                         success: (odata) => {
                             this._deleteWIPEdit(jeid);
                             MessageToast.show("Record posted");
-                            //   this._getwipprojectdata();            
-                            this._newAfterFinalized();
                         },
                         error: (err) => {
                             MessageToast.show(err);
