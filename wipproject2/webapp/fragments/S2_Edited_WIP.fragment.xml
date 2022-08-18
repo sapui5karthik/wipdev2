@@ -1,5 +1,5 @@
 <core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:layout="sap.ui.layout" xmlns:form="sap.ui.layout.form">
-    <Dialog id="changedialog" draggable="true" resizable="false" title="Change Record" contentHeight="640px" contentWidth="720px">
+    <Dialog id="changedialog" draggable="true" resizable="false" title="Change Record" contentHeight="660px" contentWidth="720px">
 
         <layout:BlockLayout background="Default" visible="true">
             <layout:content>
@@ -9,14 +9,14 @@
                             <layout:content>
                                 <form:Form width="100%" editable="true" visible="true">
                                     <form:title>
-                                        <core:Title text="Original Data" level="Auto"/>
+                                        <core:Title text="{i18n>txt_orgdata}" level="Auto"/>
                                     </form:title>
                                     <form:formContainers>
                                         <form:FormContainer visible="true">
                                             <form:formElements>
                                                 <form:FormElement visible="true">
                                                     <form:label>
-                                                        <Label text="Customer Name" design="Standard" width="231.40625px" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                                        <Label text="{i18n>txt_custname}" design="Standard" width="231.40625px" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                                     </form:label>
                                                     <form:fields>
                                                         <ObjectStatus state="Information" text="{prjlst>/CustomerName}"/>
@@ -24,7 +24,7 @@
                                                 </form:FormElement>
                                                 <form:FormElement visible="true">
                                                     <form:label>
-                                                        <Label text="Project" design="Standard" width="231.40625px" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                                        <Label text="{i18n>txt_proj}" design="Standard" width="231.40625px" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                                     </form:label>
                                                     <form:fields>
                                                         <ObjectStatus state="Information" text="{prjlst>/ProjectID}"/>
@@ -32,7 +32,7 @@
                                                 </form:FormElement>
                                                 <form:FormElement visible="true">
                                                     <form:label>
-                                                        <Label text="Unbilled Quantity" design="Standard" width="231.40625px" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                                        <Label text="{i18n>txt_unbqty}" design="Standard" width="231.40625px" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                                     </form:label>
                                                     <form:fields>
                                                         <ObjectStatus state="Information" id="editleftunbilamnt"/>
@@ -40,7 +40,7 @@
                                                 </form:FormElement>
                                                 <form:FormElement visible="true">
                                                     <form:label>
-                                                        <Label text="Workpage" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                                        <Label text="{i18n>txt_wrkpckg}" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                                     </form:label>
                                                     <form:fields>
                                                         <ObjectStatus state="Information" id="editleftwpkg"/>
@@ -48,7 +48,7 @@
                                                 </form:FormElement>
                                                 <form:FormElement visible="true">
                                                     <form:label>
-                                                        <Label text="Activity Type" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                                        <Label text="{i18n>txt_acttype}" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                                     </form:label>
                                                     <form:fields>
                                                         <ObjectStatus state="Information" id="editleftacttype"/>
@@ -56,7 +56,7 @@
                                                 </form:FormElement>
                                                   <form:FormElement visible="true">
                                                     <form:label>
-                                                        <Label text="Personnel Number" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                                        <Label text="{i18n>txt_prnr}" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                                     </form:label>
                                                     <form:fields>
                                                         <ObjectStatus state="Information" id="editleftprnr"/>
@@ -64,7 +64,7 @@
                                                 </form:FormElement>
                                                 <form:FormElement visible="true">
                                                     <form:label>
-                                                        <Label text="Service Date" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                                        <Label text="{i18n>txt_servicedata}" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                                     </form:label>
                                                     <form:fields>
                                                         <ObjectStatus state="Information" id="editleftservdate"/>
@@ -72,7 +72,7 @@
                                                 </form:FormElement>
                                                 <form:FormElement visible="true">
                                                     <form:label>
-                                                        <Label text="Notes" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                                        <Label text="{i18n>txt_notes}" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                                     </form:label>
                                                     <form:fields>
                                                         <ObjectStatus state="Information" id="editleftnotes"/>
@@ -94,7 +94,7 @@
                                     <form:title>
 
                                         <core:Title
-                                        text="Change Data" level="Auto"/>
+                                        text="{i18n>txt_chngdata}" level="Auto"/>
                                     <!-- <core:Title text="(if no changes, leave the field blank)" /> -->
 
                                     </form:title>
@@ -104,7 +104,7 @@
 
                                                 <form:FormElement visible="true">
                                                     <form:label>
-                                                        <Label text="Customer Name" design="Standard" width="231.40625px" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                                        <Label text="{i18n>txt_custname}" design="Standard" width="231.40625px" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                                     </form:label>
                                                     <form:fields>
                                                         <Input enabled="false" value="{prjlst>/CustomerName}"/>
@@ -112,7 +112,7 @@
                                                 </form:FormElement>
                                                 <form:FormElement visible="true">
                                                     <form:label>
-                                                        <Label text="Project" design="Standard" width="231.40625px" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                                        <Label text="{i18n>txt_proj}" design="Standard" width="231.40625px" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                                     </form:label>
                                                     <form:fields>
                                                         <Input enabled="false" value="{prjlst>/ProjectID}" id="editrightprojectid"/>
@@ -120,7 +120,7 @@
                                                 </form:FormElement>
                                                 <form:FormElement visible="true">
                                                     <form:label>
-                                                        <Label text="Unbilled Quantity" design="Standard" width="231.40625px" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                                        <Label text="{i18n>txt_unbqty}" design="Standard" width="231.40625px" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                                     </form:label>
                                                     <form:fields>
                                                         <Input id="editrightunbilamnt"/>
@@ -128,7 +128,7 @@
                                                 </form:FormElement>
                                                 <form:FormElement visible="true">
                                                     <form:label>
-                                                        <Label text="Workpage" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                                        <Label text="{i18n>txt_wrkpckg}" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                                     </form:label>
                                                     <form:fields>
                                                         <Input id="editrightwpkg"/>
@@ -136,7 +136,7 @@
                                                 </form:FormElement>
                                                 <form:FormElement visible="true">
                                                     <form:label>
-                                                        <Label text="Activity Type" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                                        <Label text="{i18n>txt_acttype}" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                                     </form:label>
                                                     <form:fields>
                                                         <Input id="editrightacttype"/>
@@ -144,23 +144,23 @@
                                                 </form:FormElement>
                                                   <form:FormElement visible="true">
                                                     <form:label>
-                                                        <Label text="Personnel Number" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                                        <Label text="{i18n>txt_prnr}" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                                     </form:label>
                                                     <form:fields>
-                                                        <Input id="editrightprnr"/>
+                                                        <Input enabled="true" id="editrightprnr"/>
                                                     </form:fields>
                                                 </form:FormElement>
                                                 <form:FormElement visible="true">
                                                     <form:label>
-                                                        <Label text="Service Date" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                                        <Label text="{i18n>txt_servicedata}" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                                     </form:label>
                                                     <form:fields>
-                                                        <DatePicker id="editrightservdate"/>
+                                                        <DatePicker enabled="true" id="editrightservdate" required="true"/>
                                                     </form:fields>
                                                 </form:FormElement>
                                                 <form:FormElement visible="true">
                                                     <form:label>
-                                                        <Label text="Notes" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
+                                                        <Label text="{i18n>txt_notes}" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                                     </form:label>
                                                     <form:fields>
                                                         <TextArea rows="4" id="editrightnotes"/>
@@ -171,7 +171,7 @@
                                                         <Label visible="false" text="Note*" design="Standard" width="231.40625px" required="false" textAlign="Begin" textDirection="Inherit"/>
                                                     </form:label>
                                                     <form:fields>
-                                                        <ObjectStatus state="Error" text="*(if no changes, leave the field blank)"/>
+                                                        <ObjectStatus state="Error" bold="true" text="{i18n>txt_editmessage}"/>
                                                     </form:fields>
                                                 </form:FormElement>
                                             </form:formElements>
@@ -191,8 +191,9 @@
         </layout:BlockLayout>
 
         <buttons>
-            <Button text="Save" type="Accept" press="_editjerecord"/>
-            <Button text="Close" type="Reject" press="_closechangerecord"/>
+            <Button text="{i18n>txt_save}" type="Accept" press="_saveeditjerecord"/>
+            <Button text="{i18n>txt_close}" type="Reject" press="_closechangerecord"/>
+            <Button text="{i18n>txt_resttoorgnl}" type="Reject" press="_resettooriginal"/>
         </buttons>
 
 

@@ -25,6 +25,15 @@
           "odataVersion": "2.0"
         }
       },
+      "mainService1": {
+        "uri": "/sap/opu/odata/cpd/SC_EXTERNAL_SERVICES_SRV/",
+        "type": "OData",
+        "settings": {
+          "annotations": [],
+          "localUri": "localService/metadata.xml",
+          "odataVersion": "2.0"
+        }
+      },
       
       "jrnlentry": {
         "uri": "/sap/opu/odata/sap/YY1_JOURNALENTRYITEM_CDS/",
@@ -100,6 +109,11 @@
       },
       "": {
         "dataSource": "mainService",
+        "preload": true,
+        "settings": {}
+      },
+      "s1": {
+        "dataSource": "mainService1",
         "preload": true,
         "settings": {}
       },

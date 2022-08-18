@@ -5,7 +5,7 @@
 >
    <Dialog
       id="newdialog" draggable="true" resizable="true"
-      title="Create New Record" contentHeight="430px" contentWidth="630px">
+      title="{i18n>txt_createnewrec}" contentHeight="430px" contentWidth="630px">
 <f:SimpleForm id="newform"
 			editable="true"
 			layout="ResponsiveGridLayout"		
@@ -16,25 +16,25 @@
 			columnsM="2"
 			>
 			<f:content>
-                <Label text="Customer" />
+                <Label text="{i18n>txt_cust}" />
                 <Input  width="auto" id="newcustomerid" value="{prjlst>/CustomerName}" editable = "false"/>  
-                <Label text="Customer Id" />
+                <Label text="{i18n>txt_cust}" />
                 <Input  width="auto" id="newcustomerid2"  editable = "false"/>                
-				<Label text="Project ID" />
+				<Label text="{i18n>txt_projid}" />
                 <Input  width="auto" id="newprojectid" value="{prjlst>/ProjectID}" editable = "false"/>                
-				<Label text="Journal Entry ID" />
+				<Label text="{i18n>txt_jrnlentryid}" />
                 <Input  width="auto" id="newjournalid" value="" editable = "false"/>                
-				<Label text="Unbilled Qty" />
+				<Label text="{i18n>txt_unbqty}" />
 				<Input  width="auto" id="newunbilled"/>
-				<Label text="Workpackage" />
+				<Label text="{i18n>txt_wrkpckg}" />
 				<Input width="auto" id="newworkpackage" value="{prjlst>/ProjectID}.1.1"/>               
-				<Label text="Activity Type" />
+				<Label text="{i18n>txt_acttype}" />
 				<Input width="auto" id="newacttype" value="T001"/>
-                <Label text="Personnel Number" />
+                <Label text="{i18n>txt_prnr}" />
 				<Input width="auto" id="newprnr"/>
-                <Label text="Service Date" />
+                <Label text="{i18n>txt_servicedata}" />
 				<DatePicker width="auto" id="newservicedate"/>
-                 <Label text="Notes" />
+                 <Label text="{i18n>txt_notes}" />
 				<TextArea rows="4" width="auto" id="newnotes" />
 <!--                 
                  <Button text="Save" type="Accept"/>
@@ -44,8 +44,8 @@
 			</f:content>
 		</f:SimpleForm>
       <buttons>
-        <Button text="Save" type="Accept" press="_savenewrecord"/>
-        <Button text="Close" type="Reject" press="_closenewrecord"/>
+        <Button text="{i18n>txt_save}" type="Accept" press="_savenewrecord"/>
+        <Button text="{i18n>txt_close}" type="Reject" press="_closenewrecord"/>
       </buttons>
    </Dialog>
 </core:FragmentDefinition>

@@ -5,8 +5,9 @@ sap.ui.define([
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
     "sap/m/MessageToast",
-    "sap/m/MessageBox"
-], function (BaseController, JSONModel, formatter, Filter, FilterOperator,MessageToast,MessageBox) {
+    "sap/m/MessageBox",
+    "sap/ui/model/odata/ODataModel"
+], function (BaseController, JSONModel, formatter, Filter, FilterOperator,MessageToast,MessageBox,ODataModel) {
     "use strict";
 
     return BaseController.extend("com.chappota.wippoc2.wipproject2.controller.Worklist", {
@@ -16,12 +17,27 @@ sap.ui.define([
         /* =========================================================== */
         /* lifecycle methods                                           */
         /* =========================================================== */
+        onInit : function(){
+
+            var prododata = this.getOwnerComponent().getModel("s1");
+            prododata.read("/ProjectSet",{
+                success : (odata) => {
+                    var prodjson = new JSONModel();
+                    prodjson.setData(odata.results);
+                    this.getView().setModel(prodjson,"s2");
+                },
+                error : (msg) => {
+                    MessageToast.show("Error");
+                }
+            });
+
+        },
 
         /**
          * Called when the worklist controller is instantiated.
          * @public
          */
-        onInit : function () {
+        _onInit : function () {
           
             var oViewModel;
 
