@@ -573,6 +573,8 @@ sap.ui.define([
                             this._deleteWIPEdit(jeid);
                             //this._getwipprojectdata();
                             MessageToast.show("Record posted");
+                            this.byId("wiptable").removeSelections();
+                           
                         },
                         error: (err) => {
                             MessageToast.show(err);
