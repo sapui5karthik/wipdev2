@@ -13,7 +13,6 @@ sap.ui.define([
     return BaseController.extend("com.chappota.wippoc2.wipproject2.controller.Worklist", {
 
         formatter: formatter,
-
         /* =========================================================== */
         /* lifecycle methods                                           */
         /* =========================================================== */
