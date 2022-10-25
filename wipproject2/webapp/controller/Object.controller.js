@@ -889,7 +889,7 @@ sap.ui.define([
             MessageBox.success("Selected items have been moved to \"WIP Time\" Tab");
         },
         _showBDRMessage: function(){
-            MessageBox.success("BDR:XXXX has been created from the selected items");
+            MessageBox.success("BDR:xxxx has been created from the selected items");
         },
 
         /**
