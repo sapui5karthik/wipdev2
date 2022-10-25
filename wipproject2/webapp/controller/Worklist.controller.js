@@ -6,32 +6,270 @@ sap.ui.define([
     "sap/ui/model/FilterOperator",
     "sap/m/MessageToast",
     "sap/m/MessageBox",
-    "sap/ui/model/odata/ODataModel"
-], function (BaseController, JSONModel, formatter, Filter, FilterOperator,MessageToast,MessageBox,ODataModel) {
+    "sap/ui/model/odata/ODataModel",
+    'sap/m/Token'
+], function (BaseController, JSONModel, formatter, Filter, FilterOperator,MessageToast,MessageBox,ODataModel,Token) {
     "use strict";
 
     return BaseController.extend("com.chappota.wippoc2.wipproject2.controller.Worklist", {
-
+        _smartFilterBar: null,
         formatter: formatter,
-
         /* =========================================================== */
         /* lifecycle methods                                           */
         /* =========================================================== */
         onInit : function(){
+            this._smartFilterBar = this.getView().byId("smartFilterBar");
+          
+        },
+          // **************************************************** */
+        //             VARIENT SECTION: SAVE and RETRIVE       //
+        //***************************************************** */
+                        _onBeforeVariantFetch: function (oEvent) {
+                            var projmi = this.getView().byId("projmultiInput").getValue();
+                            var custmi = this.getView().byId("customermultiInput").getValue();
+                            var stage = this.getView().byId("stagedd").getSelectedKeys();
+                        
 
+
+                            oEvent.getSource().setFilterData({
+                                _CUSTOM: {
+                                    Projmi: projmi,
+                                    Custmi: custmi,
+                                    Stage: stage                      
+
+                                }
+                            });
+
+                        },
+
+                        //To apply variant
+                        _onAfterVariantLoad: function (oEvent) {
+                            var oData = oEvent.getSource().getFilterData()._CUSTOM;
+                            debugger;
+                            if(oData.Projmi !=='') {this.byId("projmultiInput").setValue(oData.Projmi); }
+                            if(oData.Custmi !=='') {this.byId("customermultiInput").setValue(oData.Custmi);}
+                            if(oData.Stage !=='') {this.byId("stagedd").setSelectedKeys(oData.Stage);}
+                                  
+
+
+
+                        },
+
+
+
+           // **************************************************** */
+        //              PROJECT DATA                           //
+        //***************************************************** */
+        _projectdata : function(){
+           
+            if (!this.proddata) {
+				this.proddata = this.loadFragment({
+					name: "com.chappota.wippoc2.wipproject2.fragments.S1_ProjectData"
+				});
+			} 
+            
+			this.proddata.then(function(oDialog) {
+				oDialog.open();
+                sap.ui.core.BusyIndicator.show(0);
+			});
+
+            
             var prododata = this.getOwnerComponent().getModel("s1");
             prododata.read("/ProjectSet",{
                 success : (odata) => {
+                    
                     var prodjson = new JSONModel();
+                    prodjson.setSizeLimit(odata.results.length);
                     prodjson.setData(odata.results);
                     this.getView().setModel(prodjson,"s2");
+                    sap.ui.core.BusyIndicator.hide();
                 },
                 error : (msg) => {
+                    sap.ui.core.BusyIndicator.hide();
                     MessageToast.show("Error");
+                    
                 }
             });
 
+        },      
+        _handleValueHelpSearch: function (evt) {
+			var sValue = evt.getParameter("value");
+			var oFilter = new Filter(
+				"ProjectID",
+				FilterOperator.Contains,
+				sValue
+			);
+			evt.getSource().getBinding("items").filter([oFilter]);
+		},
+		_handleValueHelpClose: function (evt) {
+			var aSelectedItems = evt.getParameter("selectedItems"),
+				oMultiInput = this.byId("projmultiInput");
+
+			if (aSelectedItems && aSelectedItems.length > 0) {
+				aSelectedItems.forEach(function (oItem) {
+					oMultiInput.addToken(new Token({
+						text: oItem.getTitle()
+					}));
+				});
+			}
+		},
+      
+
+        // **************************************************** */
+        //              CUSTOMER DATA                           //
+        //***************************************************** */
+        _customerdata : function(){
+           
+            if (!this.custdata) {
+				this.custdata = this.loadFragment({
+					name: "com.chappota.wippoc2.wipproject2.fragments.S1_CustomerData"
+				});
+			} 
+            
+			this.custdata.then(function(oDialog1) {
+				oDialog1.open();
+                sap.ui.core.BusyIndicator.show(0);
+			});
+
+            
+            var custodata = this.getOwnerComponent().getModel("customerMDL");
+            custodata.read("/A_Customer",{
+                success : (odata) => {
+                    debugger;
+                    var custodatajson = new JSONModel();
+                    custodatajson.setSizeLimit(odata.results.length);
+                    
+                    custodatajson.setData(odata.results);
+                    this.getView().setModel(custodatajson,"s3");
+                    sap.ui.core.BusyIndicator.hide();
+                },
+                error : (msg) => {
+                    sap.ui.core.BusyIndicator.hide();
+                    MessageToast.show("Error");
+                    
+                }
+            });
+
+        },      
+        _handleValueHelpSearchCustomer: function (evt) {
+			var sValue = evt.getParameter("value");
+			var oFilter = new Filter(
+				"Customer",
+				FilterOperator.Contains,
+				sValue
+			);
+			evt.getSource().getBinding("items").filter([oFilter]);
+		},
+		selectcustomervalue : function (evt) {
+            debugger;
+			var aSelectedItems = evt.getParameter("selectedItems"),
+				oMultiInput = this.byId("customermultiInput");
+
+			if (aSelectedItems && aSelectedItems.length > 0) {
+				aSelectedItems.forEach(function (oItem) {
+					oMultiInput.addToken(new Token({
+						text: oItem.getTitle()
+					}));
+				});
+			}
+		},
+       
+
+        // **************************************************** */
+        //              INITIALIZE DATA  OR TRIGGERS GO EVENT   //
+        //***************************************************** */
+        onBeforeRebindTable : function(oEvent){
+          
+           // PROJECT STAGE DROPDOWN
+            var oBindingParams = oEvent.getParameter("bindingParams");
+
+
+
+            var stageid = this.getView().byId("stagedd");
+         
+           
+            var acountkeys = stageid.getSelectedKeys();
+            if(acountkeys!=''){
+            for(var i=0;i < acountkeys.length;i++){
+                var filter1= new Filter("ProjectStage",FilterOperator.EQ,acountkeys[i]);
+                if(acountkeys.length > 0){
+                    oBindingParams.filters.push(filter1);
+                    }
+                }
+            }
+
+            // PROJECT MULTI SELECT
+            if(this.byId("projmultiInput").mProperties._semanticFormValue){
+                var mvals = this.byId("projmultiInput").mProperties._semanticFormValue;
+                var mvalarr = [];
+                mvalarr = mvals.split(", ");                
+                var filter1;
+            
+            for (var i = 0; i < mvalarr.length; i++) {
+                        filter1 = new Filter("ProjectID", FilterOperator.EQ, mvalarr[i]);
+                if( mvalarr.length > 0){
+                        oBindingParams.filters.push(filter1);
+                }
+            }
+            }
+
+             // CUSTOMER MULTI SELECT
+
+             if(this.byId("customermultiInput").mProperties._semanticFormValue){
+                var mvals = this.byId("customermultiInput").mProperties._semanticFormValue;
+                var mvalarr = [];
+                mvalarr = mvals.split(", ");                
+                var filter1;            
+            for (var i = 0; i < mvalarr.length; i++) {
+                        filter1 = new Filter("Customer", FilterOperator.EQ, mvalarr[i]);
+                if( mvalarr.length > 0){
+                        oBindingParams.filters.push(filter1);
+                }
+            }
+            }
+
+
+
+           
         },
+        onClear : function(oEvent){
+            debugger;
+            var oSmtFilter =  this.getView().byId("smartFilterBar");
+
+        // CLEAR Project Stage Dropdown
+          if(this.byId("stagedd").getSelectedKeys()){
+            this.byId("stagedd").setSelectedKeys('');
+          }
+
+        //CLEAR Project Multi Input
+          
+           var projid = oSmtFilter.getControlByKey("CustomInputFiled1");
+            
+            if(projid.mProperties._semanticFormValue!==''){
+               projid.removeAllTokens();
+            }
+        //CLEAR Customer Multi Input
+        
+        var custid = oSmtFilter.getControlByKey("CustomInputFiled2");
+         
+         if(custid.mProperties._semanticFormValue!==''){
+            custid.removeAllTokens();
+         }
+
+        
+        
+        },
+        onExit: function () {
+			if (this._smartFilterBar) {
+				this._smartFilterBar.destroy();
+				this._smartFilterBar = null;
+			}
+
+			if (this._oModel) {
+				this._oModel.destroy();
+				this._oModel = null;
+			}
+		},
 
         /**
          * Called when the worklist controller is instantiated.

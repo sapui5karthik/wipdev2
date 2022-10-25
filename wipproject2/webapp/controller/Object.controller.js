@@ -573,6 +573,8 @@ sap.ui.define([
                             this._deleteWIPEdit(jeid);
                             //this._getwipprojectdata();
                             MessageToast.show("Record posted");
+                            this.byId("wiptable").removeSelections();
+                           
                         },
                         error: (err) => {
                             MessageToast.show(err);
@@ -807,6 +809,7 @@ sap.ui.define([
 				});
 		},
         handleSortDialogConfirm: function (oEvent) {
+            debugger;
 			var oTable = this.byId("wiptable"),
 				mParams = oEvent.getParameters(),
 				oBinding = oTable.getBinding("items"),

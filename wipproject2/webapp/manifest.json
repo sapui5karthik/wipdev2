@@ -34,7 +34,7 @@
           "odataVersion": "2.0"
         }
       },
-      
+           
       "jrnlentry": {
         "uri": "/sap/opu/odata/sap/YY1_JOURNALENTRYITEM_CDS/",
         "type": "OData",
@@ -55,6 +55,15 @@
       },
       "wipsaves": {
         "uri": "/sap/opu/odata/sap/API_MANAGE_WORKFORCE_TIMESHEET/",
+        "type": "OData",
+        "settings": {
+          "annotations": [],
+          "localUri": "localService/metadata.xml",
+          "odataVersion": "2.0"
+        }
+      },
+      "customerdata": {
+        "uri": "/sap/opu/odata/sap/API_BUSINESS_PARTNER/",
         "type": "OData",
         "settings": {
           "annotations": [],
@@ -132,6 +141,13 @@
         "dataSource": "wipsaves",
         "preload": true,
         "settings": {}
+      },
+      "customerMDL": {
+        "dataSource": "customerdata",
+        "preload": true,
+        "settings": {
+            
+        }
       }
     },
     "resources": {
