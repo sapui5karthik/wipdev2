@@ -14,7 +14,6 @@ sap.ui.define([
     return BaseController.extend("com.chappota.wippoc2.wipproject2.controller.Worklist", {
         _smartFilterBar: null,
         formatter: formatter,
-
         /* =========================================================== */
         /* lifecycle methods                                           */
         /* =========================================================== */
