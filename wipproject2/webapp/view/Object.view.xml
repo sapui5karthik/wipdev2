@@ -54,7 +54,8 @@
                                             <ObjectStatus state="Error" text="{i18n>txt_chngd}:{changedcount>/}"/>
                                             <ObjectStatus state="Information" text="{i18n>txt_new}: {newcount>/}"/>
                                             <!-- <ToolbarSpacer/> -->
-                                            <Input id="suggestionhelpbox" placeholder="{i18n>txt_srchpcholder}" visible="true" width="370px" showSuggestion="true" showTableSuggestionValueHelp="false" suggestionRows="{wipentry>/}" suggestionItemSelected="onSuggestionItemSelected">
+                                            <Input id="suggestionhelpbox" placeholder="{i18n>txt_srchpcholder}" visible="true" 
+                                            width="270px" showSuggestion="true" showTableSuggestionValueHelp="false" suggestionRows="{wipentry>/}" suggestionItemSelected="onSuggestionItemSelected">
                                                 <suggestionColumns>
                                                     <Column visible="false">
                                                         <Text text=""/>
@@ -103,7 +104,7 @@
                                             <Button text="{i18n>txt_delete}" width="auto" press="_deletejeRecord"/>
                                             <Button text="{i18n>txt_transfer}" width="auto" visible="false"/>
                                             <Button text="{i18n>txt_combine}" width="auto"/>
-
+                                             <Button text="Text Edit" width="auto"/>
                                             <Button
                                             text="{i18n>txt_postsubmit}" width="auto" press="_finalizeRecord"/>
                                             <!-- <CheckBox text="Fixed Layout" selected="true" select="onCheckBoxSelect"/> -->
@@ -112,6 +113,7 @@
 								iconDensityAware="false" press="_onSortOpen"/> -->
                                 	<Button	tooltip="Sort"	icon="sap-icon://sort"	press="handleSortButtonPressed"/>
                                     	<Button	tooltip="Filter"	icon="sap-icon://filter"    press="handleFilterButtonPressed"/>
+                                        	<Button	tooltip="Excel Export"	icon="sap-icon://excel-attachment" />
 							<!-- <OverflowToolbarButton text="Filter" type="Transparent" icon="sap-icon://filter" iconFirst="true" width="auto" enabled="true" visible="true"
 								iconDensityAware="false" press="_onFilterOpen"/> -->
                                             <Button
@@ -208,9 +210,20 @@
                     </IconTabFilter>
                     <!--                                   <IconTabFilter icon="sap-icon://inventory" iconColor="Negative" count="{/ProductCollectionStats/Counts/Weight/Overweight}" text="Overweight" key="Overweight"/> -->
                     <IconTabFilter icon="sap-icon://expense-report" iconColor="Critical" text="{i18n>txt_readytobill}" key="wipexpense" visible="true">
-                        <content>
+                        <!-- <content>
                             <Text text="{i18n>txt_readytobill}"/>
-                        </content>
+                        </content> -->
+                         <Table >
+                                <headerToolbar>
+                                    <Toolbar>
+                                        <content>
+                                        <ToolbarSpacer />
+                                         <Button text="Create BDR" press="_showBDRMessage"/>
+                                         <Button text="Review Again" press="_showReviewMessage"/>
+                                         </content>
+                                    </Toolbar>
+                                </headerToolbar>
+                        </Table>
 
                     </IconTabFilter>
                     <!-- <IconTabFilter icon="sap-icon://tools-opportunity" iconColor="Negative" text="WIP Unit Based" key="wipunitbased" visible="true">

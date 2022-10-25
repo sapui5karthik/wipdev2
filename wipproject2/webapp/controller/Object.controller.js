@@ -13,6 +13,7 @@ sap.ui.define([
     'sap/m/TablePersoController',
     'sap/m/library',
     './DemoPersoService'
+    
 ], function (BaseController, JSONModel, History, formatter, 
     Filter, FilterOperator, MessageToast, MessageBox, Fragment,Device,Sorter,TablePersoController,mlibrary,DemoPersoService) {
     "use strict";
@@ -884,7 +885,12 @@ sap.ui.define([
         /**************************************/
         /*  Method   */
         /**************************************/
-        
+        _showReviewMessage : function(){
+            MessageBox.success("Selected items have been moved to \"WIP Time\" Tab");
+        },
+        _showBDRMessage: function(){
+            MessageBox.success("BDR:XXXX has been created from the selected items");
+        },
 
         /**
          * Called when the worklist controller is instantiated.
