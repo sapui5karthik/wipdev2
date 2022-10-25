@@ -1,3 +1,4 @@
 {
-    "[xml].editor.defaultFormatter": "mblode.pretty-formatter"
+    "[xml].editor.defaultFormatter": "mblode.pretty-formatter",
+    "[javascript].editor.defaultFormatter": "mblode.pretty-formatter"
 }

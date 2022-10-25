@@ -809,6 +809,7 @@ sap.ui.define([
 				});
 		},
         handleSortDialogConfirm: function (oEvent) {
+            debugger;
 			var oTable = this.byId("wiptable"),
 				mParams = oEvent.getParameters(),
 				oBinding = oTable.getBinding("items"),
