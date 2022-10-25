@@ -55,7 +55,7 @@
                                             <ObjectStatus state="Information" text="{i18n>txt_new}: {newcount>/}"/>
                                             <!-- <ToolbarSpacer/> -->
                                             <Input id="suggestionhelpbox" placeholder="{i18n>txt_srchpcholder}" visible="true" 
-                                            width="270px" showSuggestion="true" showTableSuggestionValueHelp="false" suggestionRows="{wipentry>/}" suggestionItemSelected="onSuggestionItemSelected">
+                                            width="290px" showSuggestion="true" showTableSuggestionValueHelp="false" suggestionRows="{wipentry>/}" suggestionItemSelected="onSuggestionItemSelected">
                                                 <suggestionColumns>
                                                     <Column visible="false">
                                                         <Text text=""/>
@@ -100,11 +100,26 @@
                                             <Input width="auto" placeholder="{i18n>txt_accdoc}" submit="_searchaccdoc" id="_search" visible="false"/>
                                             <Button icon="sap-icon://refresh" press="_refreshWipTable"/>
                                             <Button text="{i18n>txt_new}" width="auto" press="_createjeRecord"/>
-                                            <Button text="{i18n>txt_edit}" width="auto" press="_updatejeRecord"/>
+                                            	<MenuButton text="Edit">
+                                                        <menu>
+                                                            <Menu>
+                                                                <!-- <MenuItem text="Edit" icon="sap-icon://edit" press="onPress">
+                                                                    <customData>
+                                                                        <core:CustomData
+                                                                            key="target"
+                                                                            value="p1" />
+                                                                    </customData>
+                                                                </MenuItem> -->
+                                                                <MenuItem text="Edit" icon="sap-icon://edit" press="_updatejeRecord" />
+                                                                <MenuItem text="Text Edit" icon="sap-icon://write-new-document" />
+                                                            </Menu>
+                                                        </menu>
+                                                    </MenuButton>
+                                            <!-- <Button text="{i18n>txt_edit}" width="auto" press="_updatejeRecord"/> -->
                                             <Button text="{i18n>txt_delete}" width="auto" press="_deletejeRecord"/>
                                             <Button text="{i18n>txt_transfer}" width="auto" visible="false"/>
                                             <Button text="{i18n>txt_combine}" width="auto"/>
-                                             <Button text="Text Edit" width="auto"/>
+                                             <!-- <Button text="Text Edit" width="auto"/> -->
                                             <Button
                                             text="{i18n>txt_postsubmit}" width="auto" press="_finalizeRecord"/>
                                             <!-- <CheckBox text="Fixed Layout" selected="true" select="onCheckBoxSelect"/> -->
