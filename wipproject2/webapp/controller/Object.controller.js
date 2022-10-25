@@ -886,7 +886,7 @@ sap.ui.define([
         /*  Method   */
         /**************************************/
         _showReviewMessage : function(){
-            MessageBox.success("Selected items have been moved to \"WIP Time\" Tab");
+            MessageBox.success("Selected items have been moved to \"WIP\" Tab");
         },
         _showBDRMessage: function(){
             MessageBox.success("BDR:xxxx has been created from the selected items");
