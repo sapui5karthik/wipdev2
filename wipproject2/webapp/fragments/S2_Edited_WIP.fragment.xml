@@ -1,5 +1,5 @@
 <core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:layout="sap.ui.layout" xmlns:form="sap.ui.layout.form">
-    <Dialog id="changedialog" draggable="true" resizable="false" title="Change Record" contentHeight="660px" contentWidth="720px">
+    <Dialog id="changedialog" draggable="true" resizable="true" title="Change Record" contentHeight="660px" contentWidth="800px">
 
         <layout:BlockLayout background="Default" visible="true">
             <layout:content>
@@ -115,7 +115,7 @@
                                                         <Label text="{i18n>txt_proj}" design="Standard" width="231.40625px" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                                     </form:label>
                                                     <form:fields>
-                                                        <Input enabled="false" value="{prjlst>/ProjectID}" id="editrightprojectid"/>
+                                                        <Input enabled="true" value="{prjlst>/ProjectID}" id="editrightprojectid" showValueHelp="true"/>
                                                     </form:fields>
                                                 </form:FormElement>
                                                 <form:FormElement visible="true">
@@ -131,7 +131,7 @@
                                                         <Label text="{i18n>txt_wrkpckg}" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                                     </form:label>
                                                     <form:fields>
-                                                        <Input id="editrightwpkg"/>
+                                                        <Input id="editrightwpkg" showValueHelp="true"/>
                                                     </form:fields>
                                                 </form:FormElement>
                                                 <form:FormElement visible="true">
@@ -139,7 +139,7 @@
                                                         <Label text="{i18n>txt_acttype}" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                                     </form:label>
                                                     <form:fields>
-                                                        <Input id="editrightacttype"/>
+                                                        <Input id="editrightacttype" showValueHelp="true"/>
                                                     </form:fields>
                                                 </form:FormElement>
                                                   <form:FormElement visible="true">
@@ -147,7 +147,7 @@
                                                         <Label text="{i18n>txt_prnr}" design="Standard" width="100%" required="false" textAlign="Begin" textDirection="Inherit" visible="true"/>
                                                     </form:label>
                                                     <form:fields>
-                                                        <Input enabled="true" id="editrightprnr"/>
+                                                        <Input enabled="true" id="editrightprnr" showValueHelp="true"/>
                                                     </form:fields>
                                                 </form:FormElement>
                                                 <form:FormElement visible="true">

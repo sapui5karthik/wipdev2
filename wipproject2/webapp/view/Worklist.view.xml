@@ -38,7 +38,7 @@
                                             				path: 's3>/',
                                             				sorter: { path: 'Customer' }
                                             			}" valueHelpRequest="_customerdata" >
-                                            <core:Item key="{s3>Customer}" text="{s3>Customer}"/>
+                                            <core:Item key="{s3>Customer}" text="{s3>CustomerName}"/>
                                         </MultiInput>                                    
                                     </smartFilterBar:customControl>
                                 </smartFilterBar:ControlConfiguration>                               
